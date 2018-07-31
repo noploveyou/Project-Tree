@@ -1,0 +1,3 @@
+rootProject.name = 'ProjectTrees'
+
+include ':app'
