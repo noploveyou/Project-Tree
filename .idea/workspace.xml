@@ -2,54 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="86e55c78-5173-458a-bbe3-a56a31a074b1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/.babelrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/.buckconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/.flowconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/.watchmanconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/BUCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/src/main/java/com/projecttrees/MainActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/src/main/java/com/projecttrees/MainApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/app/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/keystores/BUCK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/keystores/debug.keystore.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/android/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/app.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees-tvOS/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees-tvOSTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees.xcodeproj/project.pbxproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees.xcodeproj/xcshareddata/xcschemes/ProjectTrees-tvOS.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees.xcodeproj/xcshareddata/xcschemes/ProjectTrees.xcscheme" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees/AppDelegate.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees/AppDelegate.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees/Base.lproj/LaunchScreen.xib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees/Images.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees/Images.xcassets/Contents.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTrees/main.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTreesTests/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/ios/ProjectTreesTests/ProjectTreesTests.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTrees/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -60,56 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/android/app/build.gradle">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="143" column="34" selection-start-line="143" selection-start-column="34" selection-end-line="143" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="27" column="71" selection-start-line="27" selection-start-column="71" selection-end-line="27" selection-end-column="71" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainApplication.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/android/app/src/main/java/com/projecttrees/MainApplication.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/android/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="17" column="18" lean-forward="true" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gradle.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/android/gradle.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gradle-wrapper.properties" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="272">
+              <caret line="16" column="27" lean-forward="true" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -128,12 +39,19 @@
         <option value="$PROJECT_DIR$/android/build.gradle" />
         <option value="$PROJECT_DIR$/android/gradle.properties" />
         <option value="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
     <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
@@ -147,9 +65,9 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="315" />
-    <option name="y" value="118" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="549" />
+    <option name="y" value="93" />
     <option name="width" value="1581" />
     <option name="height" value="888" />
   </component>
@@ -158,6 +76,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -168,26 +87,12 @@
             <path>
               <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
               <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="android" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="android" type="462c0819:PsiDirectoryNode" />
-              <item name="gradle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="android" type="462c0819:PsiDirectoryNode" />
-              <item name="gradle" type="462c0819:PsiDirectoryNode" />
-              <item name="wrapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -196,6 +101,11 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.spelling" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\ProjectTrees\src\common" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -219,38 +129,39 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1533010259845</updated>
-      <workItem from="1533010261131" duration="460000" />
+      <workItem from="1533010261131" duration="1434000" />
+      <workItem from="1533012036741" duration="252000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="460000" />
+    <option name="totallyTimeSpent" value="1686000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="210" y="79" width="1054" height="592" extended-state="0" />
+    <frame x="366" y="62" width="1054" height="592" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info id="npm" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="RNConsole" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24949698" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="RNConsole" order="7" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25452715" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,6 +169,7 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.gradle" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.properties" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -272,7 +184,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
+        <state relative-caret-position="238">
           <caret line="27" column="71" selection-start-line="27" selection-start-column="71" selection-end-line="27" selection-end-column="71" />
         </state>
       </provider>
@@ -287,7 +199,7 @@
     <entry file="file://$PROJECT_DIR$/android/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
-          <caret line="17" column="18" lean-forward="true" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+          <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -301,7 +213,24 @@
     <entry file="file://$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/SideMenu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2">
+          <caret selection-end-column="41" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="27" lean-forward="true" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
         </state>
       </provider>
     </entry>
