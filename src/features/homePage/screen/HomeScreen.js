@@ -1,19 +1,37 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Item, Input, Text } from 'native-base';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
+import { Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Text, Content } from 'native-base';
+import { View, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import Autocomplete from 'react-native-autocomplete-input';
+import  CallData from '../../../../src/common/connectDatabase';
 
 class HomeScreen extends Component {
+/*    componentDidMount(){
+        CallData.Test();
+
+    }*/
 
     constructor(props) {
         super(props);
         this.state = {
-            text: null
+            text: null,
+            autoText: true
         };
     }
 
+    SearchDataSource (value) {
+        // ปิด - เปิด List in Input
+        value === "" ? this.setState({autoText: true}) : [this.setState({autoText: false}),
+            CallData.Test(value)
+            ];
+        this.setState({text: value});
+    }
+
     render() {
+
+          /*  console.log([this.props.DataSource]);*/
         return (
+
             <Container style={{backgroundColor:'#FEF9E7'}}>
                 <Header style={{backgroundColor:'#196F3D'}}>
                     <Left>
@@ -29,7 +47,9 @@ class HomeScreen extends Component {
                     <Right>
                     </Right>
                 </Header>
-                <ScrollView>
+
+                <Content>
+                    <KeyboardAvoidingView behavior="position" enabled={true} keyboardVerticalOffset={95}>
                 <View style={{flex:1}}>
                     <View style={{justifyContent:'center',flexDirection:'row',marginTop:30}}>
                         <Thumbnail
@@ -39,17 +59,29 @@ class HomeScreen extends Component {
                     <View style={{justifyContent:'center',flexDirection:'row',marginTop:30,marginBottom:10}}>
                         <Text style={{fontSize:25,fontWeight:'400'}}> ค้นหาพรรณไม้ </Text>
                     </View>
-                    <Item rounded
-                          style={{backgroundColor:'white',margin:20,marginLeft:20}}>
-                            <Input
-                                    placeholder="Search In Here"
-                                    placeholderTextColor='#D5D8DC'
-                                    returnKeyType = {"done"}
-                                    onChangeText={(value) => {this.setState({text: value})}}
-                                    value={this.state.text}
-                                    onSubmitEditing={(event) => this.props.setTextSearch(this.state.text)}
-                            />
-
+                    <View style={{flexDirection:'row' }}>
+                        <View style={{marginTop:5, marginLeft: 15, marginRight: 10,width:'70%'}}>
+                        <Autocomplete
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            /*containerStyle={styles.autocompleteContainer}*/
+                            data={this.props.DataSource.DataSource}
+                            defaultValue={this.state.text}
+                            onChangeText={(value) => this.SearchDataSource(value)}
+                            placeholder=" Enter Plant Name "
+                            hideResults={this.state.autoText}
+                            inputContainerStyle={{borderColor:'white'}}
+                            renderItem={({ plantName }) => (
+                                <TouchableOpacity onPress={() =>
+                                    [this.setState({ text: plantName }),this.setState({autoText: true})]}>
+                                    <Text>
+                                        {plantName}
+                                    </Text>
+                                </TouchableOpacity>
+                            )}
+                        />
+                        </View>
+                        <View >
                             <TouchableOpacity
                                 onPress={() => this.props.setTextSearch(this.state.text)}
                                 style={{height:50,width:80,backgroundColor:'#F4D03F',
@@ -57,11 +89,15 @@ class HomeScreen extends Component {
                                     alignItems:'center',borderRadius:25}}>
                                 <Text style={{fontSize:25,fontWeight:'500'}}>ค้นหา</Text>
                             </TouchableOpacity>
+                        </View>
+                    </View>
 
-                    </Item>
                 </View>
-                </ScrollView>
+                    </KeyboardAvoidingView>
+                </Content>
+
             </Container>
+
         );
     }
 }
@@ -69,8 +105,10 @@ class HomeScreen extends Component {
 export default connect(
     (state) => ({
         Search: state.Search,
+        DataSource: state.DataSource
     }),
     (dispatch) => ({
-        setTextSearch: (value) => {dispatch({type: "setTextSearch", payload: value})}
+        setTextSearch: (value) => {dispatch({type: "setTextSearch", payload: value})},
+        Add: (value) => {dispatch({type: "AddDataSource", payload: value})}
     })
 )(HomeScreen);

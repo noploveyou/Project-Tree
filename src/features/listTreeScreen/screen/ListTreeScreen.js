@@ -38,6 +38,7 @@ export default class Page2 extends Component {
                 TreeName={item.plantName}
                 TreeNameEN={item.plantScience}
             />
+
         );
     };
 
@@ -47,7 +48,7 @@ export default class Page2 extends Component {
     }
 
     SearchDataSource (value) {
-        fetch('http://192.168.1.22/DBCheck.php', {
+        fetch('http://192.168.1.193/DBCheck.php', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
