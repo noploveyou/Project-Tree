@@ -22,7 +22,7 @@ export default class Page2 extends Component {
     _onPressItem = (id: string) => {
         // updater functions are preferred for transactional updates
         this.setState((state) => {
-            // copy the map rather than modifying state.
+            // copy the mapPage rather than modifying state.
             const selected = new Map(state.selected);
             selected.set(id, !selected.get(id)); // toggle
             return {selected};
