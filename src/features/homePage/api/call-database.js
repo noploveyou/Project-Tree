@@ -1,7 +1,7 @@
-import {BASE_URL} from "../../../common/constants";
+import { BASE_URL } from "../../../common/constants";   // url Database
 import store from "../../../common/initialStore";
 
-function fetchData(token,checkType) {
+function fetchData(ValueKey) {
     fetch(BASE_URL, {
             method: 'POST',
             headers: {
@@ -9,14 +9,14 @@ function fetchData(token,checkType) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                plantName: token,
-                check: checkType
+                plantName: ValueKey,    // ค่าที่ส่งไป php
+                check: "Like"           // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
             })
         }
     )
         .then((response) => response.json())
         .then((responseJson) => {
-            store.dispatch({
+            store.dispatch({     // action
                 type: 'ADD_DATA_RESULTS',
                 payload : responseJson
             })

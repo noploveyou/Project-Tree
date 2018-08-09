@@ -1,53 +1,23 @@
 import { takeEvery, put, all, select } from "redux-saga/effects";
-import {BASE_URL} from "../../../common/constants";
-import store from "../../../common/initialStore";
 import fetchData from '../api/call-database';
+import fetchCheckData from "../api/check-database";
 
-const getValueSearch = (state) => state.DataHomeScreen.Search;
-const getValueSearch2 = (state) => state.DataHomeScreen.Search;
+const getValueSearch = (state) => state.DataHomeScreen.Search;  // รับค่าจาก state
 
-function* callDataLike() {
-    const token = yield select(getValueSearch);
-    fetchData(token,"Like")
+function* callDataLike() {  // เรียกฐานข้อมูลแบบ where like
+    const ValueKey = yield select(getValueSearch);
+    fetchData(ValueKey);
 }
 
-function* callDataIs() {
-    const token2 = yield select(getValueSearch2);
-    fetch(BASE_URL, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                plantName: token2,
-                check: "Is"
-            })
-        }
-    )
-        .then((response) => response.json())
-        .then((responseJson) => {
-             if(responseJson.length > 0){
-                 store.dispatch({
-                     type: 'CHECK_DATA',
-                     payload : true
-                 });
-             }else {
-                 store.dispatch({
-                     type: 'CHECK_DATA',
-                     payload : false
-                 });
-             }
-
-        })
-        .catch(function (error) {
-        })
+function* callDataIs() {    // เรียกฐานข้อมูลแบบ =
+    const CheckValueKey = yield select(getValueSearch);
+    fetchCheckData(CheckValueKey);
 }
 
-//ตรวจจับ
+//ตรวจจับ action types
 export function* watchUpdateValueSearch() {
-    yield takeEvery('CALL_DATA_IS', callDataIs);
-    yield takeEvery('CALL_DATA_LIKE', callDataLike);
+    yield takeEvery('CALL_DATA_IS', callDataIs);        //จับ Type 'CALL_DATA_IS'
+    yield takeEvery('CALL_DATA_LIKE', callDataLike);    //จับ Type 'CALL_DATA_LIKE'
 }
 
 //รวม Saga ไว้

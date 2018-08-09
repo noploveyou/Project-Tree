@@ -22,7 +22,7 @@ class HomeScreen extends Component {
             ShowLogoTitle: true,     // เปิด - ปิด Logo true = แสดง
             ShowButtonClear: false,     // แสดง - ซ่อน ปุ่ม x (ลบ) false = ซ่อน
             ValueInputEmpty: true,    // ค่าใน Input ว่าง  true = ว่าง
-        };
+            };
     }
 
     _keyboardDidShow = () => {
@@ -35,7 +35,7 @@ class HomeScreen extends Component {
     };
 
     SearchDataSource (value) {
-        this.props.SetValueCheckInDatabase(false);   // false = หาค่าใน Data ไม่เจอ
+        this.props.SetValueCheckInDatabase(false);   // ค่า CheckData ว่าค่าตรงหรือไม่ false = หาค่าใน Data ไม่เจอ
         this.setState({ValueInput: value});
         if(value === "") {  // เช็คค่าใน Input เป็นว่างใช่หรือไม่
             this.setState({ListResults: true, ShowButtonClear: false});     // ปิด ListSuggest, ปุ่ม x
@@ -55,11 +55,11 @@ class HomeScreen extends Component {
         if((this.props.CheckData)){
             this.props.navigation.navigate('Detail');
         }else {
+            // เช็คค่า Input ว่างหรือไม่
             if (this.state.ValueInputEmpty){
-                /*alert(`กรุณากรอกชื่อพรรณไม้`)*/
                 Alert.alert(
-                    'กรุณากรอกชื่อพรรณไม้',
                     null,
+                    'กรุณากรอกชื่อพรรณไม้',
                     [
                         null,
                         {text: 'ตกลง', onPress: () => null},
@@ -67,11 +67,10 @@ class HomeScreen extends Component {
                     ],
                     { cancelable: false }
                 )
-            }else {
-               /* alert(`ไม่พบพรรณไม้\nกรุณาตรวจสอบอีกครั้ง`)*/
+            }else {           
                 Alert.alert(
-                    `ไม่พบพรรณไม้`,
-                    `กรุณาตรวจสอบอีกครั้ง`,
+                    null,
+                    `ไม่พบพรรณไม้\nกรุณาตรวจสอบอีกครั้ง`,
                     [
                         null,
                         {text: 'ตกลง', onPress: () => null},
@@ -85,7 +84,7 @@ class HomeScreen extends Component {
     }
 
     BtnClear(){ // ปุ่ม x (ลบ)
-        this.props.SetValueCheckInDatabase(false);
+        this.props.SetValueCheckInDatabase(false);  // ค่า CheckData ว่าค่าตรงหรือไม่ false = หาค่าใน Data ไม่เจอ
         this.setState({ValueInput: "", ListResults: true, ShowButtonClear: false, ValueInputEmpty: true});
     }
 
@@ -95,7 +94,8 @@ class HomeScreen extends Component {
                 <Content scrollEnabled={false} /* ปิดการเลื่อนหน้า */>
                 <KeyboardAvoidingView behavior="position" enabled={false}  /* คีย์บอร์ดไม่บังช่อง Input */>
                 <View style={s.viewAll}>
-                    {this.state.ShowLogoTitle ?
+                    {
+                        this.state.ShowLogoTitle ?  // เช็คว่าแสดง Logo หรือไม่
                         <View style={s.viewImage}>
                             <Thumbnail
                                 style={s.thumbnail}
@@ -103,25 +103,21 @@ class HomeScreen extends Component {
                             />
                         </View> : null
                     }
-                    <View style={this.state.ShowLogoTitle ? s.titlePageOn: s.titlePageOff}>
+                            <View style={this.state.ShowLogoTitle ? s.titlePageOn : s.titlePageOff} /*เช็คว่าแสดง Logo หรือไม่*/> 
                         <Text style={s.labelTitlePage}>{'ค้นหาพรรณไม้'}</Text>
                     </View>
                     <View style={s.inputFormAll}>
-                        <View style={this.state.ValueInputEmpty ?
-                            [s.viewAutoCPHideBtnClr,this.state.ShowLogoTitle ? null:s.viewAutoOnKeyboardNullValue]
+                        <View style={this.state.ValueInputEmpty ?   //เช็คว่า Input ว่างหรือไม่
+                            [s.SizeInputIncrease, this.state.ShowLogoTitle ? null : s.SizeInputMaximum]
                             :
-                            [s.viewAutoCPShowBtnClr,this.state.ShowLogoTitle ? null:s.viewAutoOnKeyboard]}
-                            /*this.state.ShowLogoTitle ? s.viewAutoCPHideBtnClr:s.viewAutoOnKeyboard*/>
-
+                            [s.SizeInputDecrease, this.state.ShowLogoTitle ? null : s.SizeInputMinimum]}>
                             <Autocomplete underlineColorAndroid='transparent'
                                 style={s.inputAutoCP}
                                 autoCapitalize="none"
                                 autoCorrect={true}
-                                data={this.props.DataSource}
-
+                                data={this.props.DataSource}                        
                                 defaultValue={this.state.ValueInput}
                                 onChangeText={(value) => this.SearchDataSource(value)}
-
                                 onSubmitEditing={() => Keyboard.dismiss()}
                                 placeholder="กรุณากรอกชื่อพรรณไม้"
                                 placeholderTextColor='gray'
@@ -212,19 +208,19 @@ const s = StyleSheet.create({
     inputFormAll: {
         flexDirection: 'row'
     },
-    viewAutoCPHideBtnClr: {
+    SizeInputIncrease: {
         marginLeft: 15,
         width:'69.5%'
     },
-    viewAutoCPShowBtnClr: {
+    SizeInputDecrease: {
         marginLeft: 15,
         width:'60%'
     },
-    viewAutoOnKeyboard : {
+    SizeInputMinimum : {
         marginLeft: 15,
         width:'80%'
     },
-    viewAutoOnKeyboardNullValue : {
+    SizeInputMaximum : {
         marginLeft: 15,
         width:'90%'
     },
