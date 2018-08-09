@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Thumbnail, Text, Content } from 'native-base';
-import { View, TouchableOpacity, KeyboardAvoidingView, StyleSheet, Keyboard } from 'react-native';
+import { View, TouchableOpacity, KeyboardAvoidingView, StyleSheet, Keyboard, Alert } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import CommonList from '../../../common/components/CommonList';
 import HeaderForm from '../../../common/components/HeaderForm';
@@ -56,9 +56,29 @@ class HomeScreen extends Component {
             this.props.navigation.navigate('Detail');
         }else {
             if (this.state.ValueInputEmpty){
-                alert(`กรุณากรอกชื่อพรรณไม้`)
+                /*alert(`กรุณากรอกชื่อพรรณไม้`)*/
+                Alert.alert(
+                    'กรุณากรอกชื่อพรรณไม้',
+                    null,
+                    [
+                        null,
+                        {text: 'ตกลง', onPress: () => null},
+                        null,
+                    ],
+                    { cancelable: false }
+                )
             }else {
-                alert(`ไม่พบพรรณไม้\nกรุณาตรวจสอบอีกครั้ง`)
+               /* alert(`ไม่พบพรรณไม้\nกรุณาตรวจสอบอีกครั้ง`)*/
+                Alert.alert(
+                    `ไม่พบพรรณไม้`,
+                    `กรุณาตรวจสอบอีกครั้ง`,
+                    [
+                        null,
+                        {text: 'ตกลง', onPress: () => null},
+                        null,
+                    ],
+                    { cancelable: false }
+                )
             }
         }
         //console.log(" Object " + JSON.stringify(this.props.CheckData))
