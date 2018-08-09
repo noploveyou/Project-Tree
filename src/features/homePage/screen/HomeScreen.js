@@ -35,35 +35,37 @@ class HomeScreen extends Component {
     };
 
     SearchDataSource (value) {
-        this.props.CheckValue(false);
+        this.props.SetValueCheckInDatabase(false);   // false = หาค่าใน Data ไม่เจอ
         this.setState({ValueInput: value});
         if(value === "") {  // เช็คค่าใน Input เป็นว่างใช่หรือไม่
-            this.setState({ListResults: true, ShowButtonClear: false});
-            this.setState({ValueInputEmpty: true});
+            this.setState({ListResults: true, ShowButtonClear: false});     // ปิด ListSuggest, ปุ่ม x
+            this.setState({ValueInputEmpty: true});     // set Input = true --> ว่าง
 
         }else{
             this.setState({ListResults: false, ShowButtonClear: true});
             this.setState({ValueInputEmpty: false});
-            this.props.SetValueSearchAction(value);
-            this.props.SearchLikeAction();  // where Like
-            this.props.SearchIsAction();    // เช็คค่า true, false จาก ฐานข้อมูล
-
+            // Action
+            this.props.SetValueSearch(value);
+            this.props.FetchData();  // where Like
+            this.props.FetchCheckData();    // เช็คค่า true, false จาก ฐานข้อมูล (เช็คค่าว่ามีในฐานข้อมูลหรือไม่)
         }
     }
 
     NavToDetail (){ // ปุ่มค้นหา
-                if((this.props.CheckData)){
-                    this.props.navigation.navigate('Detail');
-
-                }else {
-                    /*this.props.CheckValue(false);*/
-                }
-                //console.log(" Object " + JSON.stringify(this.props.CheckData))
-
+        if((this.props.CheckData)){
+            this.props.navigation.navigate('Detail');
+        }else {
+            if (this.state.ValueInputEmpty){
+                alert(`กรุณากรอกชื่อพรรณไม้`)
+            }else {
+                alert(`ไม่พบพรรณไม้\nกรุณาตรวจสอบอีกครั้ง`)
+            }
+        }
+        //console.log(" Object " + JSON.stringify(this.props.CheckData))
     }
 
     BtnClear(){ // ปุ่ม x (ลบ)
-        this.props.CheckValue(false);
+        this.props.SetValueCheckInDatabase(false);
         this.setState({ValueInput: "", ListResults: true, ShowButtonClear: false, ValueInputEmpty: true});
     }
 
@@ -85,7 +87,12 @@ class HomeScreen extends Component {
                         <Text style={s.labelTitlePage}>{'ค้นหาพรรณไม้'}</Text>
                     </View>
                     <View style={s.inputFormAll}>
-                        <View style={this.state.ValueInputEmpty ? s.viewAutoCPHideBtnClr : s.viewAutoCPShowBtnClr}>
+                        <View style={this.state.ValueInputEmpty ?
+                            [s.viewAutoCPHideBtnClr,this.state.ShowLogoTitle ? null:s.viewAutoOnKeyboardNullValue]
+                            :
+                            [s.viewAutoCPShowBtnClr,this.state.ShowLogoTitle ? null:s.viewAutoOnKeyboard]}
+                            /*this.state.ShowLogoTitle ? s.viewAutoCPHideBtnClr:s.viewAutoOnKeyboard*/>
+
                             <Autocomplete underlineColorAndroid='transparent'
                                 style={s.inputAutoCP}
                                 autoCapitalize="none"
@@ -95,7 +102,7 @@ class HomeScreen extends Component {
                                 defaultValue={this.state.ValueInput}
                                 onChangeText={(value) => this.SearchDataSource(value)}
 
-                                onSubmitEditing={(value) => this.NavToDetail(value)}
+                                onSubmitEditing={() => Keyboard.dismiss()}
                                 placeholder="กรุณากรอกชื่อพรรณไม้"
                                 placeholderTextColor='gray'
                                 hideResults={this.state.ListResults}
@@ -105,7 +112,9 @@ class HomeScreen extends Component {
                                     <CommonList
                                         onPress={() =>
                                             [this.setState({ValueInputEmpty: false,ListResults: true,ValueInput:plantName}),
-                                                this.props.SetValueSearchAction(plantName),this.props.CheckValue(true)]}
+                                                this.props.SetValueSearch(plantName),this.props.SetValueCheckInDatabase(true),
+                                                Keyboard.dismiss()
+                                            ]}
                                         style={s.labelListSuggest}
                                         label={plantName}
                                     />
@@ -119,14 +128,17 @@ class HomeScreen extends Component {
                                         <Icon name={'close'} size={18}  />
                                    </TouchableOpacity>
                         }
-                        <View style={{flexDirection:'row'}}>
-                            <TouchableOpacity
-                                onPress={() => this.NavToDetail()}
-                                style={s.btnSearch}>
-                                <Icon name={'search'} size={22} />
-                                <Text style={s.labelBtn}>{'ค้นหา'}</Text>
-                            </TouchableOpacity>
-                        </View>
+                        {this.state.ShowLogoTitle ?
+                            <View style={{flexDirection:'row'}}>
+                                <TouchableOpacity
+                                    onPress={() => this.NavToDetail()}
+                                    style={s.btnSearch}>
+                                    <Icon name={'search'} size={22} />
+                                    <Text style={s.labelBtn}>{'ค้นหา'}</Text>
+                                </TouchableOpacity>
+                            </View> : null
+                        }
+
                     </View>
                 </View>
                 </KeyboardAvoidingView>
@@ -188,6 +200,14 @@ const s = StyleSheet.create({
         marginLeft: 15,
         width:'60%'
     },
+    viewAutoOnKeyboard : {
+        marginLeft: 15,
+        width:'80%'
+    },
+    viewAutoOnKeyboardNullValue : {
+        marginLeft: 15,
+        width:'90%'
+    },
     inputAutoCP: {
         borderRadius: 0,
         backgroundColor: 'white',
@@ -217,7 +237,7 @@ const s = StyleSheet.create({
     },
     CustomListSuggest: {
         height: 190,
-        width: 260,
+        width: 320,
         paddingLeft: -10,
     },
     inputContainer: {
@@ -241,9 +261,9 @@ export default connect(
         CheckData : state.DataHomeScreen.CheckDataSource
     }),
     (dispatch) => ({
-        SearchLikeAction: (value) => {dispatch({type: "CALL_DATA_LIKE", payload: value})},
-        SearchIsAction: (value) => {dispatch({type: "CALL_DATA_IS", payload: value})},
-        SetValueSearchAction: (value) => {dispatch({type: "SET_VALUE_SEARCH", payload: value})},
-        CheckValue : (value) => {dispatch({type: "CHECK_DATA", payload: value})}
+        FetchData: (value) => {dispatch({type: "CALL_DATA_LIKE", payload: value})},
+        FetchCheckData: (value) => {dispatch({type: "CALL_DATA_IS", payload: value})},
+        SetValueSearch: (value) => {dispatch({type: "SET_VALUE_SEARCH", payload: value})},
+        SetValueCheckInDatabase : (value) => {dispatch({type: "CHECK_DATA", payload: value})}
     })
 )(HomeScreen);
