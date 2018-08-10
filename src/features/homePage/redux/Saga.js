@@ -1,29 +1,28 @@
-import { takeEvery, put, all } from "redux-saga/effects";
+import { takeEvery, put, all, select } from "redux-saga/effects";
+import fetchData from '../api/call-database';
+import fetchCheckData from "../api/check-database";
 
-function* setAge() {
-    try {
-        // dispatch a success action to the store with the new dog
-        yield put({ type: "setTextSearch", payload: "" });
-        alert('Searched')
+const getValueSearch = (state) => state.DataHomeScreen.Search;  // รับค่าจาก state
 
-    } catch (error) {
-        // dispatch a failure action to the store with the error
-        yield put({ type: "setTextSearch", error });
-    }
+function* callDataLike() {  // เรียกฐานข้อมูลแบบ where like
+    const ValueKey = yield select(getValueSearch);
+    fetchData(ValueKey);
 }
 
-function* updateTextSearch() {
-        setAge()
+function* callDataIs() {    // เรียกฐานข้อมูลแบบ =
+    const CheckValueKey = yield select(getValueSearch);
+    fetchCheckData(CheckValueKey);
 }
 
-//ตรวจจับ
-export function* watchUpdateTextSearch() {
-    /*yield takeEvery('setTextSearch', updateTextSearch);*/
+//ตรวจจับ action types
+export function* watchUpdateValueSearch() {
+    yield takeEvery('CALL_DATA_IS', callDataIs);        //จับ Type 'CALL_DATA_IS'
+    yield takeEvery('CALL_DATA_LIKE', callDataLike);    //จับ Type 'CALL_DATA_LIKE'
 }
 
 //รวม Saga ไว้
 export default function* SearchSaga() {
     yield all([
-        watchUpdateTextSearch()
+        watchUpdateValueSearch()
     ])
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, Icon, Title ,
          Content, Text, icon ,View,Input,Item} from 'native-base';
-import { FlatList, ActivityIndicator,TouchableHighlight} from 'react-native';
+import { FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
 
 export default class Page2 extends Component {
     componentDidMount(){
@@ -12,28 +12,27 @@ export default class Page2 extends Component {
         super(props);
         this.state = {
             text: '',
-            selected: (new Map(): Map<string, boolean>),
-            isLoading: true,
+            selected: (new Map()),
+            isLoading: false,
         };
     }
 
     _keyExtractor = (item,index) => item.plantID;
 
-    _onPressItem = (id: string) => {
-        // updater functions are preferred for transactional updates
-        this.setState((state) => {
-            // copy the map rather than modifying state.
-            const selected = new Map(state.selected);
-            selected.set(id, !selected.get(id)); // toggle
-            return {selected};
-        });
-    };
+    // _onPressItem = (id) => {
+    //     // updater functions are preferred for transactional updates
+    //     this.setState((state) => {
+    //         // copy the mapPage rather than modifying state.
+    //         const selected = new Map(state.selected);
+    //         selected.set(id, !selected.get(id)); // toggle
+    //         return {selected};
+    //     });
+    // };
 
     _renderItem = ({item}) => {
         return (
             <MyListItem
                 id={item.plantID}
-                onPressItem={this._onPressItem}
                 selected={!!this.state.selected.get(item.plantID)}
                 TreeName={item.plantName}
                 TreeNameEN={item.plantScience}
@@ -48,14 +47,15 @@ export default class Page2 extends Component {
     }
 
     SearchDataSource (value) {
-        fetch('http://192.168.1.193/DBCheck.php', {
+        fetch('http://192.168.1.22/DBCheck.php', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    plantName: value
+                    plantName: value,
+                    check: "Like"
                 })
             }
         )
@@ -134,14 +134,15 @@ export default class Page2 extends Component {
 
 class MyListItem extends React.PureComponent {
     _onPress = () => {
-        this.props.onPressItem(this.props.id);
-        /*alert(this.props.id);*/
+        // Do someting
+        //this.props.onPressItem(this.props.id);
+        //alert(this.props.id);
     };
 
     render() {
         const textColor = this.props.selected ? "red" : "black";
         return (
-            <TouchableHighlight onPress={this._onPress}>
+            <TouchableOpacity onPress={this._onPress}>
                 <View style={{borderBottomWidth:1}}>
                     <Text style={{ color: 'black' }}>
                         {this.props.TreeName}
@@ -150,7 +151,7 @@ class MyListItem extends React.PureComponent {
                         {this.props.TreeNameEN}
                     </Text>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         );
     }
 }
