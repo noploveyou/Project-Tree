@@ -8,22 +8,25 @@ import getDirections from "react-native-google-maps-directions";
 export default class MapScreen extends Component {
     componentDidMount() {
         navigator.geolocation.getCurrentPosition((position) => {
-            var lat = parseFloat(position.coords.latitude) //คำสั่งsetที่อยุ่ตามเครื่อง +แปรงค่าเป้นทศนิยม
-            var long = parseFloat(position.coords.longitude)
-            var initialRegion = {
+            let lat = parseFloat(position.coords.latitude); //คำสั่งsetที่อยุ่ตามเครื่อง +แปรงค่าเป้นทศนิยม
+            let long = parseFloat(position.coords.longitude);
+            const initialRegion = {
                 latitude: lat,
                 longitude: long,
                 latitudeDelta: 0,  //Zoom
                 longitudeDelta: 0, //Zoom
-            }
-            this.setState({ inittialPosition: initialRegion })  //คำสั่งset Location ใน this.state
-            this.setState({ markePosition: initialRegion })//คำสั่งsetตัวแปร marke ใน this.state
+            };
+            this.setState({ inittialPosition: initialRegion });  //คำสั่งset Location ใน this.state
+            this.setState({ markePosition: initialRegion });//คำสั่งsetตัวแปร marke ใน this.state
+            console.log(lat+''+'\n'+''+long);
         })
     }
 
     componentWillUnmount() {
-        navigator.geolocation.clearWatch(this.watchID)
+        //navigator.geolocation.clearWatch(this.watchID)
     }
+
+    //watchID: ? number = null;
 
     constructor(props){
         super(props);
@@ -66,10 +69,10 @@ export default class MapScreen extends Component {
                     value: "navigate"       // this instantly initializes navigation using the given travel mode
                 }
             ]
-        }
+        };
 
         getDirections(data)
-    }
+    };
 
 
     render() {
@@ -85,7 +88,6 @@ export default class MapScreen extends Component {
                 longitudeDelta: 0
             }
         },
-
         {
             title: 'Sweet Lime Thai Cuisine',
             id: 2,
@@ -105,11 +107,11 @@ export default class MapScreen extends Component {
                 <Header style={{backgroundColor:'#196F3D'}}>
                     <Left>
                         <Button transparent  onPress={()=>this.props.navigation.openDrawer()}>
-                            <Icon name='menu' />
+                            <Icon name={'menu'} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title> แผนที่พรรณไม้ </Title>
+                        <Title> {'แผนที่พรรณไม้'} </Title>
                     </Body>
                     <Right>
 
@@ -118,49 +120,50 @@ export default class MapScreen extends Component {
 
 
                 <View style={styles.container}>
-                  <View style={{height:20,backgroundColor:'red'}} />
-                       <MapView style={styles.map}
-                            region={ // Camera Positions Start
+                  <View style={{height:20, backgroundColor:'red'}} />
+                    <MapView style={styles.map}
+                             region={
+                                 //Camera Positions Start
+                                 {
+                                     latitude: 13.7859,
+                                     longitude: 100.6976,
+                                     latitudeDelta: 0.0200,  // น้อย =  Zoom
+                                     longitudeDelta: 0.0200, // น้อย =  Zoom
+                                 }
+                             }>
+                        <Marker  onPress={this.handleGetDirections}
+                                 coordinate={
+                                     this.state.markePosition
+                                 }
+                                 title={"Here"}
+                                 description={"You on Here"}
+                        />
+                        {/*<Marker
+                            coordinate={
                                 {
                                     latitude: 13.7859,
                                     longitude: 100.6976,
-                                    latitudeDelta: 0.0200,  // น้อย =  Zoom
-                                    longitudeDelta: 0.0200, // น้อย =  Zoom
-                                }                            
-                            }>
-                            <Marker  onPress={this.handleGetDirections}
-                                coordinate={
-                                    this.state.markePosition
+                                    latitudeDelta: 0,
+                                    longitudeDelta: 0,
                                 }
-                                title={"intbizth"}
-                                description={"This is Intbizth"}
-                                // image={require('../../../../public/assets/iconsMark/2.png')}
-                            />
-                            <Marker
-                                coordinate={
-                                    {
-                                        latitude: 13.7859,
-                                        longitude: 100.6976,
-                                        latitudeDelta: 0,
-                                        longitudeDelta: 0,
-                                    }
-                                }
-                                title={"intbizthxd"}
-                                description={"จะเอ๋zxc"}
-                                image={require('../../../../public/assets/iconsMark/tree.png')}                    
-                            />
-                            {
-                                fakeData.map(function (marker) {
-                                    return <MapView.Marker
-                                        coordinate={{ latitude: marker.latlng.latitude, longitude: marker.latlng.longitude }}
-                                        title={marker.title}
-                                        description={marker.description}
-                                        image={marker.image}
-                                        key={marker.id}
-                                    />
-                                })
                             }
-                        </MapView>
+                            title={"intbizthxd"}
+                            description={"จะเอ๋zxc"}
+                            image={require('../../../../public/assets/iconsMark/tree.png')}
+                        />*/}
+                        {
+                            fakeData.map(function (marker) {
+                                return <MapView.Marker
+                                    coordinate={{ latitude: marker.latlng.latitude, longitude: marker.latlng.longitude }}
+                                    title={marker.title}
+                                    description={marker.description}
+                                    image={marker.image}
+                                    key={marker.id}
+                                />
+                            })
+                        }
+
+                    </MapView>
 
                 </View>
             </Container>
