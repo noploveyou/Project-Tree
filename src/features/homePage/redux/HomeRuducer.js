@@ -1,4 +1,4 @@
-const homeReducer = (state={DataSource:[],Search:"",CheckDataSource: false},action) => {
+const homeReducer = (state={DataSource: [], Search: "", CheckDataSource: false},action) => {
     switch (action.type){
         case "SET_VALUE_SEARCH" : {
             state = {
