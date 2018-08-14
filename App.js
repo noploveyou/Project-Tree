@@ -8,14 +8,15 @@ import DetailScreen from  './src/features/DetailPage/screen/DetailScreen';
 
 export const RootStack = createStackNavigator({
     Home: {
-        screen: HomeScreen,
+        //screen: HomeScreen,
+        screen: HomeScreen
     },
     Detail: {
         screen: DetailScreen,
     },
 },{
     navigationOptions: {
-        header: null
+        header: null,
     }
 });
 

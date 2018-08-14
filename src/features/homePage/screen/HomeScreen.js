@@ -274,12 +274,14 @@ export default connect(
     (state) => ({
         DataSource : state.DataHomeScreen.DataSource,
         Search : state.DataHomeScreen.Search,
-        CheckData : state.DataHomeScreen.CheckDataSource
+        CheckData : state.DataHomeScreen.CheckDataSource,
+        MyPosition : state.DataHomeScreen.MyLocation
     }),
     (dispatch) => ({
         FetchData: (value) => {dispatch({type: "CALL_DATA_LIKE", payload: value})},
         FetchCheckData: (value) => {dispatch({type: "CALL_DATA_IS", payload: value})},
         SetValueSearch: (value) => {dispatch({type: "SET_VALUE_SEARCH", payload: value})},
-        SetValueCheckInDatabase : (value) => {dispatch({type: "CHECK_DATA", payload: value})}
+        SetValueCheckInDatabase : (value) => {dispatch({type: "CHECK_DATA", payload: value})},
+        GetLocation : (value) => {dispatch({type: "GET_POSITION", payload: value})}
     })
 )(HomeScreen);
