@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, Icon, Title ,
          Content, Text, icon ,View,Input,Item} from 'native-base';
-import { FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
+import {FlatList, ActivityIndicator, TouchableOpacity, BackHandler} from 'react-native';
 
 export default class Page2 extends Component {
     componentDidMount(){
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.navigate('Home'));
         this.SearchDataSource('');
+    }
+
+    componentWillUnmount() {
+        this.backHandler.remove();
     }
 
     constructor(props) {

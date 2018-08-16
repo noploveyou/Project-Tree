@@ -20,7 +20,6 @@ function fetchData(ValueKey) {
                 type: 'ADD_DATA_RESULTS',
                 payload : responseJson
             })
-
         })
         .catch(function (error) {
         })

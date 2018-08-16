@@ -14,6 +14,12 @@ export const RootStack = createStackNavigator({
     Detail: {
         screen: DetailScreen,
     },
+    Map: {
+        screen: MapScreen,
+    },
+    ListTree: {
+        screen: ListTreeScreen
+    },
 },{
     navigationOptions: {
         header: null,
@@ -24,13 +30,6 @@ export default createDrawerNavigator({
     'root': {
         screen: RootStack
     },
-    Map: {
-        screen: MapScreen
-    },
-    ListTree: {
-        screen: ListTreeScreen
-    },
-
 },{
     contentComponent: SideMenu,
     drawerWidth: 300
