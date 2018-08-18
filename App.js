@@ -5,6 +5,7 @@ import HomeScreen from './src/features/homePage/screen/HomeScreen';
 import ListTreeScreen from './src/features/listTreePage/screen/ListTreeScreen';
 import MapScreen from './src/features/mapPage/screen/MapScreen'
 import DetailScreen from  './src/features/DetailPage/screen/DetailScreen';
+import {NetInfo} from 'react-native';
 
 export const RootStack = createStackNavigator({
     Home: {
@@ -32,5 +33,5 @@ export default createDrawerNavigator({
     },
 },{
     contentComponent: SideMenu,
-    drawerWidth: 300
+    drawerWidth: 300,
 });

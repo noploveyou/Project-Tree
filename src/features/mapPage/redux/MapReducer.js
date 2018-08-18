@@ -8,6 +8,21 @@ const MapReducer = (state={},action) => {
         }
             break;
 
+        case "ADD_DATA_MAIN_MAP" : {
+            state = {
+                ...state,
+                DataOnMap: action.payload,
+            }
+        }
+            break;
+        case "ADD_DATA_MAIN_MAP.CHECK_SUCCESS" : {
+            state = {
+                ...state,
+                CheckDataOnMap: action.payload,
+            }
+        }
+            break;
+
         default:
     }
     return state;

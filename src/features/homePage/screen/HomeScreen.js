@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Thumbnail, Text, Content } from 'native-base';
-import { View, TouchableOpacity, KeyboardAvoidingView, StyleSheet, Keyboard, Alert } from 'react-native';
+import {View, TouchableOpacity, KeyboardAvoidingView, StyleSheet, Keyboard, Alert, BackHandler, NetInfo} from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import CommonList from '../../../common/components/CommonList';
 import HeaderForm from '../../../common/components/HeaderForm';
 import Icon from "react-native-vector-icons/FontAwesome";
+import CheckInternet from '../../../common/components/CheckNET';
+import NoInternetScreen from '../../../common/components/NoInternetScreen';
 
 class HomeScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
+        NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
+
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow); // เมื่อเปิด keyboard
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide); // เมื่อปิด keyboard
     }
@@ -89,6 +93,10 @@ class HomeScreen extends Component {
     }
 
     render() {
+        if(this.props.NET == false){
+            return <NoInternetScreen />
+        }
+
         return (
             <Container style={s.container}>
                 <Content scrollEnabled={false} /* ปิดการเลื่อนหน้า */>
@@ -272,6 +280,7 @@ const s = StyleSheet.create({
 
 export default connect(
     (state) => ({
+        NET : state.CheckNET.InternetIsConnect,         // ตรวจสอบ Internet
         DataSource : state.DataHomeScreen.DataSource,
         Search : state.DataHomeScreen.Search,
         CheckData : state.DataHomeScreen.CheckDataSource,
