@@ -5,11 +5,12 @@ import HomeScreen from './src/features/homePage/screen/HomeScreen';
 import ListTreeScreen from './src/features/listTreePage/screen/ListTreeScreen';
 import MapScreen from './src/features/mapPage/screen/MapScreen'
 import DetailScreen from  './src/features/DetailPage/screen/DetailScreen';
-import {NetInfo} from 'react-native';
+import SearchListMap from "./src/features/mapPage/screen/SearchListMapScreen";
+import SelectedMap from "./src/features/mapPage/screen/SelectedMapScreen";
+
 
 export const RootStack = createStackNavigator({
     Home: {
-        //screen: HomeScreen,
         screen: HomeScreen
     },
     Detail: {
@@ -18,9 +19,16 @@ export const RootStack = createStackNavigator({
     Map: {
         screen: MapScreen,
     },
+    SearchListMap: {
+        screen: SearchListMap
+    },
+    SelectedMap: {
+        screen: SelectedMap
+    },
     ListTree: {
         screen: ListTreeScreen
     },
+
 },{
     navigationOptions: {
         header: null,

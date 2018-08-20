@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../../common/constants";   // url Database
 import store from "../../../common/initialStore";
 
-function fetchData(ValueKey) {
+function fetchDataHomePage(ValueKey) {
     fetch(BASE_URL, {
             method: 'POST',
             headers: {
@@ -17,7 +17,7 @@ function fetchData(ValueKey) {
         .then((response) => response.json())
         .then((responseJson) => {
             store.dispatch({     // action
-                type: 'ADD_DATA_RESULTS',
+                type: 'ADD_DATA_RESULTS_HOMEPAGE',
                 payload : responseJson
             })
         })
@@ -26,4 +26,4 @@ function fetchData(ValueKey) {
 
 }
 
-module.exports = fetchData;
+module.exports = fetchDataHomePage;

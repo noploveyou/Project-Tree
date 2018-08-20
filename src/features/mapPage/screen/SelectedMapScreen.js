@@ -10,11 +10,11 @@ import images from '../constants/IconRequire';
 import CheckInternet from '../../../common/components/CheckNET';
 import SearchListMap from "./SearchListMapScreen";
 
-class MapScreen extends Component {
+class SelectedMapScreen extends Component {
     componentDidMount(){
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
-            () => this.props.navigation.navigate('Home'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
+            () => this.props.navigation.navigate('SearchListMap'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
         setTimeout(() => {this.props.FetchDataMap()}, 1000);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 1 วินาที
         navigator.geolocation.watchPosition(
             (position) => {
@@ -107,6 +107,16 @@ class MapScreen extends Component {
         }
     };
 
+    ResetRegion(){
+        this.setState({CameraInMap: {
+                latitude: 13.8770500,
+                longitude: 100.5901700,
+                latitudeDelta: 0.00490,  // น้อย =  Zoom
+                longitudeDelta: 0.00490, // น้อย =  Zoom
+            }
+        })
+    }
+
     render() {
         if(this.props.NET == false){    // หากปิด Internet
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
@@ -118,18 +128,10 @@ class MapScreen extends Component {
 
         return (
             <Container>
-                <View style={s.viewHeader}>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('SearchListMap')}
-                        style={s.btnSearch}
-                    >
-                        <Icon name={'md-search'} size={28} color={'white'} style={s.iconBtnSearch}/>
-                        <Text style={s.labelBtnSearch}> {`ค้นหา`} </Text>
-                    </TouchableOpacity>
-                </View>
                 <View style={s.container}>
                     <MapView style={[s.map,{width:this.state.MapWidth},{height:this.state.MapHeight}]}
                              initialRegion={this.state.CameraInMap}     // มุมกล้องเริ่มต้น
+                             provider="google"                  // โปรแกรมที่เลือกสำหรับการนำทาง
                              showsMyLocationButton={true}       // แสดงปุ่ม ตำแหน่งของผู้ใช้
                              showsUserLocation={true}           // แสดงตำแหน่งของผู้ใช้
                              onMapReady={() =>
@@ -139,38 +141,59 @@ class MapScreen extends Component {
                              loadingBackgroundColor='green'     // พื้นหลังรอโหลด
                              onPress={() =>  this.setState({ShowBTNNavigate: false})}
                     >
-                    {this.props.CheckFetchDataMap && this.state.HackRender ?
-                        this.props.DataMarker.map(function (mark, index) {
-                            return <MapView.Marker
-                                        onPress={() =>
-                                            this.SetLocationToNavigate(parseFloat(mark.ly), parseFloat(mark.lx))}
-                                        coordinate={{latitude: parseFloat(mark.ly), longitude: parseFloat(mark.lx)}}
-                                        title={mark.plantName}
-                                        description={mark.locationName}
-                                        image={images[mark.plantIcon]}
-                                        key={index}>
-                                    </MapView.Marker>
-                        }) : null
-                    }
-                        {
-
+                        {this.props.CheckFetchDataMap && this.state.HackRender ?
+                            this.props.DataMarker.map(function (mark, index) {
+                                return <MapView.Marker
+                                    onPress={() =>
+                                        this.SetLocationToNavigate(parseFloat(mark.ly), parseFloat(mark.lx))}
+                                    coordinate={{latitude: parseFloat(mark.ly), longitude: parseFloat(mark.lx)}}
+                                    title={mark.plantName}
+                                    description={mark.locationName}
+                                    image={images[mark.plantIcon]}
+                                    key={index}>
+                                </MapView.Marker>
+                            }) : null
                         }
                     </MapView>
                     {this.state.ShowBTNNavigate ?
-                        <View style={{marginBottom: 15}}>
-                            <TouchableOpacity onPress={() => this.handleGetDirections()} style={s.btnNavigate}>
-                                <Icon name={'md-navigate'} size={28} style={s.iconBtnNavigate}/>
-                                <Text style={s.labelBtnNavigate}> เส้นทาง </Text>
+                        <View style={s.viewHeader}>
+                            <TouchableOpacity
+                                onPress={() => this.ResetRegion()}
+                                style={s.btnResetCamera}
+                            >
+                                <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconBtnResetCamera}/>
+                                <Text style={s.labelBtnResetCamera}> {`รายละเอียด`} </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => this.ResetRegion()}
+                                style={s.btnResetCamera}
+                            >
+                                <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconBtnResetCamera}/>
+                                <Text style={s.labelBtnResetCamera}> {`รายละเอียด`} </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.navigate('SearchListMap')}
+                                style={s.btnSearch}
+                            >
+                                <Icon name={'md-search'} size={28} color={'#196F3D'} style={s.iconBtnSearch}/>
+                                <Text style={s.labelBtnSearch}> {`ใกล้ที่สุด`} </Text>
                             </TouchableOpacity>
                         </View> : null
                     }
+                    {/*<View style={{marginBottom: 15}}>
+                        <TouchableOpacity onPress={() => this.handleGetDirections()} style={s.btnNavigate}>
+                            <Icon name={'md-navigate'} size={28} style={s.iconBtnNavigate}/>
+                            <Text style={s.labelBtnNavigate}> เส้นทาง </Text>
+                        </TouchableOpacity>
+                    </View>*/}
                 </View>
+
             </Container>
         );
     }
 }
 
-MapScreen.navigationOptions = ({ navigation }) => ({
+SelectedMapScreen.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm btn={() => navigation.openDrawer()} iconName={'bars'} titlePage={'แผนที่พรรณไม้'} />
 });
 
@@ -188,23 +211,24 @@ const s = StyleSheet.create({
         right: 0,
     },
     viewHeader: {
-        marginBottom: 0,
         flexDirection: 'row',
         backgroundColor: '#196F3D',
         justifyContent: 'space-around'
     },
     btnResetCamera: {
-        width: 190,
-        height: 45,
+        width: 90,
+        height: 60,
         borderRadius: 5,
-        borderColor: '#F1C40F',
+        borderColor: '#FEF9E7',
         borderWidth: 1,
-        backgroundColor: '#196F3D',
-        flexDirection: 'row',
-        marginBottom: 5,
+        backgroundColor: '#FEF9E7',
+        flexDirection: 'column',
+        marginBottom: 10,
         marginLeft: 5,
-        flex: 2,
-        justifyContent: 'center'
+        marginTop: 10,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems:'center'
     },
     iconBtnResetCamera: {
         marginTop: 10,
@@ -212,24 +236,26 @@ const s = StyleSheet.create({
     labelBtnResetCamera: {
         fontSize: 14,
         fontWeight: 'bold',
-        marginLeft: 15,
+        marginLeft: 0,
         marginBottom: 7,
-        marginTop: 1,
-        color: 'white',
+        marginTop: 0,
+        color: '#196F3D',
     },
     btnSearch: {
-        width: 150,
-        height: 45,
+        width: 90,
+        height: 60,
         borderRadius: 5,
-        borderColor: '#F1C40F',
+        borderColor: '#FEF9E7',
         borderWidth: 1,
-        backgroundColor: '#196F3D',
-        flexDirection: 'row',
-        marginBottom: 5,
+        backgroundColor: '#FEF9E7',
+        flexDirection: 'column',
+        marginBottom: 10,
         marginLeft: 5,
         marginRight: 5,
+        marginTop: 10,
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems:'center'
     },
     iconBtnSearch: {
         marginTop: 10,
@@ -237,10 +263,10 @@ const s = StyleSheet.create({
     labelBtnSearch: {
         fontSize: 14,
         fontWeight: 'bold',
-        marginLeft: 10,
+        marginLeft: 0,
         marginBottom: 7,
-        marginTop: 10,
-        color: 'white'
+        marginTop: 0,
+        color: '#196F3D'
     },
     btnNavigate: {
         width: 140,
@@ -272,4 +298,4 @@ export default connect(
         GetLocation : (value) => {dispatch({type: "GET_POSITION", payload: value})},    // รับตำแหน่งผู้ใช้
         FetchDataMap : (value) => {dispatch({type: "CALL_DATA_MAIN_MAP", payload: value})}      // เรียกฐานข้อมูล
     })
-)(MapScreen);
+)(SelectedMapScreen);

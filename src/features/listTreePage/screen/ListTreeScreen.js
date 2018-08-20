@@ -3,7 +3,7 @@ import { Container, Header, Left, Body, Right, Button, Icon, Title ,
          Content, Text, icon ,View,Input,Item} from 'native-base';
 import {FlatList, ActivityIndicator, TouchableOpacity, BackHandler} from 'react-native';
 
-export default class Page2 extends Component {
+export default class ListTreeScreen extends Component {
     componentDidMount(){
         this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.navigate('Home'));
         this.SearchDataSource('');

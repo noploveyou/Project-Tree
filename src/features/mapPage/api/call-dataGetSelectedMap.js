@@ -10,24 +10,24 @@ function fetchDataMAP() {
             },
             body: JSON.stringify({
                 plantName: "",
-                check: "Map"           // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
+                check: "SearchListSelectedMAP"           // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
             })
         }
     )
         .then((response) => response.json())
         .then((responseJson) => {
             store.dispatch({     // action
-                type: 'ADD_DATA_MAIN_MAP',
+                type: 'ADD_DATA_SELECTED_MAP',
                 payload : responseJson
             });
             store.dispatch({     // action
-                type: 'CHECK_DATA_MAIN_MAP',
+                type: 'CHECK_DATA_SELECTED_MAP',
                 payload : true
             })
         })
         .catch(function (error) {
             store.dispatch({     // action
-                type: 'CHECK_DATA_MAIN_MAP',
+                type: 'CHECK_DATA_SELECTED_MAP',
                 payload : false
             })
         })
