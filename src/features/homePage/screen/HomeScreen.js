@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Thumbnail, Text, Content } from 'native-base';
-import { View, TouchableOpacity, KeyboardAvoidingView, StyleSheet, Keyboard, Alert } from 'react-native';
+import {View, TouchableOpacity, KeyboardAvoidingView, StyleSheet, Keyboard, Alert, BackHandler, NetInfo} from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import CommonList from '../../../common/components/CommonList';
 import HeaderForm from '../../../common/components/HeaderForm';
 import Icon from "react-native-vector-icons/FontAwesome";
+import CheckInternet from '../../../common/components/CheckNET';
+import NoInternetScreen from '../../../common/components/NoInternetScreen';
 
 class HomeScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
-        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow); // เมื่อเปิด keyboard
-        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide); // เมื่อปิด keyboard
+        NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
+    }
+
+    componentWillUnmount() {
+        this.props.SetValueSearchHomePage('');
     }
 
     constructor(props) {
@@ -26,29 +31,34 @@ class HomeScreen extends Component {
     }
 
     _keyboardDidShow = () => {
-        this.setState({ShowLogoTitle: false}); // เมื่อเปิด keyboard
+        this.setState({ShowLogoTitle: false}); // เมื่อเปิด keyboard ซ่อน Logo
         this.SearchDataSource(this.state.ValueInput); // ใช้ฟังก์ชัน เช็คค่าว่าง
     };
 
     _keyboardDidHide = () => {
-        this.setState({ShowLogoTitle: true, ListResults: true}); // เมื่อปิด keyboard ปิด ListResults
+        this.setState({ShowLogoTitle: true, ListResults: true}); // เมื่อปิด keyboard ปิด ListResults แสดง Logo
     };
 
     SearchDataSource (value) {
-        this.props.SetValueCheckInDatabase(false);   // ค่า CheckData ว่าค่าตรงหรือไม่ false = หาค่าใน Data ไม่เจอ
+
+
+        this.props.SetValueCheckInDatabaseHomePage(false);   // ค่า CheckData ว่าค่าตรงหรือไม่ false = หาค่าใน Data ไม่เจอ
         this.setState({ValueInput: value});
         if(value === "") {  // เช็คค่าใน Input เป็นว่างใช่หรือไม่
             this.setState({ListResults: true, ShowButtonClear: false});     // ปิด ListSuggest, ปุ่ม x
             this.setState({ValueInputEmpty: true});     // set Input = true --> ว่าง
 
+
         }else{
             this.setState({ListResults: false, ShowButtonClear: true});
             this.setState({ValueInputEmpty: false});
             // Action
-            this.props.SetValueSearch(value);
-            this.props.FetchData();  // where Like
-            this.props.FetchCheckData();    // เช็คค่า true, false จาก ฐานข้อมูล (เช็คค่าว่ามีในฐานข้อมูลหรือไม่)
+            this.props.SetValueSearchHomePage(value);
+            this.props.FetchDataHomePage();  // where Like
+            this.props.FetchCheckDataHomePage();    // เช็คค่า true, false จาก ฐานข้อมูล (เช็คค่าว่ามีในฐานข้อมูลหรือไม่)
+
         }
+
     }
 
     NavToDetail (){ // ปุ่มค้นหา
@@ -84,11 +94,15 @@ class HomeScreen extends Component {
     }
 
     BtnClear(){ // ปุ่ม x (ลบ)
-        this.props.SetValueCheckInDatabase(false);  // ค่า CheckData ว่าค่าตรงหรือไม่ false = หาค่าใน Data ไม่เจอ
+        this.props.SetValueCheckInDatabaseHomePage(false);  // ค่า CheckData ว่าค่าตรงหรือไม่ false = หาค่าใน Data ไม่เจอ
         this.setState({ValueInput: "", ListResults: true, ShowButtonClear: false, ValueInputEmpty: true});
     }
 
     render() {
+        if(this.props.NET == false){
+            return <NoInternetScreen />
+        }
+
         return (
             <Container style={s.container}>
                 <Content scrollEnabled={false} /* ปิดการเลื่อนหน้า */>
@@ -113,12 +127,27 @@ class HomeScreen extends Component {
                             [s.SizeInputDecrease, this.state.ShowLogoTitle ? null : s.SizeInputMinimum]}>
                             <Autocomplete underlineColorAndroid='transparent'
                                 style={s.inputAutoCP}
-                                autoCapitalize="none"
-                                autoCorrect={true}
+                                onFocus={() => [
+                                    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow',
+                                        this._keyboardDidShow), // เมื่อเปิด keyboard
+                                    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide',
+                                        this._keyboardDidHide) // เมื่อปิด keyboard
+                                ]}
+                                onBlur={() => [
+                                    // เมื่อปิด keyboard ปิด ListResults แสดง Logo
+                                    this.setState({ShowLogoTitle: true, ListResults: true}),
+                                    // ลบ Listener ** หากไม่ปิด การทำงานนี้จะทำงานที่ Feature อื่นด้วย
+                                    this.keyboardDidShowListener.remove(), this.keyboardDidHideListener.remove(),
+                                ]}
                                 data={this.props.DataSource}                        
                                 defaultValue={this.state.ValueInput}
                                 onChangeText={(value) => this.SearchDataSource(value)}
-                                onSubmitEditing={() => Keyboard.dismiss()}
+                                onSubmitEditing={() => [
+                                    // เมื่อปิด keyboard ปิด ListResults แสดง Logo
+                                    this.setState({ShowLogoTitle: true, ListResults: true}),
+                                    // ลบ Listener ** หากไม่ปิด การทำงานนี้จะทำงานที่ Feature อื่นด้วย
+                                    this.keyboardDidShowListener.remove(), this.keyboardDidHideListener.remove()
+                                ]}
                                 placeholder="กรุณากรอกชื่อพรรณไม้"
                                 placeholderTextColor='gray'
                                 hideResults={this.state.ListResults}
@@ -128,8 +157,8 @@ class HomeScreen extends Component {
                                     <CommonList
                                         onPress={() =>
                                             [this.setState({ValueInputEmpty: false,ListResults: true,ValueInput:plantName}),
-                                                this.props.SetValueSearch(plantName),this.props.SetValueCheckInDatabase(true),
-                                                Keyboard.dismiss()
+                                                this.props.SetValueSearchHomePage(plantName),this.props.SetValueCheckInDatabaseHomePage(true),
+                                                Keyboard.dismiss(),this.setState({ShowLogoTitle: true, ListResults: true})
                                             ]}
                                         style={s.labelListSuggest}
                                         label={plantName}
@@ -272,16 +301,15 @@ const s = StyleSheet.create({
 
 export default connect(
     (state) => ({
+        NET : state.CheckNET.InternetIsConnect,         // ตรวจสอบ Internet
         DataSource : state.DataHomeScreen.DataSource,
         Search : state.DataHomeScreen.Search,
-        CheckData : state.DataHomeScreen.CheckDataSource,
-        MyPosition : state.DataHomeScreen.MyLocation
+        CheckData : state.DataHomeScreen.CheckDataSource
     }),
     (dispatch) => ({
-        FetchData: (value) => {dispatch({type: "CALL_DATA_LIKE", payload: value})},
-        FetchCheckData: (value) => {dispatch({type: "CALL_DATA_IS", payload: value})},
-        SetValueSearch: (value) => {dispatch({type: "SET_VALUE_SEARCH", payload: value})},
-        SetValueCheckInDatabase : (value) => {dispatch({type: "CHECK_DATA", payload: value})},
-        GetLocation : (value) => {dispatch({type: "GET_POSITION", payload: value})}
+        FetchDataHomePage: (value) => {dispatch({type: "CALL_DATA_HOMEPAGE_LIKE", payload: value})},
+        FetchCheckDataHomePage: (value) => {dispatch({type: "CALL_DATA_HOMEPAGE_IS", payload: value})},
+        SetValueSearchHomePage: (value) => {dispatch({type: "SET_VALUE_HOME_SEARCH", payload: value})},
+        SetValueCheckInDatabaseHomePage : (value) => {dispatch({type: "CHECK_DATA_RESULTS_HOMEPAGE", payload: value})}
     })
 )(HomeScreen);

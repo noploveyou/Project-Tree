@@ -159,10 +159,10 @@ export default connect(
         MyPosition : state.DataMapScreen.MyLocation
     }),
     (dispatch) => ({
-        FetchData: (value) => {dispatch({type: "CALL_DATA_LIKE", payload: value})},
-        FetchCheckData: (value) => {dispatch({type: "CALL_DATA_IS", payload: value})},
-        SetValueSearch: (value) => {dispatch({type: "SET_VALUE_SEARCH", payload: value})},
-        SetValueCheckInDatabase : (value) => {dispatch({type: "CHECK_DATA", payload: value})},
+        FetchDataHomePage: (value) => {dispatch({type: "CALL_DATA_LIKE", payload: value})},
+        FetchCheckDataHomePage: (value) => {dispatch({type: "CALL_DATA_IS", payload: value})},
+        SetValueSearchHomePage: (value) => {dispatch({type: "SET_VALUE_SEARCH", payload: value})},
+        SetValueCheckInDatabaseHomePage : (value) => {dispatch({type: "CHECK_DATA", payload: value})},
         GetLocation : (value) => {dispatch({type: "GET_POSITION", payload: value})}
     })
 )(AnimatedMarkers);

@@ -1,23 +1,23 @@
 import { takeEvery, put, all, select } from "redux-saga/effects";
-import fetchData from '../api/call-database';
-import fetchCheckData from "../api/check-database";
+import fetchDataHomePage from '../api/call-database';
+import fetchCheckDataHomePage from "../api/check-database";
 
 const getValueSearch = (state) => state.DataHomeScreen.Search;  // รับค่าจาก state
 
 function* callDataLike() {  // เรียกฐานข้อมูลแบบ where like
     const ValueKey = yield select(getValueSearch);
-    fetchData(ValueKey);
+    fetchDataHomePage(ValueKey);
 }
 
 function* callDataIs() {    // เรียกฐานข้อมูลแบบ =
     const CheckValueKey = yield select(getValueSearch);
-    fetchCheckData(CheckValueKey);
+    fetchCheckDataHomePage(CheckValueKey);
 }
 
 //ตรวจจับ action types
 export function* watchUpdateValueSearch() {
-    yield takeEvery('CALL_DATA_IS', callDataIs);        //จับ Type 'CALL_DATA_IS'
-    yield takeEvery('CALL_DATA_LIKE', callDataLike);    //จับ Type 'CALL_DATA_LIKE'
+    yield takeEvery('CALL_DATA_HOMEPAGE_IS', callDataIs);        //จับ Type 'CALL_DATA_IS'
+    yield takeEvery('CALL_DATA_HOMEPAGE_LIKE', callDataLike);    //จับ Type 'CALL_DATA_LIKE'
 }
 
 //รวม Saga ไว้

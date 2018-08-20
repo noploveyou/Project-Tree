@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../../common/constants";   // url Database
 import store from "../../../common/initialStore";
 
-function fetchCheckData(CheckValueKey) {
+function fetchCheckDataHomePage(CheckValueKey) {
     fetch(BASE_URL, {
         method: 'POST',
         headers: {
@@ -19,12 +19,12 @@ function fetchCheckData(CheckValueKey) {
             // เช็คค่า ถ้ามีจะเป็น 1
             if (responseJson.length > 0) {
                 store.dispatch({    // action
-                    type: 'CHECK_DATA',
+                    type: 'CHECK_DATA_RESULTS_HOMEPAGE',
                     payload: true
                 });
             } else {
                 store.dispatch({    // action
-                    type: 'CHECK_DATA',
+                    type: 'CHECK_DATA_RESULTS_HOMEPAGE',
                     payload: false
                 });
             }
@@ -34,4 +34,4 @@ function fetchCheckData(CheckValueKey) {
         })
 }
 
-module.exports = fetchCheckData;
+module.exports = fetchCheckDataHomePage;

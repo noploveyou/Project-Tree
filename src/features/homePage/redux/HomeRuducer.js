@@ -1,6 +1,6 @@
 const homeReducer = (state={DataSource: [], Search: "", CheckDataSource: false},action) => {
     switch (action.type){
-        case "SET_VALUE_SEARCH" : {
+        case "SET_VALUE_HOME_SEARCH" : {
             state = {
                 ...state,
                 Search: action.payload
@@ -8,7 +8,7 @@ const homeReducer = (state={DataSource: [], Search: "", CheckDataSource: false},
         }
             break;
 
-        case "ADD_DATA_RESULTS" : {
+        case "ADD_DATA_RESULTS_HOMEPAGE" : {
             state = {
                 ...state,
                 DataSource: action.payload,
@@ -16,7 +16,7 @@ const homeReducer = (state={DataSource: [], Search: "", CheckDataSource: false},
         }
             break;
 
-        case "CHECK_DATA" : {
+        case "CHECK_DATA_RESULTS_HOMEPAGE" : {
             state = {
                 ...state,
                 CheckDataSource: action.payload,

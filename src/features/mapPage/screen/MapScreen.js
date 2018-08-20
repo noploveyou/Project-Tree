@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
-import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
-import { StyleSheet, View, Alert, Platform, TouchableOpacity, Text} from 'react-native';
-
-import MapView, {PROVIDER_GOOGLE, Marker, AnimatedRegion} from 'react-native-maps';
+import { Container } from 'native-base';
+import { Alert, BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Icon from "react-native-vector-icons/Ionicons";
+import MapView from 'react-native-maps';
 import getDirections from "react-native-google-maps-directions";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+import HeaderForm from '../../../common/components/HeaderForm';
+import images from '../constants/IconRequire';
+import CheckInternet from '../../../common/components/CheckNET';
+import SearchListMap from "./SearchListMapScreen";
 
 class MapScreen extends Component {
     componentDidMount(){
+        NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress',
+            () => this.props.navigation.navigate('Home'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
+        setTimeout(() => {this.props.FetchDataMap()}, 1000);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 1 วินาที
         navigator.geolocation.watchPosition(
             (position) => {
                 let newLat = parseFloat(position.coords.latitude); //คำสั่งsetที่อยุ่ตามเครื่อง +แปรงค่าเป้นทศนิยม
@@ -29,183 +37,239 @@ class MapScreen extends Component {
                 ],
                 { cancelable: false }
             ),
-            {timeout: 0, distanceFilter: 0}
+            {timeout: 0, distanceFilter: 50} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
         );
     }
 
-    componentWillMount() {
-        navigator.geolocation.clearWatch(this.watchID)
+    componentWillUnmount() {
+        this.backHandler.remove();
+        navigator.geolocation.clearWatch(this.props.GetLocation(null)); // set value MyLocation = null in store
     }
 
-    watchID: ? number = null;
+    CheckInternetRender = () => {           // ทำงานเมื่อ MAP พร้อมใช้งาน (หลังปิด - เปิด Internet)
+        setTimeout(() => {
+            if(this.props.NET){                 // Internet เปิดใช้งาน
+                this.props.FetchDataMap();      // เรียกฐานข้อมูลอีกครั้ง หลังจาก เปิด Internet
+                switch (this.state.MapHeight) {     // Hack MAP เพื่อแสดงปุ่ม MyLocation
+                    case '100%':
+                        this.setState({MapHeight: '101%', ShowBTNNavigate: false});
+                        break;
+
+                    case '101%':
+                        this.setState({MapHeight: '100%', ShowBTNNavigate: false});
+                        break;
+
+                    default:
+                }
+            }
+        }, 5000)    // เริ่มทำงานหลังจาก 5 วินาที
+    };
 
     constructor(props){
         super(props);
         this.state ={
-            coordinate: new AnimatedRegion({
-                latitude: 1000,
-                longitude: 1000,
-            }),
-            MapWidth: 1
+            CameraInMap: {
+                latitude: 13.8770500,
+                longitude: 100.5901700,
+                latitudeDelta: 0.000013,  // น้อย =  Zoom
+                longitudeDelta: 0.000013, // น้อย =  Zoom
+            },
+            MapWidth: 1,        // Hack
+            MapHeight: '100%',  // Hack
+            SetLatitudeToNavigate: null,    // Latitude  ที่ปลายทาง
+            SetLongitudeToNavigate: null,   // Longitude ที่ปลายทาง
+            ShowBTNNavigate: false,     // แสดงปุ่ม นำเส้นทาง (เปิด Google MAP)
+            HackRender: false,          // สำหรับเช็ค กัน Error (ให้ MAP พร้อม และ Hack เสร็จก่อนค่อย Get Mark)
         }
     }
 
-
+    handleGetDirections = () => { //ฟังก์ชัน นำทาง (เปิด Google MAP)
+        try {   // เปิด GPS
+            const data = {
+                source: {      //จุดเริ่มต้น ตำแหน่งผู้ใช้
+                    latitude:  this.props.MyPosition.latitude,
+                    longitude: this.props.MyPosition.longitude
+                },
+                destination: {  //ปลายทาง
+                    latitude: this.state.SetLatitudeToNavigate,
+                    longitude: this.state.SetLongitudeToNavigate,
+                }
+            };
+            getDirections(data)
+        }catch (positionNull) {     // ปิด GPS
+            const data = {
+                destination: {      // ปลายทาง
+                    latitude: this.state.SetLatitudeToNavigate,
+                    longitude: this.state.SetLongitudeToNavigate,
+                }
+            };
+            getDirections(data)
+        }
+    };
 
     render() {
-        const fakeData = [{
-            title: 'Sweet Maple',
-            id: 1,
-            description: 'Sweet Maple is a laid-back and unpretentious neighborhood restaurant, coffeehouse and meeting place located in the Lower Pacific Heights neighborhood of San Francisco.',
-            image: require('../../../../public/assets/iconsMark/tree.png'),
-            latlng: {
-                latitude: 13.7880,
-                longitude: 100.6976,
-                latitudeDelta: 0,
-                longitudeDelta: 0
-            }
-        },
-        {
-            title: 'Sweet Lime Thai Cuisine',
-            id: 2,
-            description: 'Thai Food has a lot of peanuts!',
-            image: require('../../../../public/assets/iconsMark/tree.png'),
-            latlng: {
-                latitude: 13.7810,
-                longitude: 100.6976,
-                latitudeDelta: 0,
-                longitudeDelta: 0
-            }
+        if(this.props.NET == false){    // หากปิด Internet
+            return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }
-        ];
 
-        handleGetDirections = (lat,lng) => { //ฟังก์ชันแสดงตำแหน่งในแผนที่อยู่ 2 ตำแหน่ง
-            try {
-                const data = {
-                    source: {      //จุดที่ 1
-                        latitude:  this.props.MyPosition.latitude,
-                        longitude: this.props.MyPosition.longitude
-                    },
-                    destination: { //จุดที่ 2
-                        latitude: lat,
-                        longitude: lng,
-                    },
-                    params: [
-                        {
-                            key: "travelmode",
-                            value: "driving"        // may be "walking", "bicycling" or "transit" as well
-                        },
-                        {
-                            key: "dir_action",
-                            value: "navigate"       // this instantly initializes navigation using the given travel mode
-                        }
-                    ]
-                };
-                getDirections(data)
-            }catch (positionNull) {
-                const data = {
-                    destination: {
-                        latitude: lat,
-                        longitude: lng,
-                    },
-                    params: [
-                        {
-                            key: "travelmode",
-                            value: "driving"        // may be "walking", "bicycling" or "transit" as well
-                        },
-                        {
-                            key: "dir_action",
-                            value: "navigate"       // this instantly initializes navigation using the given travel mode
-                        }
-                    ]
-                };
-                getDirections(data)
-            }
+        SetLocationToNavigate = (lat, lng) => {
+            this.setState({SetLatitudeToNavigate: lat, SetLongitudeToNavigate: lng, ShowBTNNavigate: true});
         };
 
         return (
             <Container>
-                <Header style={{backgroundColor:'#196F3D'}}>
-                    <Left>
-                        <Button transparent  onPress={()=>this.props.navigation.openDrawer()}>
-                            <Icon name={'menu'} />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title> {'แผนที่พรรณไม้'} </Title>
-                    </Body>
-                    <Right>
-
-                    </Right>
-                </Header>
-
-
-                <View style={styles.container}>
-                    <MapView style={[styles.map,{width:this.state.MapWidth}]}
-                             initialRegion={
-                                 //Camera Positions Start
-                                 {
-                                     latitude: 13.7859,
-                                     longitude: 100.6976,
-                                     latitudeDelta: 0.0020,  // น้อย =  Zoom
-                                     longitudeDelta: 0.0020, // น้อย =  Zoom
-                                 }
-                             }
-                             provider="google"
-                            showsMyLocationButton={true}
-                            showsUserLocation={true}
-                            onMapReady={() => this.setState({ MapWidth: - 1 })}
-                             loadingEnabled={true}
-                             loadingIndicatorColor='yellow'
-                             loadingBackgroundColor='green'
-
-
+                <View style={s.viewHeader}>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('SearchListMap')}
+                        style={s.btnSearch}
                     >
+                        <Icon name={'md-search'} size={28} color={'white'} style={s.iconBtnSearch}/>
+                        <Text style={s.labelBtnSearch}> {`ค้นหา`} </Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={s.container}>
+                    <MapView style={[s.map,{width:this.state.MapWidth},{height:this.state.MapHeight}]}
+                             initialRegion={this.state.CameraInMap}     // มุมกล้องเริ่มต้น
+                             showsMyLocationButton={true}       // แสดงปุ่ม ตำแหน่งของผู้ใช้
+                             showsUserLocation={true}           // แสดงตำแหน่งของผู้ใช้
+                             onMapReady={() =>
+                                 [this.setState({ MapWidth: - 1, HackRender: true }), this.CheckInternetRender()]}
+                             loadingEnabled={true}              // เปิดใช้การรอโหลด
+                             loadingIndicatorColor='yellow'     // Loading สีเหลือง
+                             loadingBackgroundColor='green'     // พื้นหลังรอโหลด
+                             onPress={() =>  this.setState({ShowBTNNavigate: false})}
+                    >
+                    {this.props.CheckFetchDataMap && this.state.HackRender ?
+                        this.props.DataMarker.map(function (mark, index) {
+                            return <MapView.Marker
+                                        onPress={() =>
+                                            this.SetLocationToNavigate(parseFloat(mark.ly), parseFloat(mark.lx))}
+                                        coordinate={{latitude: parseFloat(mark.ly), longitude: parseFloat(mark.lx)}}
+                                        title={mark.plantName}
+                                        description={mark.locationName}
+                                        image={images[mark.plantIcon]}
+                                        key={index}>
+                                    </MapView.Marker>
+                        }) : null
+                    }
                         {
-                            fakeData.map(function (marker) {
-                                return <MapView.Marker  onPress={() => handleGetDirections(marker.latlng.latitude,marker.latlng.longitude)}
-                                    coordinate={{ latitude: marker.latlng.latitude, longitude: marker.latlng.longitude }}
-                                    title={marker.title}
-                                    description={marker.description}
-                                    image={marker.image}
-                                    key={marker.id}
-                                />
-                            })
+
                         }
                     </MapView>
+                    {this.state.ShowBTNNavigate ?
+                        <View style={{marginBottom: 15}}>
+                            <TouchableOpacity onPress={() => this.handleGetDirections()} style={s.btnNavigate}>
+                                <Icon name={'md-navigate'} size={28} style={s.iconBtnNavigate}/>
+                                <Text style={s.labelBtnNavigate}> เส้นทาง </Text>
+                            </TouchableOpacity>
+                        </View> : null
+                    }
                 </View>
             </Container>
         );
     }
 }
 
-const styles = StyleSheet.create({
+MapScreen.navigationOptions = ({ navigation }) => ({
+    header: <HeaderForm btn={() => navigation.openDrawer()} iconName={'bars'} titlePage={'แผนที่พรรณไม้'} />
+});
+
+const s = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
         justifyContent: 'flex-end',
-        alignItems: 'flex-end',
+        alignItems: 'center',
     },
     map: {
         position: 'absolute',
         top: 0,
-        left:0,
-        bottom:0,
-        right:0
+        left: 0,
+        bottom: 0,
+        right: 0,
     },
+    viewHeader: {
+        marginBottom: 0,
+        flexDirection: 'row',
+        backgroundColor: '#196F3D',
+        justifyContent: 'space-around'
+    },
+    btnResetCamera: {
+        width: 190,
+        height: 45,
+        borderRadius: 5,
+        borderColor: '#F1C40F',
+        borderWidth: 1,
+        backgroundColor: '#196F3D',
+        flexDirection: 'row',
+        marginBottom: 5,
+        marginLeft: 5,
+        flex: 2,
+        justifyContent: 'center'
+    },
+    iconBtnResetCamera: {
+        marginTop: 10,
+    },
+    labelBtnResetCamera: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginLeft: 15,
+        marginBottom: 7,
+        marginTop: 1,
+        color: 'white',
+    },
+    btnSearch: {
+        width: 150,
+        height: 45,
+        borderRadius: 5,
+        borderColor: '#F1C40F',
+        borderWidth: 1,
+        backgroundColor: '#196F3D',
+        flexDirection: 'row',
+        marginBottom: 5,
+        marginLeft: 5,
+        marginRight: 5,
+        flex: 1,
+        justifyContent: 'center'
+    },
+    iconBtnSearch: {
+        marginTop: 10,
+    },
+    labelBtnSearch: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginLeft: 10,
+        marginBottom: 7,
+        marginTop: 10,
+        color: 'white'
+    },
+    btnNavigate: {
+        width: 140,
+        height: 50,
+        borderRadius: 50,
+        backgroundColor:'yellow',
+        flexDirection: 'row'
+    },
+    iconBtnNavigate: {
+        marginTop: 10,
+        marginLeft: 18
+    },
+    labelBtnNavigate: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 10,
+        marginTop: 10
+    }
 });
 
 export default connect(
     (state) => ({
-        DataSource : state.DataHomeScreen.DataSource,
-        Search : state.DataHomeScreen.Search,
-        CheckData : state.DataHomeScreen.CheckDataSource,
-        MyPosition : state.DataMapScreen.MyLocation,
+        NET : state.CheckNET.InternetIsConnect,         // ตรวจสอบ Internet
+        MyPosition : state.DataMapScreen.MyLocation,    // ตำแหน่งผู้ใช้
+        DataMarker : state.DataMapScreen.DataOnMap,     // ตำแหน่ง Mark ต้นไม้
+        CheckFetchDataMap : state.DataMapScreen.CheckDataOnMap      // ตรวจสอบว่า โหลดข้อมูลเสร็จหรือไม่
     }),
     (dispatch) => ({
-        FetchData: (value) => {dispatch({type: "CALL_DATA_LIKE", payload: value})},
-        FetchCheckData: (value) => {dispatch({type: "CALL_DATA_IS", payload: value})},
-        SetValueSearch: (value) => {dispatch({type: "SET_VALUE_SEARCH", payload: value})},
-        SetValueCheckInDatabase : (value) => {dispatch({type: "CHECK_DATA", payload: value})},
-        GetLocation : (value) => {dispatch({type: "GET_POSITION", payload: value})}
+        GetLocation : (value) => {dispatch({type: "GET_POSITION", payload: value})},    // รับตำแหน่งผู้ใช้
+        FetchDataMap : (value) => {dispatch({type: "CALL_DATA_MAIN_MAP", payload: value})}      // เรียกฐานข้อมูล
     })
 )(MapScreen);

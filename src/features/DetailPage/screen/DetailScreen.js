@@ -33,7 +33,7 @@ export default connect(
         Search : state.DataHomeScreen.Search
     }),
     (dispatch) => ({
-        FetchData: (value) => {dispatch({type: "CALL_DATA_LIKE", payload: value})},
-        SetValueSearch: (value) => {dispatch({type: "SET_VALUE_SEARCH", payload: value})}
+        FetchDataHomePage: (value) => {dispatch({type: "CALL_DATA_LIKE", payload: value})},
+        SetValueSearchHomePage: (value) => {dispatch({type: "SET_VALUE_SEARCH", payload: value})}
     })
 )(DetailScreen);
