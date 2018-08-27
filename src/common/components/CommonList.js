@@ -4,7 +4,7 @@ import { Text, View } from "native-base";
 
 class CommonList extends React.PureComponent {
     render() {
-        const textColor = this.props.selected ? "red" : "black";
+        //const textColor = this.props.selected ? "red" : "black";
 
         return (
             <View>

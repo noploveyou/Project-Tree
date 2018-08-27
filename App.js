@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
+import { createDrawerNavigator, createStackNavigator, NavigationActions } from 'react-navigation';
 import SideMenu from '../ProjectTrees/src/common/SideMenu';
 import HomeScreen from './src/features/homePage/screen/HomeScreen';
 import ListTreeScreen from './src/features/listTreePage/screen/ListTreeScreen';
-import MapScreen from './src/features/mapPage/screen/MapScreen'
+import MapScreen from './src/features/mapPage/screen/MapScreen-StepOne'
 import DetailScreen from  './src/features/DetailPage/screen/DetailScreen';
-import SearchListMap from "./src/features/mapPage/screen/SearchListMapScreen";
-import SelectedMap from "./src/features/mapPage/screen/SelectedMapScreen";
+import SearchListMap from "./src/features/mapPage/screen/ListMapScreen-StepTwo";
+import SelectedMap from "./src/features/mapPage/screen/MapScreen-StepThree";
 
 
 export const RootStack = createStackNavigator({

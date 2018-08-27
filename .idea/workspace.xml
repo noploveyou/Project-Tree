@@ -2,24 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="86e55c78-5173-458a-bbe3-a56a31a074b1" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetListMAP.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetSelectedMap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/mapPage/screen/SearchListMapScreen.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/mapPage/screen/SelectedMapScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/components/GoogleMAP.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AnimatedMarkers.js" beforeDir="false" afterPath="$PROJECT_DIR$/AnimatedMarkers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/DetailPage/screen/DetailScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/DetailPage/screen/DetailScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/components/CheckNET.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/components/CheckNET.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/components/CommonList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/components/CommonList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/components/HeaderForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/components/HeaderForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/components/NoInternetScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/components/NoInternetScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/rootReducers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/rootReducers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/homePage/api/call-database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/homePage/api/call-database.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/homePage/api/check-database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/homePage/api/check-database.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/homePage/redux/HomeRuducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/homePage/redux/HomeRuducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/homePage/redux/Saga.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/homePage/redux/Saga.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/homePage/screen/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/homePage/screen/HomeScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/listTreePage/screen/ListTreeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/listTreePage/screen/ListTreeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetMap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetListMAP.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/mapPage/api/call-database-step-two.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/mapPage/api/call-database-step-one.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetSelectedMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/mapPage/api/call-database-step-three.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/mapPage/redux/MapReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/mapPage/redux/MapReducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/mapPage/redux/Saga.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/mapPage/redux/Saga.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/mapPage/screen/MapScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/mapPage/screen/MapScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/mapPage/screen/MapScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/mapPage/screen/MapScreen-StepOne.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/mapPage/screen/SearchListMapScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/mapPage/screen/ListMapScreen-StepTwo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/mapPage/screen/SelectedMapScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/mapPage/screen/MapScreen-StepThree.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -83,88 +91,40 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MapScreen.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/features/mapPage/screen/MapScreen.js">
+      <file leaf-file-name="DBCheck.php" pinned="false" current-in-tab="true">
+        <entry file="file://C:/xampp/htdocs/DBCheck.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+            <state relative-caret-position="17">
+              <caret line="24" column="48" selection-start-line="24" selection-start-column="48" selection-end-line="24" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MapScreen-StepOne.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/features/mapPage/screen/MapScreen-StepOne.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="279">
+              <caret line="238" column="56" selection-start-line="238" selection-start-column="56" selection-end-line="238" selection-end-column="72" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
-                <element signature="e#8184#10031#0" />
+                <element signature="n#!!block;n#componentDidMount#0;n#MapScreenStepOne#0" />
+                <element signature="n#!!block;n#componentWillUnmount#0;n#MapScreenStepOne#0" />
+                <element signature="n#!!block;n#constructor#0;n#MapScreenStepOne#0" />
+                <element signature="n#!!block;n#render#0;n#MapScreenStepOne#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HomeScreen.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/features/homePage/screen/HomeScreen.js">
+      <file leaf-file-name="MapScreen-StepThree.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/features/mapPage/screen/MapScreen-StepThree.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="138" column="76" selection-start-line="138" selection-start-column="76" selection-end-line="138" selection-end-column="76" />
+            <state relative-caret-position="203">
+              <caret line="124" column="70" lean-forward="true" selection-start-line="124" selection-start-column="70" selection-end-line="124" selection-end-column="70" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
-                <element signature="n#!!block;n#NavToDetail#0;n#HomeScreen#0" />
-                <element signature="n#!!block;n#BtnClear#0;n#HomeScreen#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="constants.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/common/constants.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="34" selection-start-column="34" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SearchListMapScreen.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/features/mapPage/screen/SearchListMapScreen.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2278">
-              <caret line="138" column="48" selection-start-line="138" selection-start-column="48" selection-end-line="138" selection-end-column="48" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Saga.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/features/mapPage/redux/Saga.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="call-dataGetListMAP.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/features/mapPage/api/call-dataGetListMAP.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="call-dataGetMap.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/features/mapPage/api/call-dataGetMap.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
+                <element signature="n#!!block;n#componentDidMount#0;n#MapScreenStepThree#0" />
+                <element signature="n#!!block;n#componentWillUnmount#0;n#MapScreenStepThree#0" />
               </folding>
             </state>
           </provider>
@@ -183,6 +143,8 @@
       <find>HackRender</find>
       <find>CheckFetchDataMap</find>
       <find>MapS</find>
+      <find>DisableListResults</find>
+      <find>SetSearchListMap</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -191,23 +153,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/features/HomeScreen/redux/Redux.js" />
-        <option value="$PROJECT_DIR$/src/features/HomeScreen/redux/UserRuducer.js" />
-        <option value="$PROJECT_DIR$/src/features/HomeScreen/redux/Saga.js" />
-        <option value="$PROJECT_DIR$/src/features/HomeScreen/redux/HomeRuducer.js" />
-        <option value="$PROJECT_DIR$/src/common/sideMenu.js" />
-        <option value="$PROJECT_DIR$/src/common/initialStore.js" />
-        <option value="$PROJECT_DIR$/src/common/SideMenu.js" />
-        <option value="$PROJECT_DIR$/src/features/listTreeScreen/screen/ListTreeScreen.js" />
-        <option value="$PROJECT_DIR$/src/common/connect.js" />
-        <option value="$PROJECT_DIR$/src/common/components.js" />
-        <option value="$PROJECT_DIR$/src/common/components/Lists.js" />
-        <option value="$PROJECT_DIR$/src/common/components/headerForm.js" />
         <option value="$PROJECT_DIR$/android/settings.gradle" />
         <option value="$PROJECT_DIR$/android/app/build.gradle" />
         <option value="$PROJECT_DIR$/android/app/src/main/java/com/projecttrees/MainApplication.java" />
-        <option value="$PROJECT_DIR$/src/common/components/CommonList.js" />
-        <option value="$PROJECT_DIR$/src/common/components/HeaderForm.js" />
         <option value="$PROJECT_DIR$/src/common/connectDatabase.js" />
         <option value="$PROJECT_DIR$/src/features/DetailPage/screen/DetailScreen.js" />
         <option value="$PROJECT_DIR$/src/features/homePage/api/HomePage.js" />
@@ -217,31 +165,45 @@
         <option value="$PROJECT_DIR$/node_modules/react-native-maps/lib/components/MapMarker.js" />
         <option value="$PROJECT_DIR$/src/features/mapPage/constants/IconRequire.js" />
         <option value="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetMap" />
-        <option value="$PROJECT_DIR$/src/common/components/NoInternetScreen.js" />
-        <option value="$PROJECT_DIR$/src/common/components/CheckNET.js" />
-        <option value="$PROJECT_DIR$/src/common/rootReducers.js" />
         <option value="$PROJECT_DIR$/index.js" />
-        <option value="$PROJECT_DIR$/src/features/listTreePage/screen/ListTreeScreen.js" />
         <option value="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetListMAP.js" />
         <option value="$PROJECT_DIR$/src/common/rootSaga.js" />
-        <option value="$PROJECT_DIR$/src/features/mapPage/redux/Saga.js" />
         <option value="$PROJECT_DIR$/src/features/mapPage/screen/DetailScreen.js" />
         <option value="$PROJECT_DIR$/src/features/mapPage/screen/SelectedMap.js" />
         <option value="$PROJECT_DIR$/src/features/mapPage/screen/SearchListMap.js" />
         <option value="$PROJECT_DIR$/src/features/mapPage/screen/SelectedMapScreen.js" />
-        <option value="$PROJECT_DIR$/src/features/homePage/redux/HomeRuducer.js" />
-        <option value="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetMap.js" />
         <option value="$PROJECT_DIR$/src/features/mapPage/screen/SearchListMapScreen.js" />
         <option value="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetSelectedMap.js" />
-        <option value="$PROJECT_DIR$/src/features/mapPage/redux/MapReducer.js" />
-        <option value="$PROJECT_DIR$/src/features/homePage/api/call-database.js" />
-        <option value="$PROJECT_DIR$/src/features/homePage/api/check-database.js" />
-        <option value="$PROJECT_DIR$/src/features/homePage/redux/Saga.js" />
-        <option value="C:/xampp/htdocs/DBCheck.php" />
         <option value="$PROJECT_DIR$/src/features/mapPage/screen/MapScreen.js" />
-        <option value="$PROJECT_DIR$/App.js" />
         <option value="$PROJECT_DIR$/src/common/constants.js" />
+        <option value="$PROJECT_DIR$/src/common/components/HeaderForm.js" />
+        <option value="$PROJECT_DIR$/src/common/components/CommonList.js" />
+        <option value="$PROJECT_DIR$/src/common/components/NoInternetScreen.js" />
+        <option value="$PROJECT_DIR$/src/common/components/CheckNET.js" />
         <option value="$PROJECT_DIR$/src/features/homePage/screen/HomeScreen.js" />
+        <option value="$PROJECT_DIR$/src/features/homePage/redux/Saga.js" />
+        <option value="$PROJECT_DIR$/src/features/homePage/redux/HomeRuducer.js" />
+        <option value="$PROJECT_DIR$/src/features/homePage/api/check-database.js" />
+        <option value="$PROJECT_DIR$/src/features/homePage/api/call-database.js" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/api/call-database-List.js" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/api/call-dataGetMap.js" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/api/call-data-step-one.js" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/api/call-database-step-two.js" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/api/call-data-step-three.js" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/redux/Saga.js" />
+        <option value="$PROJECT_DIR$/src/common/rootReducers.js" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/api/call-database-step-one.js" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/redux/MapReducer.js" />
+        <option value="C:/xampp/htdocs/DBCheck.php" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/api/call-database-step-three.js" />
+        <option value="$PROJECT_DIR$/src/common/components/MAP.js" />
+        <option value="$PROJECT_DIR$/src/features/listTreePage/screen/ListTreeScreen.js" />
+        <option value="$PROJECT_DIR$/App.js" />
+        <option value="$PROJECT_DIR$/src/common/SideMenu.js" />
+        <option value="$PROJECT_DIR$/src/common/components/GoogleMAP.js" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/screen/ListMapScreen-StepTwo.js" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/screen/MapScreen-StepOne.js" />
+        <option value="$PROJECT_DIR$/src/features/mapPage/screen/MapScreen-StepThree.js" />
       </list>
     </option>
   </component>
@@ -268,104 +230,21 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="177" />
-    <option name="y" value="60" />
-    <option name="width" value="1545" />
-    <option name="height" value="930" />
+    <option name="x" value="132" />
+    <option name="y" value="99" />
+    <option name="width" value="1614" />
+    <option name="height" value="975" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="features" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="features" type="462c0819:PsiDirectoryNode" />
-              <item name="homePage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="features" type="462c0819:PsiDirectoryNode" />
-              <item name="homePage" type="462c0819:PsiDirectoryNode" />
-              <item name="screen" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="features" type="462c0819:PsiDirectoryNode" />
-              <item name="mapPage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="features" type="462c0819:PsiDirectoryNode" />
-              <item name="mapPage" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="features" type="462c0819:PsiDirectoryNode" />
-              <item name="mapPage" type="462c0819:PsiDirectoryNode" />
-              <item name="redux" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ProjectTrees" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectTrees" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="features" type="462c0819:PsiDirectoryNode" />
-              <item name="mapPage" type="462c0819:PsiDirectoryNode" />
-              <item name="screen" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="sid&#9;FILE&#9;file://D:/ProjectTrees/src/common/SideMenu.js&#10;MapMarker.js&#9;FILE&#9;file://D:/ProjectTrees/node_modules/react-native-maps/lib/components/MapMarker.js&#10;location&#9;FILE&#9;file://D:/ProjectTrees/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/modules/location" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="D:/react-native-3pp-timemint" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -399,10 +278,10 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="MapScreen.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="MapScreen.js" working-dir="$PROJECT_DIR$/src/features/mapPage/screen" />
+    <configuration name="MapScreen-StepOne.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/features/mapPage/screen/MapScreen-StepOne.js" working-dir="$PROJECT_DIR$/src/features/mapPage/screen" />
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.MapScreen.js" />
+        <item itemvalue="Node.js.MapScreen-StepOne.js" />
       </list>
     </recent_temporary>
   </component>
@@ -453,11 +332,16 @@
       <workItem from="1534732248913" duration="10264000" />
       <workItem from="1534747689161" duration="15776000" />
       <workItem from="1534772591365" duration="3461000" />
+      <workItem from="1534818654850" duration="2908000" />
+      <workItem from="1535081939667" duration="6911000" />
+      <workItem from="1535093546749" duration="14508000" />
+      <workItem from="1535355922070" duration="12618000" />
+      <workItem from="1535368704023" duration="539000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="352146000" />
+    <option name="totallyTimeSpent" value="389630000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="33" width="1295" height="695" extended-state="6" />
@@ -471,7 +355,7 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.3298969" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.34707904" />
       <window_info anchor="bottom" id="RNConsole" order="9" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.21545668" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.23653395" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -503,34 +387,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/android/app/src/main/java/com/projecttrees/MainApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="36" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/android/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="153" column="49" selection-start-line="153" selection-start-column="49" selection-end-line="153" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/WorkIntbizth/Design/tabThree.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1700">
-          <caret line="100" column="45" lean-forward="true" selection-start-line="100" selection-start-column="45" selection-end-line="100" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/components/CommonList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/common/components/consts.js" />
     <entry file="file://$PROJECT_DIR$/src/common/connectDatabase.js" />
     <entry file="file://D:/How to Get Map RN/App.js">
@@ -551,13 +407,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="17" column="44" lean-forward="true" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/initialStore.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -602,16 +451,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/components/NoInternetScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/react/cjs/react.development.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
@@ -633,35 +472,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/components/CheckNET.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="10" selection-start-line="10" selection-end-line="10" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/features/mapPage/screen/DetailScreen.js" />
-    <entry file="file://$PROJECT_DIR$/src/features/DetailPage/screen/DetailScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/listTreePage/screen/ListTreeScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-204">
-          <caret line="6" column="24" lean-forward="true" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/MyApp/SideMenu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -669,138 +480,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/common/components/HeaderForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="9" column="52" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/SideMenu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="43" column="120" lean-forward="true" selection-start-line="43" selection-start-column="113" selection-end-line="43" selection-end-column="120" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/rootReducers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/mapPage/screen/SelectedMapScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="294" column="48" selection-start-line="294" selection-start-column="48" selection-end-line="294" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/mapPage/api/call-dataGetSelectedMap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/homePage/redux/HomeRuducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/homePage/redux/Saga.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="19" column="50" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/homePage/api/call-database.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="23" column="33" lean-forward="true" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/homePage/api/check-database.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="29" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/xampp/htdocs/DBCheck.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="97" column="1" selection-start-line="97" selection-start-column="1" selection-end-line="97" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/mapPage/redux/MapReducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="41" column="27" selection-start-line="41" selection-start-column="27" selection-end-line="41" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/mapPage/api/call-dataGetMap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/mapPage/api/call-dataGetListMAP.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/rootSaga.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="17" lean-forward="true" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/mapPage/redux/Saga.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/mapPage/screen/SearchListMapScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2278">
-          <caret line="138" column="48" selection-start-line="138" selection-start-column="48" selection-end-line="138" selection-end-column="48" />
+        <state relative-caret-position="449">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/mapPage/screen/MapScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#8184#10031#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -808,19 +500,218 @@
     <entry file="file://$PROJECT_DIR$/src/common/constants.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="34" selection-start-column="34" selection-end-column="34" />
+          <caret column="38" selection-start-column="38" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/initialStore.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/rootSaga.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="4" column="14" lean-forward="true" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/DetailPage/screen/DetailScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/homePage/redux/Saga.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/homePage/redux/HomeRuducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="81" selection-start-column="81" selection-end-column="81" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/features/homePage/screen/HomeScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="138" column="76" selection-start-line="138" selection-start-column="76" selection-end-line="138" selection-end-column="76" />
+        <state relative-caret-position="381">
+          <caret line="285" column="86" selection-start-line="285" selection-start-column="86" selection-end-line="285" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/homePage/api/call-database.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="23" column="33" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/homePage/api/check-database.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="47">
+          <caret line="12" column="37" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/mapPage/api/call-database-step-one.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="29" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/mapPage/redux/Saga.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="36" lean-forward="true" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/components/NoInternetScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="65" selection-start-line="7" selection-start-column="65" selection-end-line="7" selection-end-column="65" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
-            <element signature="n#!!block;n#NavToDetail#0;n#HomeScreen#0" />
-            <element signature="n#!!block;n#BtnClear#0;n#HomeScreen#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/components/CheckNET.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/mapPage/api/call-database-step-two.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="42" column="27" lean-forward="true" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/SideMenu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="56" column="22" lean-forward="true" selection-start-line="56" selection-start-column="22" selection-end-line="56" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/listTreePage/screen/ListTreeScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="62" column="47" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/components/CommonList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-153" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/mapPage/api/call-database-step-three.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="19" column="47" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/components/GoogleMAP.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/website/bellcenter_admin10.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="489" column="1445" lean-forward="true" selection-start-line="489" selection-start-column="1" selection-end-line="489" selection-end-column="1445" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/mapPage/redux/MapReducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-61">
+          <caret column="6" selection-start-column="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/rootReducers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="29" column="8" lean-forward="true" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/mapPage/screen/ListMapScreen-StepTwo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="133" column="37" lean-forward="true" selection-start-line="133" selection-start-column="37" selection-end-line="133" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/mapPage/screen/MapScreen-StepThree.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="124" column="70" lean-forward="true" selection-start-line="124" selection-start-column="70" selection-end-line="124" selection-end-column="70" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+            <element signature="n#!!block;n#componentDidMount#0;n#MapScreenStepThree#0" />
+            <element signature="n#!!block;n#componentWillUnmount#0;n#MapScreenStepThree#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/mapPage/screen/MapScreen-StepOne.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="238" column="56" selection-start-line="238" selection-start-column="56" selection-end-line="238" selection-end-column="72" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+            <element signature="n#!!block;n#componentDidMount#0;n#MapScreenStepOne#0" />
+            <element signature="n#!!block;n#componentWillUnmount#0;n#MapScreenStepOne#0" />
+            <element signature="n#!!block;n#constructor#0;n#MapScreenStepOne#0" />
+            <element signature="n#!!block;n#render#0;n#MapScreenStepOne#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/xampp/htdocs/DBCheck.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="24" column="48" selection-start-line="24" selection-start-column="48" selection-end-line="24" selection-end-column="48" />
         </state>
       </provider>
     </entry>

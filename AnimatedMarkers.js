@@ -156,7 +156,7 @@ export default connect(
         DataSource : state.DataHomeScreen.DataSource,
         Search : state.DataHomeScreen.Search,
         CheckData : state.DataHomeScreen.CheckDataSource,
-        MyPosition : state.DataMapScreen.MyLocation
+        MyPosition : state.DataMapScreen.UserLocation
     }),
     (dispatch) => ({
         FetchDataHomePage: (value) => {dispatch({type: "CALL_DATA_LIKE", payload: value})},

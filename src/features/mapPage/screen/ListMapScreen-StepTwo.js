@@ -4,7 +4,7 @@ import { FlatList, ActivityIndicator, TouchableOpacity, BackHandler } from 'reac
 import HeaderForm from '../../../common/components/HeaderForm';
 import { connect } from "react-redux";
 
-class SearchListMapScreen extends Component {
+class ListMapScreenStepTwo extends Component {
     componentDidMount(){
         this.props.FetchDataListMap();
         this.props.SetSearchListMap('');
@@ -28,12 +28,8 @@ class SearchListMapScreen extends Component {
 
     _keyExtractor = (item) => item.plantID;
 
-     _onPressItem = (id) => {
-         this.setState((state) => {
-             const selected = new Map(state.selected);
-             selected.set(id, !selected.get(id)); // toggle
-             return {selected};
-         });
+     _onPressItem = (TreeName) => {
+         this.props.SetSearchListMap(TreeName);
          this.props.navigation.navigate('SelectedMap');
     };
 
@@ -73,7 +69,6 @@ class SearchListMapScreen extends Component {
                     </View>
                 )
             }, 3000);
-
         }
         return (
             <Container>
@@ -108,7 +103,7 @@ class SearchListMapScreen extends Component {
 class MyListItem extends React.PureComponent {
     _onPress = () => {
         // Do someting
-        this.props.onPressItem(this.props.id);
+        this.props.onPressItem(this.props.TreeName);
         //alert(this.props.TreeName);
 
     };
@@ -130,16 +125,16 @@ class MyListItem extends React.PureComponent {
     }
 }
 
-SearchListMapScreen.navigationOptions = ({ navigation }) => ({
+ListMapScreenStepTwo.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm btn={() => navigation.goBack()} iconName={'arrow-left'} titlePage={'ค้นหาตำแหน่งพรรณไม้'} />
 });
 
 export default connect(
     (state) => ({
-        DataList : state.DataMapScreen.DataListMap      // ตรวจสอบว่า โหลดข้อมูลเสร็จหรือไม่
+        DataList : state.DataMapScreen.DataListStepTwo      // ตรวจสอบว่า โหลดข้อมูลเสร็จหรือไม่
     }),
     (dispatch) => ({
         SetSearchListMap : (value) => {dispatch({type: "SET_VALUE_SEARCH_LIST_MAP", payload: value})},
-        FetchDataListMap: (value) => {dispatch({type: "CALL_DATA_LIST_MAP", payload: value})},
+        FetchDataListMap: (value) => {dispatch({type: "CALL_DATA_STEP_TWO", payload: value})},
     })
-)(SearchListMapScreen);
+)(ListMapScreenStepTwo);

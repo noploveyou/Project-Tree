@@ -10,7 +10,7 @@ function fetchCheckDataHomePage(CheckValueKey) {
         },
         body: JSON.stringify({
             plantName: CheckValueKey,   // ค่าที่ส่งไป php
-            check: "Is"                 // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
+            check: "IS_HOMEPAGESCREEN"                 // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
         })
     }
     )
@@ -19,16 +19,15 @@ function fetchCheckDataHomePage(CheckValueKey) {
             // เช็คค่า ถ้ามีจะเป็น 1
             if (responseJson.length > 0) {
                 store.dispatch({    // action
-                    type: 'CHECK_DATA_RESULTS_HOMEPAGE',
+                    type: 'CHECK_DATA_LIST_HOMEPAGE',
                     payload: true
                 });
             } else {
                 store.dispatch({    // action
-                    type: 'CHECK_DATA_RESULTS_HOMEPAGE',
+                    type: 'CHECK_DATA_LIST_HOMEPAGE',
                     payload: false
                 });
             }
-
         })
         .catch(function (error) {
         })

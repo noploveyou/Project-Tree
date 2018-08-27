@@ -10,20 +10,19 @@ function fetchDataHomePage(ValueKey) {
             },
             body: JSON.stringify({
                 plantName: ValueKey,    // ค่าที่ส่งไป php
-                check: "Like"           // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
+                check: "Like_HOMEPAGESCREEN"           // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
             })
         }
     )
         .then((response) => response.json())
         .then((responseJson) => {
             store.dispatch({     // action
-                type: 'ADD_DATA_RESULTS_HOMEPAGE',
+                type: 'ADD_DATA_LIST_HOMEPAGE',
                 payload : responseJson
             })
         })
         .catch(function (error) {
         })
-
 }
 
 module.exports = fetchDataHomePage;

@@ -1,4 +1,4 @@
-import { takeEvery, put, all, select } from "redux-saga/effects";
+import { takeEvery, all, select } from "redux-saga/effects";
 import fetchDataHomePage from '../api/call-database';
 import fetchCheckDataHomePage from "../api/check-database";
 

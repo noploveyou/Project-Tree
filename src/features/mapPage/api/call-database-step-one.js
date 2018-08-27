@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../../common/constants";   // url Database
 import store from "../../../common/initialStore";
 
-function fetchDataMAP() {
+function fetchDataStepOne() {
     fetch(BASE_URL, {
             method: 'POST',
             headers: {
@@ -10,27 +10,27 @@ function fetchDataMAP() {
             },
             body: JSON.stringify({
                 plantName: "",
-                check: "SearchListSelectedMAP"           // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
+                check: "MAPSCREEN_STEP_ONE"           // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
             })
         }
     )
         .then((response) => response.json())
         .then((responseJson) => {
             store.dispatch({     // action
-                type: 'ADD_DATA_SELECTED_MAP',
+                type: 'ADD_MARK_MAP_STEP_ONE',
                 payload : responseJson
             });
             store.dispatch({     // action
-                type: 'CHECK_DATA_SELECTED_MAP',
+                type: 'CHECK_MARK_MAP_STEP_ONE',
                 payload : true
             })
         })
         .catch(function (error) {
             store.dispatch({     // action
-                type: 'CHECK_DATA_SELECTED_MAP',
+                type: 'CHECK_MARK_MAP_STEP_ONE',
                 payload : false
             })
         })
 }
 
-module.exports = fetchDataMAP;
+module.exports = fetchDataStepOne;
