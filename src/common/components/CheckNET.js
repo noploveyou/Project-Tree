@@ -12,16 +12,15 @@ function handleFirstConnectivityChange(isConnected){
     console.log('Network, is ' + (isConnected ? 'online' : 'offline'));
     if(isConnected){
         store.dispatch({     // action
-            type: 'CHECK_INTERNET',
+            type: 'USE_INTERNET',
             payload : true
         });
     }else{
         store.dispatch({     // action
-            type: 'CHECK_INTERNET',
+            type: 'USE_INTERNET',
             payload : false
         });
     }
 }
 
 export default CheckInternet;
-

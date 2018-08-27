@@ -1,9 +1,17 @@
 import homeReducer from '../features/homePage/redux/HomeRuducer';
 import MapReducer from '../features/mapPage/redux/MapReducer';
 
-const CheckNET = (state={},action) => {
+const CheckDevice = (state={}, action) => {
     switch (action.type){
-        case "CHECK_INTERNET" : {
+        case "GET_USER_LOCATION" : {     // ตำแหน่งผู้ใช้ lat, lng, latDel, lngDel  in MAP StepOne, StepTree
+            state = {
+                ...state,
+                UserLocation: action.payload,
+            }
+        }
+            break;
+
+        case "USE_INTERNET" : {
             state = {
                 ...state,
                 InternetIsConnect: action.payload,
@@ -17,7 +25,7 @@ const CheckNET = (state={},action) => {
 };
 
 const rootReducer = {
-    CheckNET: CheckNET,
+    CheckDevice: CheckDevice,
     DataHomeScreen: homeReducer,
     DataMapScreen: MapReducer,
 };

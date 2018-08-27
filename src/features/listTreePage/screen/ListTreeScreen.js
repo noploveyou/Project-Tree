@@ -60,7 +60,7 @@ export default class ListTreeScreen extends Component {
                 },
                 body: JSON.stringify({
                     plantName: value,
-                    check: "Like"
+                    check: "Like_HOMEPAGESCREEN"
                 })
             }
         )

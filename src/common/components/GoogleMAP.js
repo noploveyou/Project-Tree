@@ -1,0 +1,61 @@
+import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
+import MapView from 'react-native-maps';
+import PropTypes from 'prop-types';
+import images from "../../features/mapPage/constants/IconRequire";
+
+const GoogleMAP = (props) => {
+    return(
+        <MapView style={[s.map, props.hackScale]}
+                    initialRegion={{
+                        latitude: 13.8770500,
+                        longitude: 100.5901700,
+                        latitudeDelta: 0.000013,  // น้อย =  Zoom
+                        longitudeDelta: 0.000013, // น้อย =  Zoom
+                    }}     // มุมกล้องเริ่มต้น
+                    showsMyLocationButton={true}       // แสดงปุ่ม ตำแหน่งของผู้ใช้
+                    showsUserLocation={true}           // แสดงตำแหน่งของผู้ใช้
+                    onMapReady={props.onMapReady}
+                    loadingEnabled={true}              // เปิดใช้การรอโหลด
+                    loadingIndicatorColor='yellow'     // Loading สีเหลือง
+                    loadingBackgroundColor='green'     // พื้นหลังรอโหลด
+                    onPress={props.onPress}
+                    toolbarEnabled={false}
+        >
+            {props.check ?
+                props.Data.map(function (mark, index) {
+                    return <MapView.Marker
+                        onPress={() => props.OnMarkPress(mark.ly, mark.lx)} //() => SetLocationToNavigate(parseFloat(mark.ly), parseFloat(mark.lx))
+                        coordinate={{latitude: parseFloat(mark.ly), longitude: parseFloat(mark.lx)}}
+                        title={mark.plantName}
+                        description={mark.locationName}
+                        image={images[mark.plantIcon]}
+                        key={index}>
+                    </MapView.Marker>
+                }) : null
+            }
+        </MapView>
+    )
+};
+
+GoogleMAP.propTypes = {
+    hackScale: PropTypes.object,
+    initialRegion: PropTypes.object,
+    onMapReady: PropTypes.func,
+    onPress: PropTypes.func,
+    check: PropTypes.bool,
+    Data: PropTypes.array,
+    OnMarkPress: PropTypes.func
+};
+
+const s = StyleSheet.create({
+    map: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+    }
+});
+
+export default GoogleMAP;

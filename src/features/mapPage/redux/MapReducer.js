@@ -1,56 +1,48 @@
-const MapReducer = (state={DataSearchMap: "", DataListMap: []}, action) => {
+const MapReducer = (state={ValueSearchPlant: "", DataListStepTwo: []}, action) => {
     switch (action.type){
-        case "GET_POSITION" : {     // ตำแหน่งผู้ใช้ lat, lng, latDel, lngDel
+        case "ADD_MARK_MAP_STEP_ONE" : {    // Mark in MAP StepOne
             state = {
                 ...state,
-                MyLocation: action.payload,
+                DataMarkStepOne: action.payload,
+            }
+        }
+            break;
+        case "CHECK_MARK_MAP_STEP_ONE" : {
+            state = {       // Check Success = true
+                ...state,
+                CheckDataMarkStepOne: action.payload,
             }
         }
             break;
 
-        case "ADD_DATA_MAIN_MAP" : {    // All Mark Trees in MAP
+        case "ADD_DATA_LIST_MAP_STEP_TWO" : {        // List in MAP StepTwo
             state = {
                 ...state,
-                DataOnMap: action.payload,
-            }
-        }
-            break;
-        case "CHECK_DATA_MAIN_MAP" : {      // Check Success = true
-            state = {
-                ...state,
-                CheckDataOnMap: action.payload,
+                DataListStepTwo: action.payload,
             }
         }
             break;
 
-        case "ADD_DATA_LIST_MAP" : {
+        case "SET_VALUE_SEARCH_LIST_MAP" : {    // Value Search in MAP StepTwo
             state = {
                 ...state,
-                DataListMap: action.payload,
+                ValueSearchPlant: action.payload,
             }
         }
             break;
 
-        case "SET_VALUE_SEARCH_LIST_MAP" : {      // Check Success = true
+        case "ADD_DATA_MARK_STEP_THREE" : {        // Mark in MAP StepTree
             state = {
                 ...state,
-                DataSearchMap: action.payload,
+                DataMarkStepThree: action.payload,
             }
         }
             break;
 
-        case "ADD_DATA_SELECTED_MAP" : {
-            state = {
+        case "CHECK_DATA_MARK_STEP_THREE" : {
+            state = {    // Check Success = true
                 ...state,
-                DataSelectedMap: action.payload,
-            }
-        }
-            break;
-
-        case "CHECK_DATA_SELECTED_MAP" : {      // Check Success = true
-            state = {
-                ...state,
-                CheckDataSelectedMap: action.payload,
+                CheckDataMarkStepThree: action.payload,
             }
         }
             break;

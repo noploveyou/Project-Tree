@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../../common/constants";   // url Database
 import store from "../../../common/initialStore";
 
-function fetchDataListMAP(value) {
+function fetchDataStepTwo(value) {
     fetch(BASE_URL, {
             method: 'POST',
             headers: {
@@ -10,14 +10,14 @@ function fetchDataListMAP(value) {
             },
             body: JSON.stringify({
                 plantName: value,
-                check: "SearchListMAPLike"           // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
+                check: "MAPSCREEN_STEP_TWO"           // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
             })
         }
     )
     .then((response) => response.json())
     .then((responseJson) => {
         store.dispatch({     // action
-            type: 'ADD_DATA_LIST_MAP',
+            type: 'ADD_DATA_LIST_MAP_STEP_TWO',
             payload : responseJson
         });
     })
@@ -25,4 +25,4 @@ function fetchDataListMAP(value) {
     })
 }
 
-module.exports = fetchDataListMAP;
+module.exports = fetchDataStepTwo;

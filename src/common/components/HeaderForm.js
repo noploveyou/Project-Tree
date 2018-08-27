@@ -1,6 +1,5 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
-import {Body, Button, Container, Header, Left, Right, Text, Title, View} from "native-base";
+import { Body, Button, Header, Left, Title } from "native-base";
 import PropTypes from "prop-types";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -26,6 +25,5 @@ HeaderForm.propTypes = {
     iconName: PropTypes.string.isRequired,
     titlePage: PropTypes.string.isRequired
 };
-
 
 export default HeaderForm;
