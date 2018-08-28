@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'native-base';
-import { Alert, BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
 import getDirections from "react-native-google-maps-directions";
 import { connect } from "react-redux";
@@ -14,7 +14,7 @@ class MapScreenStepOne extends Component {
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate('Home'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
-        setTimeout(() => {this.props.FetchDataMap()},   0);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 0 วินาที
+        setTimeout(() => this.props.FetchDataMap(), 0);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 0 วินาที
         this.CheckGPS();
     }
 
@@ -61,13 +61,12 @@ class MapScreenStepOne extends Component {
                 let newLong = parseFloat(position.coords.longitude);
                 const initialRegion = {
                     latitude: newLat,
-                    longitude: newLong,
-                    latitudeDelta: 0,  //Zoom
-                    longitudeDelta: 0, //Zoom
+                    longitude: newLong
                 };
                 this.props.GetLocation(initialRegion);  // Set Value in Store
+                //this.props.GPS(true);
             },
-            () => Alert.alert(
+            () => [Alert.alert(
                 null,
                 'กรุณาเปิดใช้ GPS ก่อนการใช้งาน',
                 [
@@ -75,8 +74,9 @@ class MapScreenStepOne extends Component {
                     {text: 'ตั้งค่า', onPress: () => null}
                 ],
                 { cancelable: false }
-            ),
-            {timeout: 0, distanceFilter: 50} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
+            ),navigator.geolocation.clearWatch(this.watchID)],
+            {timeout: 0, distanceFilter: 0}
+            //{timeout: 0, distanceFilter: 50} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
         );
     };
 
@@ -113,11 +113,25 @@ class MapScreenStepOne extends Component {
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }
 
+        if(this.props.CheckFetchDataMap == false){
+            /*setTimeout(function(){ alert("Hello"); }, 3000);*/
+            return(
+                <View style={{flex: 1, alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
+                    <View>
+                        <ActivityIndicator size="large" color="green"/>
+                        <Text style={{fontSize:30}}> กำลังโหลด กรุณารอสักครู่ </Text>
+                    </View>
+                </View>
+            )
+        }
+
         return (
             <Container>
+                {}
                 <View style={s.viewHeader}>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('SearchListMap')} style={s.btnSearch}
+                        onPress={() => [this.props.navigation.navigate('SearchListMap'),
+                            navigator.geolocation.clearWatch(this.watchID)]} style={s.btnSearch}
                     >
                         <Icon name={'md-search'} size={28} color={'white'} style={s.iconBtnSearch}/>
                         <Text style={s.labelBtnSearch}> {`ค้นหา`} </Text>
@@ -242,6 +256,7 @@ export default connect(
     }),
     (dispatch) => ({
         GetLocation : (value) => {dispatch({type: "GET_USER_LOCATION", payload: value})},    // รับตำแหน่งผู้ใช้
-        FetchDataMap : (value) => {dispatch({type: "CALL_DATA_STEP_ONE", payload: value})}      // เรียกฐานข้อมูล
+        FetchDataMap : (value) => {dispatch({type: "CALL_DATA_STEP_ONE", payload: value})},      // เรียกฐานข้อมูล
+        GPS : (value) => {dispatch({type: "USE_GPS", payload: value})},
     })
 )(MapScreenStepOne);

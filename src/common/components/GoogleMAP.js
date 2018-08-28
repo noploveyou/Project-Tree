@@ -16,7 +16,7 @@ const GoogleMAP = (props) => {
                     showsMyLocationButton={true}       // แสดงปุ่ม ตำแหน่งของผู้ใช้
                     showsUserLocation={true}           // แสดงตำแหน่งของผู้ใช้
                     onMapReady={props.onMapReady}
-                    loadingEnabled={true}              // เปิดใช้การรอโหลด
+                    loadingEnabled={false}              // เปิดใช้การรอโหลด
                     loadingIndicatorColor='yellow'     // Loading สีเหลือง
                     loadingBackgroundColor='green'     // พื้นหลังรอโหลด
                     onPress={props.onPress}
@@ -40,12 +40,11 @@ const GoogleMAP = (props) => {
 
 GoogleMAP.propTypes = {
     hackScale: PropTypes.object,
-    initialRegion: PropTypes.object,
     onMapReady: PropTypes.func,
     onPress: PropTypes.func,
     check: PropTypes.bool,
     Data: PropTypes.array,
-    OnMarkPress: PropTypes.func
+    OnMarkPress: PropTypes.func,
 };
 
 const s = StyleSheet.create({

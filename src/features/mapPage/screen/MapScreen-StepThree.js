@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'native-base';
-import { Alert, BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
 import getDirections from "react-native-google-maps-directions";
 import { connect } from "react-redux";
@@ -21,6 +21,9 @@ class MapScreenStepThree extends Component {
     componentWillUnmount() {
         this.backHandler.remove();
         this.props.ResetMark([]);
+        //this.props.GPS(false);
+        //this.props.GetLocation(null);
+        this.setState({isLoading: false});
         navigator.geolocation.clearWatch(this.watchID); // set value UserLocation = null in store
     }
 
@@ -34,7 +37,8 @@ class MapScreenStepThree extends Component {
             ShowBTNNavigate: false,     // แสดงปุ่ม นำเส้นทาง (เปิด Google MAP)
             HackRender: false,          // สำหรับเช็ค กัน Error (ให้ MAP พร้อม และ Hack เสร็จก่อนค่อย Get Mark)
             MyLat: 0,
-            MyLng: 0
+            MyLng: 0,
+            isLoading: false
         }
     }
 
@@ -62,17 +66,13 @@ class MapScreenStepThree extends Component {
             (position) => {
                 let newLat = parseFloat(position.coords.latitude); //คำสั่งsetที่อยุ่ตามเครื่อง +แปรงค่าเป้นทศนิยม
                 let newLong = parseFloat(position.coords.longitude);
-                const initialRegion = {
-                    latitude: newLat,
-                    longitude: newLong,
-                    latitudeDelta: 0,  //Zoom
-                    longitudeDelta: 0, //Zoom
-                };
+                const initialRegion = {latitude: newLat, longitude: newLong};
                 this.props.GetLocation(initialRegion);  // Set Value in Store
-                this.setState({MyLat: newLat, MyLng: newLong});
-
+                this.props.GPS(true);
+                this.GetNear();
+                this.setState({isLoading: false});
             },
-            () => Alert.alert(
+            () => [Alert.alert(
                 null,
                 'กรุณาเปิดใช้ GPS ก่อนการใช้งาน',
                 [
@@ -80,9 +80,41 @@ class MapScreenStepThree extends Component {
                     {text: 'ตั้งค่า', onPress: () => null}
                 ],
                 { cancelable: false }
-            ),
+            ),navigator.geolocation.clearWatch(this.watchID),this.setState({isLoading: false}),this.props.GPS(false)],
             {timeout: 0, distanceFilter: 50} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
         );
+    };
+
+    GetNear = () => {
+        if(this.props.LocationUser){
+            this.setState({isLoading: true});
+            this.CheckGPS();
+            try {
+                let sum = [];   // เก็บค่า lat, lng และ distance
+                for(let i = 0;i < this.props.DataMarker.length; i++){   // Loop ตามจำนวนค่าที่มี length
+                    let distance = geolib.getDistance(
+                        // ตำแหน่งผู้ใช้
+                        {latitude: this.props.LocationUser.latitude, longitude: this.props.LocationUser.longitude},
+                        // ตำแหน่ง Mark
+                        {latitude: this.props.DataMarker[i].ly, longitude: this.props.DataMarker[i].lx}
+                    );
+                    sum.push({  // Add Value in Array {}, +{}
+                        [i]: {  // Head 0... n
+                            lat: this.props.DataMarker[i].ly,   // latitude Mark
+                            lng: this.props.DataMarker[i].lx,   // longitude Mark
+                            dit: distance       // distance User - Mark : Meter เมตร
+                        }
+                    });
+                    console.log(sum);
+                    this.setState({isLoading: false});
+                }
+            }catch (e) {
+                navigator.geolocation.clearWatch(this.watchID);
+            }
+        }else {
+            this.CheckGPS();
+            this.setState({isLoading: true});
+        }
     };
 
     handleGetDirections = () => { //ฟังก์ชัน นำทาง (เปิด Google MAP)
@@ -113,49 +145,24 @@ class MapScreenStepThree extends Component {
         this.setState({SetLatitudeToNavigate: lat, SetLongitudeToNavigate: lng, ShowBTNNavigate: true});
     };
 
-    GetNear = () => {
-        let sum = [];
-        //console.log(this.props.LocationUser);
-        for(let i = 0;i < this.props.DataMarker.length; i++){
-            //const MyLocation = this.props.LocationUser
-            //const getMarklat = this.props.DataMarker[i].ly;
-            //const getMarklng = this.props.DataMarker[i].lx;
-            const distance = geolib.getDistance(
-                {latitude: this.props.LocationUser.latitude, longitude: this.props.LocationUser.longitude},
-                {latitude: this.props.DataMarker[i].ly, longitude: this.props.DataMarker[i].lx}
-                );
-            sum.push({
-                [i]: {
-                    lat: this.props.DataMarker[i].ly,
-                    lng: this.props.DataMarker[i].lx,
-                    dit: distance
-                }
-            });
-            console.log(sum);
-        }
 
-
-            /*navigator.geolocation.getCurrentPosition(
-                function(position) {
-                    /!*alert('You are ' + geolib.getDistance(position.coords, {
-                        latitude: getMarklat,
-                        longitude: getMarklng
-                    }) + '  จากพรรณไม้' );//' meters away from 51.525, 7.4575'*!/
-                    const distance = geolib.getDistance(position.coords, {latitude: getMarklat, longitude: getMarklng});
-                    console.log(distance);
-
-                },
-                function() {
-                    alert('Position could not be determined.')
-                }
-            );*/
-
-    };
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }
+
+        /*if(this.state.isLoading){
+            /!*setTimeout(function(){ alert("Hello"); }, 3000);*!/
+            return(
+                <View style={{flex: 1, alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
+                    <View>
+                        <ActivityIndicator size="large" color="green"/>
+                        <Text style={{fontSize:30}}> กำลังโหลด กรุณารอสักครู่ </Text>
+                    </View>
+                </View>
+            )
+        }*/
 
         return (
             <Container>
@@ -171,30 +178,41 @@ class MapScreenStepThree extends Component {
                         Data={this.props.DataMarker}
                         OnMarkPress={(ly,lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
                     />
-                    {this.state.ShowBTNNavigate ?
-                        <View style={s.viewHeader}>
-                            <TouchableOpacity
-                                onPress={() => this.onPress}
-                                style={s.btnResetCamera}
-                            >
-                                <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconBtnResetCamera}/>
-                                <Text style={s.labelBtnResetCamera}> {`รายละเอียด`} </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => this.handleGetDirections()}
-                                style={s.btnResetCamera}
-                            >
-                                <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconBtnResetCamera}/>
-                                <Text style={s.labelBtnResetCamera}> {`เส้นทาง`} </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => this.GetNear()}
-                                style={s.btnSearch}
-                            >
-                                <Icon name={'md-search'} size={28} color={'#196F3D'} style={s.iconBtnSearch}/>
-                                <Text style={s.labelBtnSearch}> {`ใกล้ที่สุด`} </Text>
-                            </TouchableOpacity>
-                        </View> : null
+                    {this.state.isLoading ?
+                        <View style={{
+                            flexDirection: 'column',
+                            backgroundColor: '#FEF9E7',
+                            //justifyContent: 'space-around'
+                        }}>
+                            <ActivityIndicator size="large" color="green"/>
+                            <Text style={{fontSize:30}}> กำลังโหลด กรุณารอสักครู่ </Text>
+                        </View>
+                        :
+                        this.state.ShowBTNNavigate ?
+                            <View style={s.viewHeader}>
+                                <TouchableOpacity
+                                    onPress={() => this.onPress}
+                                    style={s.btnResetCamera}
+                                >
+                                    <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconBtnResetCamera}/>
+                                    <Text style={s.labelBtnResetCamera}> {`รายละเอียด`} </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => this.handleGetDirections()}
+                                    style={s.btnResetCamera}
+                                >
+                                    <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconBtnResetCamera}/>
+                                    <Text style={s.labelBtnResetCamera}> {`เส้นทาง`} </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => this.GetNear()}
+                                    style={s.btnSearch}
+                                >
+                                    <Icon name={'md-search'} size={28} color={'#196F3D'} style={s.iconBtnSearch}/>
+                                    <Text style={s.labelBtnSearch}> {`ใกล้ที่สุด`} </Text>
+                                </TouchableOpacity>
+                            </View>  : null
+
                     }
                 </View>
 
@@ -301,13 +319,14 @@ export default connect(
     (state) => ({
         NET : state.CheckDevice.InternetIsConnect,         // ตรวจสอบ Internet
         LocationUser : state.CheckDevice.UserLocation,      // ตำแหน่งผู้ใช้
+        CheckGPS : state.CheckDevice.GPSConnect,
         DataMarker : state.DataMapScreen.DataMarkStepThree,     // ตำแหน่ง Mark ต้นไม้
         CheckFetchDataMap : state.DataMapScreen.CheckDataMarkStepThree,     // ตรวจสอบว่า โหลดข้อมูลเสร็จหรือไม่
-
     }),
     (dispatch) => ({
         GetLocation : (value) => {dispatch({type: "GET_USER_LOCATION", payload: value})},    // รับตำแหน่งผู้ใช้
         FetchDataMap : (value) => {dispatch({type: "CALL_DATA_STEP_THREE", payload: value})},      // เรียกฐานข้อมูล
-        ResetMark : (value) => {dispatch({type: "ADD_DATA_MARK_STEP_THREE", payload: value})}
+        ResetMark : (value) => {dispatch({type: "ADD_DATA_MARK_STEP_THREE", payload: value})},  // ลบ Data Mark
+        GPS : (value) => {dispatch({type: "USE_GPS", payload: value})},     // set GPS true/false
     })
 )(MapScreenStepThree);

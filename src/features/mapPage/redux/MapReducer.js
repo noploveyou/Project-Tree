@@ -1,4 +1,4 @@
-const MapReducer = (state={ValueSearchPlant: "", DataListStepTwo: []}, action) => {
+const MapReducer = (state={ValueSearchPlant: "", DataListStepTwo: [],CheckDataMarkStepOne: false}, action) => {
     switch (action.type){
         case "ADD_MARK_MAP_STEP_ONE" : {    // Mark in MAP StepOne
             state = {
