@@ -15,7 +15,7 @@ class MapScreenStepThree extends Component {
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate('SearchListMap'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
         setTimeout(() => {this.props.FetchDataMap()}, 0);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 0 วินาที
-        setTimeout(() => this.CheckGPS(), 1500);
+        this.CheckGPS();    // ตรวจ GPS
     }
 
     componentWillUnmount() {
@@ -33,9 +33,7 @@ class MapScreenStepThree extends Component {
             SetLongitudeToNavigate: null,   // Longitude ที่ปลายทาง
             ShowBTNNavigate: false,     // แสดงปุ่ม นำเส้นทาง (เปิด Google MAP)
             HackRender: false,          // สำหรับเช็ค กัน Error (ให้ MAP พร้อม และ Hack เสร็จก่อนค่อย Get Mark)
-            MyLat: 0,
-            MyLng: 0,
-            isLoading: false
+            isLoading: false,
         }
     }
 
@@ -61,13 +59,15 @@ class MapScreenStepThree extends Component {
     CheckGPS = () => {
         this.watchID = navigator.geolocation.watchPosition(
             (position) => {
-                let newLat = parseFloat(position.coords.latitude); //คำสั่งsetที่อยุ่ตามเครื่อง +แปรงค่าเป้นทศนิยม
-                let newLong = parseFloat(position.coords.longitude);
+                let newLat = parseFloat(position.coords.latitude); //คำสั่ง set ที่อยู่ผู้ใช้ แปลงค่าเป็นทศนิยม
+                let newLong = parseFloat(position.coords.longitude); //คำสั่ง set ที่อยู่ผู้ใช้ แปลงค่าเป็นทศนิยม
                 const initialRegion = {latitude: newLat, longitude: newLong};
                 this.props.GetLocation(initialRegion);  // Set Value in Store
-                this.props.GPS(true);
-                this.GetNear();
-                this.setState({isLoading: false});
+                this.props.GPS(true);       // set GPS true = Enable GPS
+                if(this.state.OnPressNear){     // ทำงานหลังกดปุ่ม
+                    this.GetNear();
+                }
+                this.setState({isLoading: false});  // ปิดการโหลด
             },
             () => [Alert.alert(
                 null,
@@ -84,32 +84,50 @@ class MapScreenStepThree extends Component {
 
     GetNear = () => {
         this.CheckGPS();
-        if(this.props.LocationUser){
+        if(this.props.LocationUser) {
             this.setState({isLoading: true});   // เปิดการโหลด
             try {
-                let sum = [];   // เก็บค่า lat, lng และ distance
-                for(let i = 0;i < this.props.DataMarker.length; i++){   // Loop ตามจำนวนค่าที่มี length
+                let Locations = [];   // เก็บค่า lat, lng และ distance
+                let Distance = [];
+                for (let i = 0; i < this.props.DataMarker.length; i++) {   // Loop ตามจำนวนค่าที่มี length
                     let distance = geolib.getDistance(
                         // ตำแหน่งผู้ใช้
                         {latitude: this.props.LocationUser.latitude, longitude: this.props.LocationUser.longitude},
                         // ตำแหน่ง Mark
                         {latitude: this.props.DataMarker[i].ly, longitude: this.props.DataMarker[i].lx}
                     );
-                    sum.push({  // Add Value in Array {}, +{}
-                        [i]: {  // Head 0... n
+                    Locations.push(  // Add Value in Array {}, +{}
+                        {
                             lat: this.props.DataMarker[i].ly,   // latitude Mark
                             lng: this.props.DataMarker[i].lx,   // longitude Mark
-                            dit: distance       // distance User - Mark : Meter เมตร
                         }
-                    });
-                    console.log(sum);
-                    this.setState({isLoading: false}); // ปิดการโหลด
+                    );
+                    Distance.push(  // Add Value in Array {}, +{}
+                        distance // distance User - Mark : Meter เมตร
+                    );
                 }
-            }catch (e) {
+                let IndexLocations = Distance.indexOf(Math.min(...Distance));   //คำนวนค่าน้อยที่สุด และบอกตำแหน่งใน array
+                this.NavigateNear(parseFloat(Locations[IndexLocations].lat), parseFloat(Locations[IndexLocations].lng));
+                this.setState({OnPressNear: false});    // Reset การกดปุ่ม
+                this.setState({isLoading: false});      // ปิดการโหลด
+            } catch (e) {
             }
         }else {
-            this.setState({isLoading: true});
+            this.setState({isLoading: true});       // ปิดการโหลด
         }
+    };
+
+    NavigateNear = ( lat,lng) => {
+       try{
+           let ss = {
+               destination: {  //ปลายทาง
+                   latitude: lat,
+                   longitude: lng
+               }
+           };
+           getDirections(ss)
+       }catch (e) {
+       }
     };
 
     handleGetDirections = () => { //ฟังก์ชัน นำทาง (เปิด Google MAP)
@@ -179,7 +197,6 @@ class MapScreenStepThree extends Component {
                         <View style={{
                             flexDirection: 'column',
                             backgroundColor: '#FEF9E7',
-                            //justifyContent: 'space-around'
                         }}>
                             <ActivityIndicator size="large" color="green"/>
                             <Text style={{fontSize:30}}> กำลังโหลด กรุณารอสักครู่ </Text>
@@ -189,54 +206,33 @@ class MapScreenStepThree extends Component {
                             <View style={s.viewHeader}>
                                 <TouchableOpacity
                                     onPress={() => this.onPress}
-                                    style={s.btnResetCamera}
+                                    style={s.ButtonsGroup}
                                 >
-                                    <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconBtnResetCamera}/>
-                                    <Text style={s.labelBtnResetCamera}> {`รายละเอียด`} </Text>
+                                    <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
+                                    <Text style={s.labelButtonGroup}> {`รายละเอียด`} </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => this.handleGetDirections()}
-                                    style={s.btnResetCamera}
+                                    style={s.ButtonsGroup}
                                 >
-                                    <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconBtnResetCamera}/>
-                                    <Text style={s.labelBtnResetCamera}> {`เส้นทาง`} </Text>
+                                    <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
+                                    <Text style={s.labelButtonGroup}> {`เส้นทาง`} </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    onPress={() => this.GetNear()}
-                                    style={[s.btnNear,{width: 90, flex: 1}]}
+                                    onPress={() => [this.setState({OnPressNear: true}),this.GetNear()]}
+                                    style={[s.ButtonsGroup]}
                                 >
-                                    <Icon name={'md-search'} size={28} color={'#196F3D'} style={s.iconBtnSearch}/>
-                                    <Text style={s.labelBtnSearch}> {`ใกล้ที่สุด`} </Text>
+                                    <Icon name={'md-search'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
+                                    <Text style={s.labelButtonGroup}> {`ใกล้ที่สุด`} </Text>
                                 </TouchableOpacity>
                             </View>
                             :
                             <TouchableOpacity
-                                onPress={() => this.GetNear()}
-                                style={{
-                                    width: '40%',
-                                    height: 60,
-                                    borderRadius: 5,
-                                    borderColor: '#F1C40F',
-                                    borderWidth: 1,
-                                    backgroundColor: '#196F3D',
-                                    flexDirection: 'row',
-                                    marginBottom: 10,
-                                    marginLeft: 5,
-                                    marginRight: 5,
-                                    marginTop: 10,
-                                    justifyContent: 'center',
-                                    alignItems:'center'
-                                }}
+                                onPress={() => [this.setState({OnPressNear: true}),this.GetNear()]}
+                                style={s.buttonNear}
                             >
-                                <Icon name={'md-search'} size={28} color={'#FEF9E7'} style={{marginTop: 5}}/>
-                                <Text style={{
-                                    fontSize: 20,
-                                    fontWeight: 'bold',
-                                    marginLeft: 10,
-                                    marginBottom: 7,
-                                    marginTop: 8,
-                                    color: '#FEF9E7'
-                                }}> {`ใกล้ที่สุด`} </Text>
+                                <Icon name={'md-search'} size={28} color={'#FEF9E7'} style={s.iconButtonNear}/>
+                                <Text style={s.labelButtonNear}> {`ใกล้ที่สุด`} </Text>
                             </TouchableOpacity>
                     }
                 </View>
@@ -255,19 +251,12 @@ const s = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
-    map: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-    },
     viewHeader: {
         flexDirection: 'row',
         backgroundColor: '#196F3D',
         justifyContent: 'space-around'
     },
-    btnResetCamera: {
+    ButtonsGroup: {
         width: 90,
         height: 60,
         borderRadius: 5,
@@ -282,10 +271,10 @@ const s = StyleSheet.create({
         justifyContent: 'center',
         alignItems:'center'
     },
-    iconBtnResetCamera: {
+    iconButtonsGroup: {
         marginTop: 10,
     },
-    labelBtnResetCamera: {
+    labelButtonGroup: {
         fontSize: 14,
         fontWeight: 'bold',
         marginLeft: 0,
@@ -293,13 +282,14 @@ const s = StyleSheet.create({
         marginTop: 0,
         color: '#196F3D',
     },
-    btnNear: {
+    buttonNear: {
+        width: '40%',
         height: 60,
         borderRadius: 5,
-        borderColor: '#FEF9E7',
+        borderColor: '#F1C40F',
         borderWidth: 1,
-        backgroundColor: '#FEF9E7',
-        flexDirection: 'column',
+        backgroundColor: '#196F3D',
+        flexDirection: 'row',
         marginBottom: 10,
         marginLeft: 5,
         marginRight: 5,
@@ -307,33 +297,16 @@ const s = StyleSheet.create({
         justifyContent: 'center',
         alignItems:'center'
     },
-    iconBtnSearch: {
-        marginTop: 10,
+    iconButtonNear: {
+        marginTop: 5,
     },
-    labelBtnSearch: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginLeft: 0,
-        marginBottom: 7,
-        marginTop: 0,
-        color: '#196F3D'
-    },
-    btnNavigate: {
-        width: 140,
-        height: 50,
-        borderRadius: 50,
-        backgroundColor:'yellow',
-        flexDirection: 'row'
-    },
-    iconBtnNavigate: {
-        marginTop: 10,
-        marginLeft: 18
-    },
-    labelBtnNavigate: {
+    labelButtonNear: {
         fontSize: 20,
         fontWeight: 'bold',
         marginLeft: 10,
-        marginTop: 10
+        marginBottom: 7,
+        marginTop: 8,
+        color: '#FEF9E7'
     }
 });
 

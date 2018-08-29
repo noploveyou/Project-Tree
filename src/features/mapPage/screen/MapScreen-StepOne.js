@@ -15,7 +15,7 @@ class MapScreenStepOne extends Component {
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate('Home'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
         setTimeout(() => this.props.FetchDataMap(), 0);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 0 วินาที
-        setTimeout(() => this.CheckGPS(), 1500);
+        this.CheckGPS();
     }
 
     componentWillUnmount() {
@@ -130,10 +130,10 @@ class MapScreenStepOne extends Component {
                 <View style={s.viewHeader}>
                     <TouchableOpacity
                         onPress={() => [this.props.navigation.navigate('SearchListMap'),
-                            navigator.geolocation.clearWatch(this.watchID)]} style={s.btnNear}
+                            navigator.geolocation.clearWatch(this.watchID)]} style={s.buttonNear}
                     >
-                        <Icon name={'md-search'} size={28} color={'white'} style={s.iconBtnSearch}/>
-                        <Text style={s.labelBtnSearch}> {`ค้นหา`} </Text>
+                        <Icon name={'md-search'} size={28} color={'white'} style={s.iconButtonNear}/>
+                        <Text style={s.labelButtonNear}> {`ค้นหา`} </Text>
                     </TouchableOpacity>
                 </View>
                     <View style={s.container}>
@@ -178,7 +178,7 @@ const s = StyleSheet.create({
         backgroundColor: '#196F3D',
         justifyContent: 'space-around'
     },
-    btnResetCamera: {
+    ButtonsGroup: {
         width: 190,
         height: 45,
         borderRadius: 5,
@@ -191,10 +191,10 @@ const s = StyleSheet.create({
         flex: 2,
         justifyContent: 'center'
     },
-    iconBtnResetCamera: {
+    iconButtonsGroup: {
         marginTop: 10,
     },
-    labelBtnResetCamera: {
+    labelButtonGroup: {
         fontSize: 14,
         fontWeight: 'bold',
         marginLeft: 15,
@@ -202,7 +202,7 @@ const s = StyleSheet.create({
         marginTop: 1,
         color: 'white',
     },
-    btnNear: {
+    buttonNear: {
         width: 150,
         height: 45,
         borderRadius: 5,
@@ -216,10 +216,10 @@ const s = StyleSheet.create({
         flex: 1,
         justifyContent: 'center'
     },
-    iconBtnSearch: {
+    iconButtonNear: {
         marginTop: 10,
     },
-    labelBtnSearch: {
+    labelButtonNear: {
         fontSize: 14,
         fontWeight: 'bold',
         marginLeft: 10,
