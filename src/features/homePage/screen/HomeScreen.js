@@ -167,7 +167,7 @@ class HomeScreen extends Component {
                         }
                         {this.state.ShowLogoTitle ?
                             <View style={{flexDirection:'row'}}>
-                                <TouchableOpacity onPress={() => this.NavToDetail()} style={s.btnSearch}>
+                                <TouchableOpacity onPress={() => this.NavToDetail()} style={s.buttonNear}>
                                     <Icon name={'search'} size={22} />
                                     <Text style={s.labelBtn}>{'ค้นหา'}</Text>
                                 </TouchableOpacity>
@@ -238,7 +238,7 @@ const s = StyleSheet.create({
         marginLeft: 5,
         marginBottom: 5
     },
-    btnSearch: {
+    buttonNear: {
         height: 50,
         width: 80,
         backgroundColor: '#F4D03F',

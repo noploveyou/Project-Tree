@@ -13,6 +13,11 @@ NetInfo.isConnected.fetch().then(isConnected => {
             type: 'CHECK_INTERNET',
             payload : false
         });
+    }else {
+        store.dispatch({     // action
+            type: 'CHECK_INTERNET',
+            payload : true
+        });
     }
 });
 
