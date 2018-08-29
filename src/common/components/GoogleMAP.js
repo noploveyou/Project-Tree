@@ -16,16 +16,13 @@ const GoogleMAP = (props) => {
                     showsMyLocationButton={true}       // แสดงปุ่ม ตำแหน่งของผู้ใช้
                     showsUserLocation={true}           // แสดงตำแหน่งของผู้ใช้
                     onMapReady={props.onMapReady}
-                    loadingEnabled={false}              // เปิดใช้การรอโหลด
-                    loadingIndicatorColor='yellow'     // Loading สีเหลือง
-                    loadingBackgroundColor='green'     // พื้นหลังรอโหลด
                     onPress={props.onPress}
                     toolbarEnabled={false}
         >
             {props.check ?
                 props.Data.map(function (mark, index) {
                     return <MapView.Marker
-                        onPress={() => props.OnMarkPress(mark.ly, mark.lx)} //() => SetLocationToNavigate(parseFloat(mark.ly), parseFloat(mark.lx))
+                        onPress={() => props.OnMarkPress(mark.ly, mark.lx)}
                         coordinate={{latitude: parseFloat(mark.ly), longitude: parseFloat(mark.lx)}}
                         title={mark.plantName}
                         description={mark.locationName}

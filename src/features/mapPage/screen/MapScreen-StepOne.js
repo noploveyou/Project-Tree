@@ -15,7 +15,7 @@ class MapScreenStepOne extends Component {
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate('Home'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
         setTimeout(() => this.props.FetchDataMap(), 0);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 0 วินาที
-        this.CheckGPS();
+        setTimeout(() => this.CheckGPS(), 1500);
     }
 
     componentWillUnmount() {
@@ -38,7 +38,7 @@ class MapScreenStepOne extends Component {
     CheckInternetRender = () => {           // ทำงานเมื่อ MAP พร้อมใช้งาน (หลังปิด - เปิด Internet)
         setTimeout(() => {
             if(this.props.NET){                 // Internet เปิดใช้งาน
-                this.props.FetchDataMap();      // เรียกฐานข้อมูลอีกครั้ง หลังจาก เปิด Internet
+                //this.props.FetchDataMap();      // เรียกฐานข้อมูลอีกครั้ง หลังจาก เปิด Internet
                 switch (this.state.MapHeight) {     // Hack MAP เพื่อแสดงปุ่ม UserLocation
                     case '100%':
                         this.setState({MapHeight: '101%', ShowBTNNavigate: false});
@@ -64,7 +64,6 @@ class MapScreenStepOne extends Component {
                     longitude: newLong
                 };
                 this.props.GetLocation(initialRegion);  // Set Value in Store
-                //this.props.GPS(true);
             },
             () => [Alert.alert(
                 null,
@@ -75,8 +74,7 @@ class MapScreenStepOne extends Component {
                 ],
                 { cancelable: false }
             ),navigator.geolocation.clearWatch(this.watchID)],
-            {timeout: 0, distanceFilter: 0}
-            //{timeout: 0, distanceFilter: 50} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
+            {timeout: 0, distanceFilter: 50} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
         );
     };
 
@@ -114,7 +112,9 @@ class MapScreenStepOne extends Component {
         }
 
         if(this.props.CheckFetchDataMap == false){
-            /*setTimeout(function(){ alert("Hello"); }, 3000);*/
+            if(this.props.NET == true){
+                this.props.FetchDataMap();
+            }
             return(
                 <View style={{flex: 1, alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
                     <View>
@@ -127,37 +127,36 @@ class MapScreenStepOne extends Component {
 
         return (
             <Container>
-                {}
                 <View style={s.viewHeader}>
                     <TouchableOpacity
                         onPress={() => [this.props.navigation.navigate('SearchListMap'),
-                            navigator.geolocation.clearWatch(this.watchID)]} style={s.btnSearch}
+                            navigator.geolocation.clearWatch(this.watchID)]} style={s.btnNear}
                     >
                         <Icon name={'md-search'} size={28} color={'white'} style={s.iconBtnSearch}/>
                         <Text style={s.labelBtnSearch}> {`ค้นหา`} </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={s.container}>
-                    <GoogleMAP
-                        hackScale={{width:this.state.MapWidth, height:this.state.MapHeight}}
-                        onMapReady={() =>
+                    <View style={s.container}>
+                        <GoogleMAP
+                            hackScale={{width:this.state.MapWidth, height:this.state.MapHeight}}
+                            onMapReady={() =>
                             [this.setState({ MapWidth: - 1, HackRender: true }), this.CheckInternetRender()]
-                        }
-                        onPress={() => this.setState({ShowBTNNavigate: false})}
+                            }
+                            onPress={() => this.setState({ShowBTNNavigate: false})}
 
-                        check={this.props.CheckFetchDataMap && this.state.HackRender}
-                        Data={this.props.DataMarker}
-                        OnMarkPress={(ly,lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
-                    />
-                    {this.state.ShowBTNNavigate ?
-                        <View style={{marginBottom: 15}}>
-                            <TouchableOpacity onPress={() => this.handleGetDirections()} style={s.btnNavigate}>
-                                <Icon name={'md-navigate'} size={28} style={s.iconBtnNavigate}/>
-                                <Text style={s.labelBtnNavigate}> เส้นทาง </Text>
-                            </TouchableOpacity>
-                        </View> : null
-                    }
-                </View>
+                            check={this.props.CheckFetchDataMap && this.state.HackRender}
+                            Data={this.props.DataMarker}
+                            OnMarkPress={(ly,lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
+                        />
+                        {this.state.ShowBTNNavigate ?
+                            <View style={{marginBottom: 15}}>
+                                <TouchableOpacity onPress={() => this.handleGetDirections()} style={s.btnNavigate}>
+                                    <Icon name={'md-navigate'} size={28} style={s.iconBtnNavigate}/>
+                                    <Text style={s.labelBtnNavigate}> เส้นทาง </Text>
+                                </TouchableOpacity>
+                            </View> : null
+                        }
+                    </View>
             </Container>
         );
     }
@@ -203,7 +202,7 @@ const s = StyleSheet.create({
         marginTop: 1,
         color: 'white',
     },
-    btnSearch: {
+    btnNear: {
         width: 150,
         height: 45,
         borderRadius: 5,

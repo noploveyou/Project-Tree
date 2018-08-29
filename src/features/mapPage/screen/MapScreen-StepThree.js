@@ -15,15 +15,12 @@ class MapScreenStepThree extends Component {
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate('SearchListMap'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
         setTimeout(() => {this.props.FetchDataMap()}, 0);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 0 วินาที
-        this.CheckGPS();
+        setTimeout(() => this.CheckGPS(), 1500);
     }
 
     componentWillUnmount() {
         this.backHandler.remove();
         this.props.ResetMark([]);
-        //this.props.GPS(false);
-        //this.props.GetLocation(null);
-        this.setState({isLoading: false});
         navigator.geolocation.clearWatch(this.watchID); // set value UserLocation = null in store
     }
 
@@ -45,7 +42,7 @@ class MapScreenStepThree extends Component {
     CheckInternetRender = () => {           // ทำงานเมื่อ MAP พร้อมใช้งาน (หลังปิด - เปิด Internet)
         setTimeout(() => {
             if(this.props.NET){                 // Internet เปิดใช้งาน
-                this.props.FetchDataMap();      // เรียกฐานข้อมูลอีกครั้ง หลังจาก เปิด Internet
+                //this.props.FetchDataMap();      // เรียกฐานข้อมูลอีกครั้ง หลังจาก เปิด Internet
                 switch (this.state.MapHeight) {     // Hack MAP เพื่อแสดงปุ่ม UserLocation
                     case '100%':
                         this.setState({MapHeight: '101%', ShowBTNNavigate: false});
@@ -86,9 +83,9 @@ class MapScreenStepThree extends Component {
     };
 
     GetNear = () => {
+        this.CheckGPS();
         if(this.props.LocationUser){
-            this.setState({isLoading: true});
-            this.CheckGPS();
+            this.setState({isLoading: true});   // เปิดการโหลด
             try {
                 let sum = [];   // เก็บค่า lat, lng และ distance
                 for(let i = 0;i < this.props.DataMarker.length; i++){   // Loop ตามจำนวนค่าที่มี length
@@ -106,13 +103,11 @@ class MapScreenStepThree extends Component {
                         }
                     });
                     console.log(sum);
-                    this.setState({isLoading: false});
+                    this.setState({isLoading: false}); // ปิดการโหลด
                 }
             }catch (e) {
-                navigator.geolocation.clearWatch(this.watchID);
             }
         }else {
-            this.CheckGPS();
             this.setState({isLoading: true});
         }
     };
@@ -152,8 +147,10 @@ class MapScreenStepThree extends Component {
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }
 
-        /*if(this.state.isLoading){
-            /!*setTimeout(function(){ alert("Hello"); }, 3000);*!/
+        if(this.props.CheckFetchDataMap == false){
+            if(this.props.NET == true){
+                this.props.FetchDataMap();
+            }
             return(
                 <View style={{flex: 1, alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
                     <View>
@@ -162,7 +159,7 @@ class MapScreenStepThree extends Component {
                     </View>
                 </View>
             )
-        }*/
+        }
 
         return (
             <Container>
@@ -206,16 +203,43 @@ class MapScreenStepThree extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => this.GetNear()}
-                                    style={s.btnSearch}
+                                    style={[s.btnNear,{width: 90, flex: 1}]}
                                 >
                                     <Icon name={'md-search'} size={28} color={'#196F3D'} style={s.iconBtnSearch}/>
                                     <Text style={s.labelBtnSearch}> {`ใกล้ที่สุด`} </Text>
                                 </TouchableOpacity>
-                            </View>  : null
-
+                            </View>
+                            :
+                            <TouchableOpacity
+                                onPress={() => this.GetNear()}
+                                style={{
+                                    width: '40%',
+                                    height: 60,
+                                    borderRadius: 5,
+                                    borderColor: '#F1C40F',
+                                    borderWidth: 1,
+                                    backgroundColor: '#196F3D',
+                                    flexDirection: 'row',
+                                    marginBottom: 10,
+                                    marginLeft: 5,
+                                    marginRight: 5,
+                                    marginTop: 10,
+                                    justifyContent: 'center',
+                                    alignItems:'center'
+                                }}
+                            >
+                                <Icon name={'md-search'} size={28} color={'#FEF9E7'} style={{marginTop: 5}}/>
+                                <Text style={{
+                                    fontSize: 20,
+                                    fontWeight: 'bold',
+                                    marginLeft: 10,
+                                    marginBottom: 7,
+                                    marginTop: 8,
+                                    color: '#FEF9E7'
+                                }}> {`ใกล้ที่สุด`} </Text>
+                            </TouchableOpacity>
                     }
                 </View>
-
             </Container>
         );
     }
@@ -269,8 +293,7 @@ const s = StyleSheet.create({
         marginTop: 0,
         color: '#196F3D',
     },
-    btnSearch: {
-        width: 90,
+    btnNear: {
         height: 60,
         borderRadius: 5,
         borderColor: '#FEF9E7',
@@ -281,7 +304,6 @@ const s = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         marginTop: 10,
-        flex: 1,
         justifyContent: 'center',
         alignItems:'center'
     },
