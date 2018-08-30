@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import HeaderForm from '../../../common/components/HeaderForm';
 import CheckInternet from '../../../common/components/CheckNET';
 import GoogleMAP from '../../../common/components/GoogleMAP'
-import geolib from 'geolib'
+import geolib from 'geolib';
 
 class MapScreenStepThree extends Component {
     componentDidMount(){
@@ -40,7 +40,6 @@ class MapScreenStepThree extends Component {
     CheckInternetRender = () => {           // ทำงานเมื่อ MAP พร้อมใช้งาน (หลังปิด - เปิด Internet)
         setTimeout(() => {
             if(this.props.NET){                 // Internet เปิดใช้งาน
-                //this.props.FetchDataMap();      // เรียกฐานข้อมูลอีกครั้ง หลังจาก เปิด Internet
                 switch (this.state.MapHeight) {     // Hack MAP เพื่อแสดงปุ่ม UserLocation
                     case '100%':
                         this.setState({MapHeight: '101%', ShowBTNNavigate: false});
@@ -84,7 +83,7 @@ class MapScreenStepThree extends Component {
 
     GetNear = () => {
         this.CheckGPS();
-        if(this.props.LocationUser) {
+        if(this.props.GPSConnect) {
             this.setState({isLoading: true});   // เปิดการโหลด
             try {
                 let Locations = [];   // เก็บค่า lat, lng และ distance
@@ -110,9 +109,11 @@ class MapScreenStepThree extends Component {
                 this.NavigateNear(parseFloat(Locations[IndexLocations].lat), parseFloat(Locations[IndexLocations].lng));
                 this.setState({OnPressNear: false});    // Reset การกดปุ่ม
                 this.setState({isLoading: false});      // ปิดการโหลด
+                navigator.geolocation.clearWatch(this.watchID);
             } catch (e) {
+
             }
-        }else {
+        }else if(this.props.GPSConnect == false){
             this.setState({isLoading: true});       // ปิดการโหลด
         }
     };
@@ -157,8 +158,6 @@ class MapScreenStepThree extends Component {
     SetLocationToNavigate = (lat, lng) => {
         this.setState({SetLatitudeToNavigate: lat, SetLongitudeToNavigate: lng, ShowBTNNavigate: true});
     };
-
-
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
@@ -314,7 +313,7 @@ export default connect(
     (state) => ({
         NET : state.CheckDevice.InternetIsConnect,         // ตรวจสอบ Internet
         LocationUser : state.CheckDevice.UserLocation,      // ตำแหน่งผู้ใช้
-        CheckGPS : state.CheckDevice.GPSConnect,
+        GPSConnect : state.CheckDevice.GPSConnect,
         DataMarker : state.DataMapScreen.DataMarkStepThree,     // ตำแหน่ง Mark ต้นไม้
         CheckFetchDataMap : state.DataMapScreen.CheckDataMarkStepThree,     // ตรวจสอบว่า โหลดข้อมูลเสร็จหรือไม่
     }),
