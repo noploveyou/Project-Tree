@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'native-base';
-import { Alert, BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { Alert, BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
 import getDirections from "react-native-google-maps-directions";
 import { connect } from "react-redux";
@@ -8,6 +8,8 @@ import HeaderForm from '../../../common/components/HeaderForm';
 import CheckInternet from '../../../common/components/CheckNET';
 import SearchListMap from "./ListMapScreen-StepTwo";
 import GoogleMAP from '../../../common/components/GoogleMAP'
+import Loading from '../../../common/components/Loading';
+import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 
 class MapScreenStepOne extends Component {
     componentDidMount(){
@@ -116,12 +118,7 @@ class MapScreenStepOne extends Component {
                 this.props.FetchDataMap();
             }
             return(
-                <View style={{flex: 1, alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
-                    <View>
-                        <ActivityIndicator size="large" color="green"/>
-                        <Text style={{fontSize:30}}> กำลังโหลด กรุณารอสักครู่ </Text>
-                    </View>
-                </View>
+                <Loading />
             )
         }
 
