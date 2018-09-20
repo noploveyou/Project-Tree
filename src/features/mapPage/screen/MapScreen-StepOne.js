@@ -15,7 +15,7 @@ class MapScreenStepOne extends Component {
     componentDidMount(){
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
-            () => this.props.navigation.navigate('Home'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
+            () => this.props.navigation.navigate('Map'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
         setTimeout(() => this.props.FetchDataMap(), 0);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 0 วินาที
         this.CheckGPS();
     }
@@ -126,7 +126,7 @@ class MapScreenStepOne extends Component {
             <Container>
                 <View style={s.viewHeader}>
                     <TouchableOpacity
-                        onPress={() => [this.props.navigation.navigate('SearchListMap'),
+                        onPress={() => [this.props.navigation.navigate({routeName: 'SearchListMap',}),
                             navigator.geolocation.clearWatch(this.watchID)]} style={s.buttonNear}
                     >
                         <Icon name={'md-search'} size={28} color={'white'} style={s.iconButtonNear}/>
@@ -253,6 +253,6 @@ export default connect(
     (dispatch) => ({
         GetLocation : (value) => {dispatch({type: "GET_USER_LOCATION", payload: value})},    // รับตำแหน่งผู้ใช้
         FetchDataMap : (value) => {dispatch({type: "CALL_DATA_STEP_ONE", payload: value})},      // เรียกฐานข้อมูล
-        GPS : (value) => {dispatch({type: "USE_GPS", payload: value})},
+        GPS : (value) => {dispatch({type: "USE_GPS", payload: value})}
     })
 )(MapScreenStepOne);

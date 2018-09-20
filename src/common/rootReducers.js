@@ -1,5 +1,6 @@
 import homeReducer from '../features/homePage/redux/HomeRuducer';
 import MapReducer from '../features/mapPage/redux/MapReducer';
+import ListTreeReducer from '../features/listTreePage/redux/ListTreeReducer';
 
 const CheckDevice = (state={}, action) => {
     switch (action.type){
@@ -36,6 +37,7 @@ const rootReducer = {
     CheckDevice: CheckDevice,
     DataHomeScreen: homeReducer,
     DataMapScreen: MapReducer,
+    DataListTreeScreen : ListTreeReducer
 };
 
 export default rootReducer;

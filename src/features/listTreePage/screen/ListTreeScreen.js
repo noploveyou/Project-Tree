@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
-import { Container, Header, Left, Body, Right, Button, Icon, Title ,
-         Content, Text, icon ,View,Input,Item} from 'native-base';
-import {FlatList, ActivityIndicator, TouchableOpacity, BackHandler} from 'react-native';
+import { Container, Icon, Content, View, Input, Item } from 'native-base';
+import { FlatList, BackHandler, NetInfo } from 'react-native';
+import NoInternetScreen from  '../../../common/components/NoInternetScreen';
+import HeaderForm from '../../../common/components/HeaderForm';
+import ListItem from '../components/ListItem';
+import { connect } from "react-redux";
+import CheckInternet from "../../../common/components/CheckNET";
 
-export default class ListTreeScreen extends Component {
+class ListTreeScreen extends Component {
     componentDidMount(){
-        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.navigate('Home'));
-        this.SearchDataSource('');
+        this.props.FetchDataList();
+        this.props.SetSearchList('');
+        NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress',
+            () => this.props.navigation.navigate('ListTree'));
     }
 
     componentWillUnmount() {
@@ -17,117 +24,68 @@ export default class ListTreeScreen extends Component {
         super(props);
         this.state = {
             text: '',
-            selected: (new Map()),
-            isLoading: false,
         };
     }
 
-    _keyExtractor = (item,index) => item.plantID;
+    _keyExtractor = (item) => item.plantID;
 
-    // _onPressItem = (id) => {
-    //     // updater functions are preferred for transactional updates
-    //     this.setState((state) => {
-    //         // copy the mapPage rather than modifying state.
-    //         const selected = new Map(state.selected);
-    //         selected.set(id, !selected.get(id)); // toggle
-    //         return {selected};
-    //     });
-    // };
+    _onPressItem = (value) => {
+        this.props.navigation.navigate({
+            routeName: 'Detail',
+            params: { back: "ListTree", Three : value }
+        });   // ไปยังหน้า รายละเอียด
+        this.props.SetSearchList('');
+    };
 
     _renderItem = ({item}) => {
         return (
-            <MyListItem
-                id={item.plantID}
-                selected={!!this.state.selected.get(item.plantID)}
-                TreeName={item.plantName}
-                TreeNameEN={item.plantScience}
+            <ListItem
+                //id={item.plantID}
+                labelTreeNameTH={item.plantName}
+                labelTreeNameEN={item.plantScience}
+                onPressItem={() => this._onPressItem(item.plantName)}
+                image={item.plantIcon}
             />
-
         );
     };
+
+    Search(value){
+        this.setState({text: value});
+        this.props.SetSearchList(value);
+        this.props.FetchDataList();
+    }
 
     clearText(){
         this.setState({text:''});
         this.componentDidMount();
     }
 
-    SearchDataSource (value) {
-        fetch('http://192.168.1.22/DBCheck.php', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    plantName: value,
-                    check: "Like_HOMEPAGESCREEN"
-                })
-            }
-        )
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: responseJson
-                }, function(){
-
-                });
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            });
-
-        this.setState({text: value})
-    }
-
     render() {
-        if(this.state.isLoading){
-            /*setTimeout(function(){ alert("Hello"); }, 3000);*/
-            return(
-                <View style={{flex: 1, alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
-                    <View>
-                        <ActivityIndicator size="large" color="green"/>
-                        <Text style={{fontSize:30}}> กำลังโหลด กรุณารอสักครู่ </Text>
-                    </View>
-                </View>
-
-            )
+        if(this.props.NET == false){    // หากปิด Internet
+            return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }
+        //console.log(this.props.DataList);
         return (
             <Container>
-                <Header style={{backgroundColor:'#196F3D'}}>
-                    <Left>
-                        <Button transparent  onPress={()=>this.props.navigation.openDrawer()}>
-                            <Icon name='menu' />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title> รายชื่อพรรณไม้ </Title>
-                    </Body>
-                    <Right>
-                    </Right>
-                </Header>
-                    <Item>
-                        <View style={{flex: 1,flexDirection: 'row',justifyContent: 'center'}}>
-                            <Input placeholder= "Search In Here"
-                                   placeholderTextColor = '#D5D8DC'
-                                   returnKeyType={"done"}
-                                   onChangeText={(value) => {this.SearchDataSource(value)}}
-                                   /*this.SearchDataSource(value*/
-                                   value={this.state.text}
-                            />
-                        </View>
-                        <View>
-                            <Icon name='close' style={{fontSize: 25, color: 'red',marginRight: 15}}
-                                  onPress={() => {this.clearText()}}
-                            />
-                        </View>
-                    </Item>
+                <Item>
+                    <View style={{flex: 1,flexDirection: 'row',justifyContent: 'center'}}>
+                        <Input
+                            placeholder= "Search In Here"
+                            placeholderTextColor = '#D5D8DC'
+                            returnKeyType={"done"}
+                            onChangeText={(value) => {this.Search(value)}}
+                            value={this.state.text}
+                        />
+                    </View>
+                    <View>
+                        <Icon name='close' style={{fontSize: 25, color: 'red',marginRight: 15}}
+                              onPress={() => {this.clearText()}}
+                        />
+                    </View>
+                </Item>
                 <Content>
                     <FlatList
-                        data={this.state.dataSource}
-                        /*extraData={this.state}*/
+                        data={this.props.DataList}
                         keyExtractor={this._keyExtractor}
                         renderItem={this._renderItem}
                     />
@@ -137,26 +95,17 @@ export default class ListTreeScreen extends Component {
     }
 }
 
-class MyListItem extends React.PureComponent {
-    _onPress = () => {
-        // Do someting
-        //this.props.onPressItem(this.props.id);
-        //alert(this.props.id);
-    };
+ListTreeScreen.navigationOptions = ({ navigation }) => ({
+    header: <HeaderForm btn={() => navigation.openDrawer()} iconName={'bars'} titlePage={'รายชื่อพรรณไม้'} />
+});
 
-    render() {
-        const textColor = this.props.selected ? "red" : "black";
-        return (
-            <TouchableOpacity onPress={this._onPress}>
-                <View style={{borderBottomWidth:1}}>
-                    <Text style={{ color: 'black' }}>
-                        {this.props.TreeName}
-                    </Text>
-                    <Text style={{ color: 'black' }}>
-                        {this.props.TreeNameEN}
-                    </Text>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}
+export default connect(
+    (state) => ({
+        NET : state.CheckDevice.InternetIsConnect,
+        DataList : state.DataListTreeScreen.DataListTree
+    }),
+    (dispatch) => ({
+        SetSearchList : (value) => {dispatch({type: "SET_VALUE_SEARCH_LIST_TREE", payload: value})},
+        FetchDataList: (value) => {dispatch({type: "CALL_DATA_LIST_TREE", payload: value})}
+    })
+)(ListTreeScreen);

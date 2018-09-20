@@ -4,7 +4,6 @@ import { FlatList, BackHandler, NetInfo } from 'react-native';
 import HeaderForm from '../../../common/components/HeaderForm';
 import { connect } from "react-redux";
 import ListItem from '../components/ListItem';
-import Loading from '../../../common/components/Loading';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import CheckInternet from "../../../common/components/CheckNET";
 
@@ -34,8 +33,11 @@ class ListMapScreenStepTwo extends Component {
     _keyExtractor = (item) => item.plantID;
 
      _onPressItem = (value) => {
-         this.props.SetSearchListMap(value);
-         this.props.navigation.navigate('SelectedMap');
+         this.props.SetSearchListMap("");
+         this.props.SetKeySearch(value);
+         this.setState({text: ""});
+         this.props.FetchDataListMap();
+         this.props.navigation.navigate({routeName: 'SelectedMap'})
     };
 
     _renderItem = ({item}) => {
@@ -64,14 +66,6 @@ class ListMapScreenStepTwo extends Component {
     render() {
         if(this.props.NET == false){    // หากปิด Internet
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
-        }
-
-        if(this.state.isLoading){
-            setTimeout(function(){
-                return(
-                    <Loading />
-                )
-            }, 3000);
         }
 
         return (
@@ -104,31 +98,6 @@ class ListMapScreenStepTwo extends Component {
     }
 }
 
-/*class MyListItem extends React.PureComponent {
-    _onPress = () => {
-        // Do someting
-        this.props.onPressItem(this.props.TreeName);
-        //alert(this.props.TreeName);
-
-    };
-
-    render() {
-        const textColor = this.props.selected ? "red" : "black";
-        return (
-            <TouchableOpacity onPress={this._onPress}>
-                <View style={{borderBottomWidth:1}}>
-                    <Text style={{ color: 'black' }}>
-                        {this.props.TreeName}
-                    </Text>
-                    <Text style={{ color: 'black' }}>
-                        {this.props.TreeNameEN}
-                    </Text>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}*/
-
 ListMapScreenStepTwo.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm btn={() => navigation.goBack()} iconName={'arrow-left'} titlePage={'ค้นหาตำแหน่งพรรณไม้'} />
 });
@@ -140,6 +109,7 @@ export default connect(
     }),
     (dispatch) => ({
         SetSearchListMap : (value) => {dispatch({type: "SET_VALUE_SEARCH_LIST_MAP", payload: value})},
+        SetKeySearch : (value) => {dispatch({type: "KEY_VALUE_SEARCH_DATA_MARK_STEP_THREE", payload: value})},
         FetchDataListMap: (value) => {dispatch({type: "CALL_DATA_STEP_TWO", payload: value})}
     })
 )(ListMapScreenStepTwo);

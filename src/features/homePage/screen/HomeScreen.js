@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Container, Thumbnail, Text, Content } from 'native-base';
 import { View, TouchableOpacity, StyleSheet, Keyboard, Alert, NetInfo } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
-import CommonList from '../../../common/components/CommonList';
+import CommonList from '../components/CommonList';
 import HeaderForm from '../../../common/components/HeaderForm';
 import Icon from "react-native-vector-icons/FontAwesome";
 import CheckInternet from '../../../common/components/CheckNET';
@@ -59,7 +59,12 @@ class HomeScreen extends Component {
 
     NavToDetail (){     // ปุ่มค้นหา
         if((this.props.CheckData)){
-            this.props.navigation.navigate('Detail');   // ไปยังหน้า รายละเอียด
+            this.props.navigation.navigate({
+                routeName: 'Detail',
+                params: { back: "Home", Three : this.state.ValueInput }
+            });   // ไปยังหน้า รายละเอียด
+            this.setState({ValueInput: ""});
+            this.props.SetValueSearchHomePage("");
         }else {
             if (this.state.InputIsEmpty){    // เช็คค่า Input ว่างหรือไม่
                 Alert.alert(

@@ -162,6 +162,7 @@ class MapScreenStepThree extends Component {
     };
 
     render() {
+        //const { Three } = this.props.navigation.state.params;
         if(this.props.NET == false){    // หากปิด Internet
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }
@@ -201,7 +202,12 @@ class MapScreenStepThree extends Component {
                         this.state.ShowBTNNavigate ?
                             <View style={s.viewHeader}>
                                 <TouchableOpacity
-                                    onPress={() => this.onPress}
+                                    onPress={() =>
+                                        this.props.navigation.navigate({
+                                            routeName: 'Detail',
+                                            params: { back: "SelectedMap", Three : this.props.GetTree }
+                                        })
+                                    }
                                     style={s.ButtonsGroup}
                                 >
                                     <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
@@ -313,6 +319,7 @@ export default connect(
         GPSConnect : state.CheckDevice.GPSConnect,
         DataMarker : state.DataMapScreen.DataMarkStepThree,     // ตำแหน่ง Mark ต้นไม้
         CheckFetchDataMap : state.DataMapScreen.CheckDataMarkStepThree,     // ตรวจสอบว่า โหลดข้อมูลเสร็จหรือไม่
+        GetTree: state.DataMapScreen.KeyValue
     }),
     (dispatch) => ({
         GetLocation : (value) => {dispatch({type: "GET_USER_LOCATION", payload: value})},    // รับตำแหน่งผู้ใช้
