@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
-import images from "../../features/mapPage/constants/IconRequire";
+import images from "../IconRequire";
 
 const GoogleMAP = (props) => {
     return(

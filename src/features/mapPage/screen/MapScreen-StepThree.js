@@ -8,6 +8,8 @@ import HeaderForm from '../../../common/components/HeaderForm';
 import CheckInternet from '../../../common/components/CheckNET';
 import GoogleMAP from '../../../common/components/GoogleMAP'
 import geolib from 'geolib';
+import Loading from '../../../common/components/Loading';
+import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 
 class MapScreenStepThree extends Component {
     componentDidMount(){
@@ -169,12 +171,7 @@ class MapScreenStepThree extends Component {
                 this.props.FetchDataMap();
             }
             return(
-                <View style={{flex: 1, alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
-                    <View>
-                        <ActivityIndicator size="large" color="green"/>
-                        <Text style={{fontSize:30}}> กำลังโหลด กรุณารอสักครู่ </Text>
-                    </View>
-                </View>
+                <Loading />
             )
         }
 
