@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../../common/constants";   // url Database
 import store from "../../../common/initialStore";
 
-function fetchDataStepThree(value) {
+function fetchData(value) {
     fetch(BASE_URL, {
             method: 'POST',
             headers: {
@@ -10,28 +10,20 @@ function fetchDataStepThree(value) {
             },
             body: JSON.stringify({
                 plantName: value,
-                check: "MAPSCREEN_STEP_THREE"           // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
+                check: "LIKE_LIST_TREE_SCREEN"           // ค่าที่ส่งไป php (เช็ค เป็น Like, where)
             })
         }
     )
         .then((response) => response.json())
         .then((responseJson) => {
             store.dispatch({     // action
-                type: 'ADD_DATA_MARK_STEP_THREE',
+                type: 'ADD_DATA_LIST_TREE',
                 payload : responseJson
             });
-            //console.log(responseJson);
-            store.dispatch({     // action
-                type: 'CHECK_DATA_MARK_STEP_THREE',
-                payload : true
-            })
         })
         .catch(function (error) {
-            store.dispatch({     // action
-                type: 'CHECK_DATA_MARK_STEP_THREE',
-                payload : false
-            });
+            console.log("error")
         })
 }
 
-module.exports = fetchDataStepThree;
+module.exports = fetchData;

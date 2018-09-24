@@ -4,6 +4,7 @@ import fetchDataStepTwo from '../api/call-database-step-two';
 import fetchDataStepThree from '../api/call-database-step-three';
 
 const getValueSearchStepTwo = (state) => state.DataMapScreen.ValueSearchPlant;  // รับค่าจาก state
+const getKeyValue = (state) => state.DataMapScreen.KeyValue;  // รับค่าจาก state
 
 function* callDataStepOne() {    // เรียกฐานข้อมูลแบบ =
     fetchDataStepOne();
@@ -15,7 +16,7 @@ function* callDataStepTwo() {    // เรียกฐานข้อมูล�
 }
 
 function* callDataStepThree() {    // เรียกฐานข้อมูลแบบ =
-    const ValueSearch = yield select(getValueSearchStepTwo);
+    const ValueSearch = yield select(getKeyValue);
     fetchDataStepThree(ValueSearch);
 }
 
