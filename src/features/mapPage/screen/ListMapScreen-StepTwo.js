@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import ListItem from '../components/ListItem';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import CheckInternet from "../../../common/components/CheckNET";
+import Loading from '../../../common/components/Loading';
 
 class ListMapScreenStepTwo extends Component {
     componentDidMount(){
@@ -73,6 +74,8 @@ class ListMapScreenStepTwo extends Component {
     render() {
         if(this.props.NET == false){    // หากปิด Internet
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
+        }else if(this.props.DataList == null){    // หากปิด Internet
+            return <Loading />     // แสดงหน้า Screen NoInternet
         }
 
         return (

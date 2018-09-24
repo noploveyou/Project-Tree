@@ -1,17 +1,8 @@
 <?php
-include 'connect.php';
-
-// Create connection
-$conn = mysqli_connect($HostName, $HostUser, $HostPass, $DatabaseName);
-mysqli_query($conn,"SET CHARACTER SET UTF8");
-if ($conn->connect_error) {
-
-    die("Connection failed: " . $conn->connect_error);
-}
+include "connect.php";
 
 $GetPlantName = file_get_contents('php://input');
 $TextPlantName = json_decode($GetPlantName,true);
-
 $plantName = $TextPlantName['plantName'];
 $Check = $TextPlantName['check'];
 
@@ -19,12 +10,12 @@ if($Check == "Like_HOMEPAGESCREEN"){
     $sql = "SELECT * FROM plant WHERE plantName LIKE '%".$plantName."%' ";
     $result = $conn->query($sql);
 
-    if ($result->num_rows >0) {
-        while($row[] = $result->fetch_assoc()) {
+    if($result->num_rows >0){
+        while($row[] = $result->fetch_assoc()){
             $tem = $row;
-            $json = json_encode( $tem, JSON_UNESCAPED_UNICODE );
+            $json = json_encode($tem, JSON_UNESCAPED_UNICODE);
         }
-    } else {
+    }else {
         echo "No Results Found.";
         $json = "No Results Found.";
     }
@@ -32,50 +23,70 @@ if($Check == "Like_HOMEPAGESCREEN"){
     $conn->close();
 
 }else if($Check=="IS_HOMEPAGESCREEN"){
-    $sql = "SELECT * FROM plant WHERE (plantName = '$plantName' )";
-//$sql = "SELECT * FROM plant WHERE (plantName='$plantName' )";  ต้องพิมพ์ครบ ถึงเจอ 'พรรณไม้ที่มีมากกว่า1ชื่อ กรุณากดเลือกในรายชื่อด้านล่าง'
+    $sql = "SELECT * FROM plant WHERE (plantName = '$plantName')";
     $result = $conn->query($sql);
 
-    if ($result->num_rows >0) {
-        while($row[] = $result->fetch_assoc()) {
+    if($result->num_rows >0){
+        while($row[] = $result->fetch_assoc()){
             $tem = $row;
-            $json = json_encode( $tem, JSON_UNESCAPED_UNICODE );
+            $json = json_encode($tem, JSON_UNESCAPED_UNICODE);
         }
-    } else {
+    }else {
         echo "No Results Found.";
     }
     echo $json;
     $conn->close();
 
 }else if($Check=="LIKE_LIST_TREE_SCREEN"){
-    $sql = "SELECT * FROM plant WHERE (plantName LIKE '%" . $plantName . "%' 
-            OR plantScience LIKE'%" . $plantName . "%')";
+    $sql = "SELECT * FROM plant WHERE (plantName LIKE '%".$plantName."%' OR plantScience LIKE '%".$plantName."%')";
     $result = $conn->query($sql);
 
-    if ($result->num_rows >0) {
-        while($row[] = $result->fetch_assoc()) {
+    if($result->num_rows >0){
+        while($row[] = $result->fetch_assoc()){
             $tem = $row;
-            $json = json_encode( $tem, JSON_UNESCAPED_UNICODE );
+            $json = json_encode( $tem, JSON_UNESCAPED_UNICODE);
         }
-    } else {
+    }else {
         echo "No Results Found.";
         $json = "No Results Found.";
     }
     echo $json;
     $conn->close();
 
+}else if($Check=="IS_DETAILSCREEN"){
+    $sql = "SELECT 
+                  plant.plantID, plant.plantScience, plant.plantName, plant.plantCommonname, plant.plantSpecies,
+                  plant.plantDistribution, plant.plantbenefit, plant.plantbenefity,
+                  plantfamily.plantFamilyName,
+                  extraction.extractionName
+                FROM plant, plantfamily, extraction, propagation
+                WHERE (plant.plantName = '$plantName') AND plant.plantID = propagation.plantID 
+                AND propagation.popID = extraction.extractionID AND plantfamily.familyID = plant.plantFamilyID ";
+    $result = $conn->query($sql);
+
+    if($result->num_rows >0){
+        while($row[] = $result->fetch_assoc()){
+            $tem = $row;
+            $json = json_encode($tem, JSON_UNESCAPED_UNICODE);
+        }
+    }else {
+        echo "No Results Found.";
+    }
+    echo $json;
+    $conn->close();
+
 }else if($Check=="MAPSCREEN_STEP_ONE"){
     $sql = "SELECT plant.plantID, plant.plantIcon , plant.plantName ,location.locationName, area.lx, area.ly
-            FROM area,plant,location 
-            WHERE lx != 0.0 AND ly != 0.0 AND plant.plantID = area.plantID AND location.locationID = area.locationID";
+                FROM area,plant,location WHERE lx != 0.0 AND ly != 0.0 AND plant.plantID = area.plantID 
+                AND location.locationID = area.locationID";
     $result = $conn -> query($sql);
 
     if ($result -> num_rows > 0) {
-        while($row[] = $result->fetch_assoc()) {
+        while($row[] = $result->fetch_assoc()){
             $tem = $row;
-            $json = json_encode( $tem, JSON_UNESCAPED_UNICODE );
+            $json = json_encode($tem, JSON_UNESCAPED_UNICODE);
         }
-    } else {
+    }else {
         echo "No Results Found.";
     }
     echo $json;
@@ -83,31 +94,31 @@ if($Check == "Like_HOMEPAGESCREEN"){
 
 }else if($Check == "MAPSCREEN_STEP_TWO"){
     $sql = "SELECT plant.plantID, plant.plantName, plant.plantScience ,plant.plantIcon, area.areaID
-            FROM plant, area  WHERE 
-            (plant.plantName LIKE '%" . $plantName . "%' OR plant.plantScience LIKE '%" . $plantName . "%')
-            AND area.plantID = plant.plantID AND lx != 0.0 AND ly != 0.0 ";
+                FROM plant, area  WHERE (plant.plantName LIKE '%".$plantName."%' 
+                OR plant.plantScience LIKE '%".$plantName."%') AND area.plantID = plant.plantID 
+                AND lx != 0.0 AND ly != 0.0 ";
     $result = $conn->query($sql);
 
     if ($result->num_rows >0) {
-        while($row[] = $result->fetch_assoc()) {
+        while($row[] = $result->fetch_assoc()){
             $tem = $row;
-            $json = json_encode( $tem, JSON_UNESCAPED_UNICODE );
+            $json = json_encode($tem, JSON_UNESCAPED_UNICODE);
         }
-    } else {
+    }else {
         echo "No Results Found.";
         $json = "No Results Found.";
     }
     echo $json;
     $conn->close();
 
-}else if($Check=="MAPSCREEN_STEP_THREE") {
+}else if($Check=="MAPSCREEN_STEP_THREE"){
     $sql = "SELECT plant.plantID, plant.plantIcon , plant.plantName ,location.locationName, area.lx, area.ly
-            FROM area,plant,location 
-            WHERE plant.plantName = '$plantName' AND  area.plantID = plant.plantID AND location.locationID = area.locationID  ";
+                FROM area,plant,location WHERE plant.plantName = '$plantName' AND  area.plantID = plant.plantID 
+                AND location.locationID = area.locationID  ";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        while ($row[] = $result->fetch_assoc()) {
+    if ($result->num_rows > 0){
+        while ($row[] = $result->fetch_assoc()){
             $tem = $row;
             $json = json_encode($tem, JSON_UNESCAPED_UNICODE);
         }
@@ -117,17 +128,5 @@ if($Check == "Like_HOMEPAGESCREEN"){
     echo $json;
     $conn->close();
 }
-
-/*$txtKeyword = "กระ";
-if($txtKeyword!= "") {
-    // Search By Name or Email
-    $sql = "SELECT * FROM plant WHERE (plantName LIKE '%" . $txtKeyword . "%' or plantScience LIKE '%" . $txtKeyword . "%' )";
-    $result = $conn->query($sql);
-
-    while ($objResult = mysqli_fetch_array($result)) {
-        echo $objResult["plantName"];
-    }
-
-    $conn->close();
-}*/
 ?>
+

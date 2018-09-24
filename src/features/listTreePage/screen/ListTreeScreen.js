@@ -6,6 +6,7 @@ import HeaderForm from '../../../common/components/HeaderForm';
 import ListItem from '../components/ListItem';
 import { connect } from "react-redux";
 import CheckInternet from "../../../common/components/CheckNET";
+import Loading from '../../../common/components/Loading';
 
 class ListTreeScreen extends Component {
     componentDidMount(){
@@ -21,6 +22,7 @@ class ListTreeScreen extends Component {
     componentWillUnmount() {
         this.backHandler.remove();
         this.keyboardDidHideListener.remove();
+        this.props.SetSearchList('');
     }
 
     constructor(props) {
@@ -54,6 +56,7 @@ class ListTreeScreen extends Component {
             params: { back: "ListTree", Tree : value }
         });   // ไปยังหน้า รายละเอียด
         this.props.SetSearchList('');
+        this.clearText()
     };
 
     _renderItem = ({item}) => {
@@ -82,6 +85,8 @@ class ListTreeScreen extends Component {
     render() {
         if(this.props.NET == false){    // หากปิด Internet
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
+        }else if(this.props.DataList == null){    // หากปิด Internet
+            return <Loading />     // แสดงหน้า Screen NoInternet
         }
         //console.log(this.props.DataList);
         return (

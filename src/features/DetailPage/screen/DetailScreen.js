@@ -7,10 +7,14 @@ import CheckInternet from "../../../common/components/CheckNET";
 import Detail from './tab/DetailTree';
 import Appearance from './tab/Appearance';
 import Location from './tab/Location';
+import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 
 class DetailScreen extends Component {
     componentDidMount(){
-        const { back } = this.props.navigation.state.params;
+        const { back, Tree } = this.props.navigation.state.params;
+        this.props.SetValue(Tree);
+        this.props.FetchData();
+
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate(back));
@@ -21,7 +25,10 @@ class DetailScreen extends Component {
     }
 
     render() {
-        const { back, Tree } = this.props.navigation.state.params;
+        if(this.props.NET == false){    // หากปิด Internet
+            return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
+        }
+
         return (
             <Container>
                     <Tabs >
@@ -63,14 +70,6 @@ class DetailScreen extends Component {
                             <Location />
                         </Tab>
                     </Tabs>
-                <View>
-                    <Text>
-                        {Tree}
-                    </Text>
-                    <Text>
-                        {back}
-                    </Text>
-                </View>
             </Container>
         );
     }
@@ -84,10 +83,15 @@ DetailScreen.navigationOptions = ({ navigation }) => ({
     />
 
 });
+
 export default connect(
-    null,
+    (state) => ({
+        NET : state.CheckDevice.InternetIsConnect,         // ตรวจสอบ Internet
+        DataSource : state.DataDetailScreen.DataSource,
+        Search : state.DataDetailScreen.Search
+    }),
     (dispatch) => ({
-        FetchDataHomePage: (value) => {dispatch({type: "CALL_DATA_LIKE", payload: value})},
-        SetValueSearchHomePage: (value) => {dispatch({type: "SET_VALUE_SEARCH", payload: value})}
+        FetchData: (value) => {dispatch({type: "CALL_DATA_DETAIL", payload: value})},
+        SetValue: (value) => {dispatch({type: "SET_VALUE_DETAIL", payload: value})}
     })
 )(DetailScreen);
