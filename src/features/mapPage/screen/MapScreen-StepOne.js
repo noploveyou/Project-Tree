@@ -15,7 +15,7 @@ class MapScreenStepOne extends Component {
     componentDidMount(){
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
-            () => this.props.navigation.navigate('Map'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
+            () => [this.props.navigation.navigate('Map'), this.checkExitApp()]);     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
         setTimeout(() => this.props.FetchDataMap(), 0);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 0 วินาที
         this.CheckGPS();
     }
@@ -36,6 +36,18 @@ class MapScreenStepOne extends Component {
             HackRender: false,          // สำหรับเช็ค กัน Error (ให้ MAP พร้อม และ Hack เสร็จก่อนค่อย Get Mark)
         }
     }
+
+    checkExitApp = () => {
+        Alert.alert(
+            null,
+            'คุณต้องการออกจากแอพพลิเคชันหรือไม่ ?',
+            [
+                {text: 'ไม่ใช่', onPress: () => null},
+                {text: 'ใช่', onPress: () => BackHandler.exitApp()},
+            ],
+            { cancelable: false }
+        )
+    };
 
     CheckInternetRender = () => {           // ทำงานเมื่อ MAP พร้อมใช้งาน (หลังปิด - เปิด Internet)
         setTimeout(() => {

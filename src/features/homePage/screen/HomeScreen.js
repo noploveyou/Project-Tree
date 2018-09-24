@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Thumbnail, Text, Content } from 'native-base';
-import { View, TouchableOpacity, StyleSheet, Keyboard, Alert, NetInfo } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Keyboard, Alert, NetInfo, BackHandler } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import CommonList from '../components/CommonList';
 import HeaderForm from '../../../common/components/HeaderForm';
@@ -14,10 +14,13 @@ const LogoPage = require('../../../../public/assets/images/Tree.jpg');
 class HomeScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress',
+            () => [this.props.navigation.navigate('Home'),this.checkExitApp()]);
     }
 
     componentWillUnmount() {
         this.props.SetValueSearchHomePage('');
+        this.backHandler.remove();
     }
 
     constructor(props) {
@@ -29,8 +32,20 @@ class HomeScreen extends Component {
             ShowLogoTitle: true,     // เปิด - ปิด Logo true = แสดง
             ShowButtonClear: false,     // แสดง - ซ่อน ปุ่ม x (ลบ) false = ซ่อน
             InputIsEmpty: true,    // ค่าใน Input ว่าง  true = ว่าง
-            };
-    }
+        }
+    };
+
+    checkExitApp = () => {
+        Alert.alert(
+            null,
+            'คุณต้องการออกจากแอพพลิเคชันหรือไม่ ?',
+            [
+                {text: 'ไม่ใช่', onPress: () => null, style: 'cancel'},
+                {text: 'ใช่', onPress: () => BackHandler.exitApp()},
+            ],
+            { cancelable: false }
+        )
+    };
 
     _keyboardDidShow = () => {
         this.setState({ShowLogoTitle: false}); // เมื่อเปิด keyboard ซ่อน Logo
@@ -39,6 +54,7 @@ class HomeScreen extends Component {
 
     _keyboardDidHide = () => {
         this.setState({ShowLogoTitle: true, DisableListResults: true}); // เมื่อปิด keyboard ปิด DisableListResults แสดง Logo
+        this.refs['input'].blur();
     };
 
     SearchDataSource (value) {
@@ -54,6 +70,8 @@ class HomeScreen extends Component {
             this.props.SetValueSearchHomePage(value);   // Action -> set Search in Store
             this.props.FetchDataHomePage();         // where Like
             this.props.FetchCheckDataHomePage();    // เช็คค่า true, false จาก ฐานข้อมูล (เช็คค่าว่ามีในฐานข้อมูลหรือไม่)
+
+
         }
     }
 
@@ -61,7 +79,7 @@ class HomeScreen extends Component {
         if((this.props.CheckData)){
             this.props.navigation.navigate({
                 routeName: 'Detail',
-                params: { back: "Home", Three : this.state.ValueInput }
+                params: { back: "Home", Tree : this.state.ValueInput }
             });   // ไปยังหน้า รายละเอียด
             this.setState({ValueInput: ""});
             this.props.SetValueSearchHomePage("");
@@ -134,6 +152,7 @@ class HomeScreen extends Component {
                                     // ลบ Listener ** หากไม่ปิด การทำงานนี้จะทำงานที่ Feature อื่นด้วย
                                     this.keyboardDidShowListener.remove(), this.keyboardDidHideListener.remove(),
                                 ]}
+                                ref="input"
                                 data={this.props.DataSource}                        
                                 defaultValue={this.state.ValueInput}
                                 onChangeText={(value) => this.SearchDataSource(value)}

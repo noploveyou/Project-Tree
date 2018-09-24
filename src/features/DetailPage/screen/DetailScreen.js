@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Text } from 'native-base';
+import { Container, Header, Text, Tab, Tabs, TabHeading, Icon } from 'native-base';
 import {BackHandler, NetInfo, View} from 'react-native';
 import HeaderForm from "../../../common/components/HeaderForm";
 import CheckInternet from "../../../common/components/CheckNET";
-
-
+import Detail from './tab/DetailTree';
+import Appearance from './tab/Appearance';
+import Location from './tab/Location';
 
 class DetailScreen extends Component {
     componentDidMount(){
@@ -20,17 +21,55 @@ class DetailScreen extends Component {
     }
 
     render() {
-        const { back, Three } = this.props.navigation.state.params;
+        const { back, Tree } = this.props.navigation.state.params;
         return (
             <Container>
+                    <Tabs >
+                        <Tab
+                            heading={
+                                <TabHeading
+                                    style={{backgroundColor: "#196F3D"}}
+                                >
+
+                                        <Icon name="camera" style={{marginLeft: 10}}/>
+                                        <Text style={{fontSize: 16}}>{"รายละเอียด"}</Text>
+
+                                </TabHeading>}
+                        >
+                            <Detail />
+                        </Tab>
+                        <Tab
+                            heading={
+                                <TabHeading style={{backgroundColor: "#196F3D"}}>
+
+                                        <Icon name="camera" />
+                                        <Text style={{fontSize: 16}}>{"ลักษณะ"}</Text>
+
+                                </TabHeading>
+                            }
+                        >
+                            <Appearance />
+                        </Tab>
+                        <Tab
+                            heading={
+                                <TabHeading style={{backgroundColor: "#196F3D"}}>
+
+                                        <Icon name="apps" />
+                                        <Text style={{fontSize: 16}}>{"สถานที่พบ"}</Text>
+
+                                </TabHeading>
+                            }
+                        >
+                            <Location />
+                        </Tab>
+                    </Tabs>
                 <View>
                     <Text>
-                        {Three}
+                        {Tree}
                     </Text>
                     <Text>
                         {back}
                     </Text>
-
                 </View>
             </Container>
         );

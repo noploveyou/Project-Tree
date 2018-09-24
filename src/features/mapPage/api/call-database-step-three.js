@@ -20,6 +20,7 @@ function fetchDataStepThree(value) {
                 type: 'ADD_DATA_MARK_STEP_THREE',
                 payload : responseJson
             });
+            //console.log(responseJson);
             store.dispatch({     // action
                 type: 'CHECK_DATA_MARK_STEP_THREE',
                 payload : true

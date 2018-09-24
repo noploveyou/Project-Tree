@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container } from 'native-base';
 import { Alert, BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
+import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import getDirections from "react-native-google-maps-directions";
 import { connect } from "react-redux";
 import HeaderForm from '../../../common/components/HeaderForm';
@@ -13,9 +14,10 @@ import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 
 class MapScreenStepThree extends Component {
     componentDidMount(){
+        const { back } = this.props.navigation.state.params;
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
-            () => this.props.navigation.navigate('SearchListMap'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
+            () => this.props.navigation.navigate(back));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
         setTimeout(() => {this.props.FetchDataMap()}, 0);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 0 วินาที
         this.CheckGPS();    // ตรวจ GPS
     }
@@ -205,27 +207,27 @@ class MapScreenStepThree extends Component {
                                     onPress={() =>
                                         this.props.navigation.navigate({
                                             routeName: 'Detail',
-                                            params: { back: "SelectedMap", Three : this.props.GetTree }
+                                            params: { back: "SelectedMap", Tree : this.props.GetTree }
                                         })
                                     }
                                     style={s.ButtonsGroup}
                                 >
-                                    <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
+                                    <Icon name={'md-paper'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
                                     <Text style={s.labelButtonGroup}> {`รายละเอียด`} </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => this.handleGetDirections()}
                                     style={s.ButtonsGroup}
                                 >
-                                    <Icon name={'md-refresh'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
+                                    <Icon name={'md-navigate'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
                                     <Text style={s.labelButtonGroup}> {`เส้นทาง`} </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => [this.setState({OnPressNear: true}),this.GetNear()]}
                                     style={[s.ButtonsGroup]}
                                 >
-                                    <Icon name={'md-search'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
-                                    <Text style={s.labelButtonGroup}> {`ใกล้ที่สุด`} </Text>
+                                    <MaterialIcons name={'near-me'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
+                                    <Text style={s.labelButtonGroup}> {`เส้นทางใกล้ที่สุด`} </Text>
                                 </TouchableOpacity>
                             </View>
                             :
@@ -233,8 +235,8 @@ class MapScreenStepThree extends Component {
                                 onPress={() => [this.setState({OnPressNear: true}),this.GetNear()]}
                                 style={s.buttonNear}
                             >
-                                <Icon name={'md-search'} size={28} color={'#FEF9E7'} style={s.iconButtonNear}/>
-                                <Text style={s.labelButtonNear}> {`ใกล้ที่สุด`} </Text>
+                                <MaterialIcons name={'near-me'} size={28} color={'#FEF9E7'} style={s.iconButtonNear}/>
+                                <Text style={s.labelButtonNear}> {`เส้นทางใกล้ที่สุด`} </Text>
                             </TouchableOpacity>
                     }
                 </View>
@@ -285,7 +287,7 @@ const s = StyleSheet.create({
         color: '#196F3D',
     },
     buttonNear: {
-        width: '40%',
+        width: '65%',
         height: 60,
         borderRadius: 5,
         borderColor: '#F1C40F',

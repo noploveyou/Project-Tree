@@ -47,10 +47,10 @@ GoogleMAP.propTypes = {
 const s = StyleSheet.create({
     map: {
         position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
+        top: 10,
+        left: 10,
+        bottom: 10,
+        right: 10,
     }
 });
 

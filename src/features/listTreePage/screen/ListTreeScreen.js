@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Container, Icon, Content, View, Input, Item } from 'native-base';
-import { FlatList, BackHandler, NetInfo } from 'react-native';
+import { Container, Icon, Content, View, Item } from 'native-base';
+import { FlatList, BackHandler, NetInfo, Alert, Keyboard, TextInput } from 'react-native';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import HeaderForm from '../../../common/components/HeaderForm';
 import ListItem from '../components/ListItem';
@@ -13,11 +13,14 @@ class ListTreeScreen extends Component {
         this.props.SetSearchList('');
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
-            () => this.props.navigation.navigate('ListTree'));
+            () => [this.props.navigation.navigate('ListTree'),this.checkExitApp()]);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide',
+            this._keyboardDidHide); // เมื่อปิด keyboard
     }
 
     componentWillUnmount() {
         this.backHandler.remove();
+        this.keyboardDidHideListener.remove();
     }
 
     constructor(props) {
@@ -27,12 +30,28 @@ class ListTreeScreen extends Component {
         };
     }
 
+    _keyboardDidHide = () => {
+        this.refs['SearchInput'].blur();
+    };
+
+    checkExitApp = () => {
+        Alert.alert(
+            null,
+            'คุณต้องการออกจากแอพพลิเคชันหรือไม่ ?',
+            [
+                {text: 'ไม่ใช่', onPress: () => null},
+                {text: 'ใช่', onPress: () => BackHandler.exitApp()},
+            ],
+            { cancelable: false }
+        )
+    };
+
     _keyExtractor = (item) => item.plantID;
 
     _onPressItem = (value) => {
         this.props.navigation.navigate({
             routeName: 'Detail',
-            params: { back: "ListTree", Three : value }
+            params: { back: "ListTree", Tree : value }
         });   // ไปยังหน้า รายละเอียด
         this.props.SetSearchList('');
     };
@@ -68,15 +87,15 @@ class ListTreeScreen extends Component {
         return (
             <Container>
                 <Item>
-                    <View style={{flex: 1,flexDirection: 'row',justifyContent: 'center'}}>
-                        <Input
-                            placeholder= "Search In Here"
-                            placeholderTextColor = '#D5D8DC'
-                            returnKeyType={"done"}
-                            onChangeText={(value) => {this.Search(value)}}
-                            value={this.state.text}
-                        />
-                    </View>
+                    <TextInput
+                        style={{flex: 1,flexDirection: 'row',justifyContent: 'center', fontSize: 18}}
+                        ref="SearchInput"
+                        placeholder= "กรอกชื่อพรรณไม้"
+                        placeholderTextColor = '#D5D8DC'
+                        returnKeyType={"done"}
+                        onChangeText={(value) => {this.Search(value)}}
+                        value={this.state.text}
+                    />
                     <View>
                         <Icon name='close' style={{fontSize: 25, color: 'red',marginRight: 15}}
                               onPress={() => {this.clearText()}}

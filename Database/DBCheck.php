@@ -15,8 +15,8 @@ $TextPlantName = json_decode($GetPlantName,true);
 $plantName = $TextPlantName['plantName'];
 $Check = $TextPlantName['check'];
 
-if($Check=="Like_HOMEPAGESCREEN"){
-    $sql = "SELECT * FROM plant WHERE (plantName LIKE '%" . $plantName . "%')";
+if($Check == "Like_HOMEPAGESCREEN"){
+    $sql = "SELECT * FROM plant WHERE plantName LIKE '%".$plantName."%' ";
     $result = $conn->query($sql);
 
     if ($result->num_rows >0) {
@@ -47,6 +47,23 @@ if($Check=="Like_HOMEPAGESCREEN"){
     echo $json;
     $conn->close();
 
+}else if($Check=="LIKE_LIST_TREE_SCREEN"){
+    $sql = "SELECT * FROM plant WHERE (plantName LIKE '%" . $plantName . "%' 
+            OR plantScience LIKE'%" . $plantName . "%')";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows >0) {
+        while($row[] = $result->fetch_assoc()) {
+            $tem = $row;
+            $json = json_encode( $tem, JSON_UNESCAPED_UNICODE );
+        }
+    } else {
+        echo "No Results Found.";
+        $json = "No Results Found.";
+    }
+    echo $json;
+    $conn->close();
+
 }else if($Check=="MAPSCREEN_STEP_ONE"){
     $sql = "SELECT plant.plantID, plant.plantIcon , plant.plantName ,location.locationName, area.lx, area.ly
             FROM area,plant,location 
@@ -63,9 +80,12 @@ if($Check=="Like_HOMEPAGESCREEN"){
     }
     echo $json;
     $conn->close();
-}else if($Check=="MAPSCREEN_STEP_TWO"){
-    $sql = "SELECT * FROM plant WHERE (plantName LIKE '%" . $plantName . "%' 
-            OR plantScience LIKE'%" . $plantName . "%')";
+
+}else if($Check == "MAPSCREEN_STEP_TWO"){
+    $sql = "SELECT plant.plantID, plant.plantName, plant.plantScience ,plant.plantIcon, area.areaID
+            FROM plant, area  WHERE 
+            (plant.plantName LIKE '%" . $plantName . "%' OR plant.plantScience LIKE '%" . $plantName . "%')
+            AND area.plantID = plant.plantID AND lx != 0.0 AND ly != 0.0 ";
     $result = $conn->query($sql);
 
     if ($result->num_rows >0) {

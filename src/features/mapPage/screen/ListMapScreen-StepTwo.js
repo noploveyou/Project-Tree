@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Container, Icon, Content, View, Input, Item } from 'native-base';
-import { FlatList, BackHandler, NetInfo } from 'react-native';
+import { Container, Icon, Content, View, Item } from 'native-base';
+import { FlatList, BackHandler, NetInfo, Keyboard, TextInput } from 'react-native';
 import HeaderForm from '../../../common/components/HeaderForm';
 import { connect } from "react-redux";
 import ListItem from '../components/ListItem';
@@ -14,11 +14,14 @@ class ListMapScreenStepTwo extends Component {
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate('Map'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide',
+            this._keyboardDidHide); // เมื่อปิด keyboard
     }
 
     componentWillUnmount() {
         this.backHandler.remove();
         this.props.SetSearchListMap('');
+        this.keyboardDidHideListener.remove();
     }
 
     constructor(props) {
@@ -30,14 +33,18 @@ class ListMapScreenStepTwo extends Component {
         };
     }
 
-    _keyExtractor = (item) => item.plantID;
+    _keyboardDidHide = () => {
+        this.refs['SearchInput'].blur();
+    };
+
+    _keyExtractor = (item ) => item.areaID;
 
      _onPressItem = (value) => {
          this.props.SetSearchListMap("");
          this.props.SetKeySearch(value);
          this.setState({text: ""});
          this.props.FetchDataListMap();
-         this.props.navigation.navigate({routeName: 'SelectedMap'})
+         this.props.navigation.navigate({routeName: 'SelectedMap', params: { back: "SearchListMap" }})
     };
 
     _renderItem = ({item}) => {
@@ -71,15 +78,15 @@ class ListMapScreenStepTwo extends Component {
         return (
             <Container>
                 <Item>
-                    <View style={{flex: 1,flexDirection: 'row',justifyContent: 'center'}}>
-                        <Input
-                            placeholder= "Search In Here"
-                            placeholderTextColor = '#D5D8DC'
-                            returnKeyType={"done"}
-                            onChangeText={(value) => {this.Search(value)}}
-                            value={this.state.text}
-                        />
-                    </View>
+                    <TextInput
+                        style={{flex: 1,flexDirection: 'row',justifyContent: 'center', fontSize: 18}}
+                        ref="SearchInput"
+                        placeholder= "Search In Here"
+                        placeholderTextColor = '#D5D8DC'
+                        returnKeyType={"done"}
+                        onChangeText={(value) => {this.Search(value)}}
+                        value={this.state.text}
+                    />
                     <View>
                         <Icon name='close' style={{fontSize: 25, color: 'red',marginRight: 15}}
                               onPress={() => {this.clearText()}}
