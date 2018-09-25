@@ -3,7 +3,7 @@ import { ScrollView, Text, View, Image, StyleSheet } from 'react-native';
 import { List, ListItem, Icon, Left, Right } from 'native-base';
 import { connect } from "react-redux";
 
-const LogoPNRU = require('../../public/assets/images/pnru_logo.png');
+const LogoPNRU = require('../../public/assets/palntImages/pnru_logo.png');
 
 class SideMenu extends Component {
     constructor() {

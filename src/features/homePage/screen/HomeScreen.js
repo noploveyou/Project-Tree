@@ -9,7 +9,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import CheckInternet from '../../../common/components/CheckNET';
 import NoInternetScreen from '../../../common/components/NoInternetScreen';
 
-const LogoPage = require('../../../../public/assets/images/Tree.jpg');
+const LogoPage = require('../../../../public/assets/palntImages/Tree.jpg');
 
 class HomeScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน

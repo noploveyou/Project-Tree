@@ -53,15 +53,16 @@ if($Check == "Like_HOMEPAGESCREEN"){
     echo $json;
     $conn->close();
 
-}else if($Check=="IS_DETAILSCREEN"){
+}else if($Check == "IS_DETAILSCREEN"){
     $sql = "SELECT 
-                  plant.plantID, plant.plantScience, plant.plantName, plant.plantCommonname, plant.plantSpecies,
-                  plant.plantDistribution, plant.plantbenefit, plant.plantbenefity,
+                  plant.*,
                   plantfamily.plantFamilyName,
-                  extraction.extractionName
-                FROM plant, plantfamily, extraction, propagation
+                  extraction.extractionName,
+                  images.*
+                FROM plant, plantfamily, extraction, propagation, images
                 WHERE (plant.plantName = '$plantName') AND plant.plantID = propagation.plantID 
-                AND propagation.popID = extraction.extractionID AND plantfamily.familyID = plant.plantFamilyID ";
+                AND propagation.popID = extraction.extractionID AND plantfamily.familyID = plant.plantFamilyID 
+                AND images.plantID = plant.plantID";
     $result = $conn->query($sql);
 
     if($result->num_rows >0){

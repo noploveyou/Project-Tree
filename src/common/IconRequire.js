@@ -1,4 +1,4 @@
-const images = {
+const Icons = {
     '1.png': require('../../public/assets/iconsMark/1.png'),
     '2.png': require('../../public/assets/iconsMark/2.png'),
     '3.png': require('../../public/assets/iconsMark/3.png'),
@@ -94,4 +94,4 @@ const images = {
     '93.png': require('../../public/assets/iconsMark/93.png'),
 };
 
-export default images;
+export default Icons;
