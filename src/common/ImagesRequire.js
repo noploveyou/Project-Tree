@@ -1,4 +1,4 @@
-const images = {
+const imagesRequire = {
     'null': require('../../public/assets/palntImages/Tree.jpg'),    // หากไม่มีรูปภาพ
     '00002.jpg': require('../../public/assets/palntImages/taorang/00002.jpg'),
     '00003.jpg': require('../../public/assets/palntImages/taorang/00003.jpg'),
@@ -184,6 +184,9 @@ const images = {
     '00266.jpg': require('../../public/assets/palntImages/chumhedted/00266.jpg'),
     '00267.jpg': require('../../public/assets/palntImages/donya/00267.jpg'),
     '00268.jpg': require('../../public/assets/palntImages/donya/00268.jpg'),
+    '00270.jpg': require('../../public/assets/palntImages/hookrajong/00270.jpg'),
+    '00271.jpg': require('../../public/assets/palntImages/kradon/00271.jpg'),
+    '00272.jpg': require('../../public/assets/palntImages/kradon/00272.jpg'),
 };
 
-export default images;
+export default imagesRequire;

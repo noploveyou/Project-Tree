@@ -1,30 +1,33 @@
 import React, { Component } from 'react';
 import { Container } from 'native-base';
-import { Alert, BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
-import Icon from "react-native-vector-icons/Ionicons";
-import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import getDirections from "react-native-google-maps-directions";
+import { BackHandler, StyleSheet, View } from 'react-native';
 import { connect } from "react-redux";
-import HeaderForm from '../../../common/components/HeaderForm';
-import CheckInternet from '../../../common/components/CheckNET';
-import GoogleMAP from '../../../common/components/GoogleMAP'
+import getDirections from "react-native-google-maps-directions";
 import geolib from 'geolib';
+import HeaderForm from '../../../common/components/HeaderForm';
+import FuncCheckNet from '../components/FuncCheckNet';
+import GoogleMAP from '../../../common/components/GoogleMAP'
 import Loading from '../../../common/components/Loading';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
+import AlertGPS from '../components/AlertGPS';
+import ButtonFooterStepThree from  '../components/ButtonFooterStepThree';
+import LoadingButtonFooter from '../components/LoadingButtonFooter';
 
 class MapScreenStepThree extends Component {
     componentDidMount(){
+        this.CheckGPS();    // ตรวจ GPS
+        FuncCheckNet; // ตรวจสอบ internet
         const { back } = this.props.navigation.state.params;
-        NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate(back));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
         setTimeout(() => {this.props.FetchDataMap()}, 0);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 0 วินาที
-        this.CheckGPS();    // ตรวจ GPS
+
     }
 
     componentWillUnmount() {
         this.backHandler.remove();
         this.props.ResetMark([]);
+        this.setState({OnPressNear: false, HackRender: false, isLoading: false});
         navigator.geolocation.clearWatch(this.watchID); // set value UserLocation = null in store
     }
 
@@ -38,6 +41,7 @@ class MapScreenStepThree extends Component {
             ShowBTNNavigate: false,     // แสดงปุ่ม นำเส้นทาง (เปิด Google MAP)
             HackRender: false,          // สำหรับเช็ค กัน Error (ให้ MAP พร้อม และ Hack เสร็จก่อนค่อย Get Mark)
             isLoading: false,
+            OnPressNear: false
         }
     }
 
@@ -62,25 +66,15 @@ class MapScreenStepThree extends Component {
     CheckGPS = () => {
         this.watchID = navigator.geolocation.watchPosition(
             (position) => {
-                let newLat = parseFloat(position.coords.latitude); //คำสั่ง set ที่อยู่ผู้ใช้ แปลงค่าเป็นทศนิยม
-                let newLong = parseFloat(position.coords.longitude); //คำสั่ง set ที่อยู่ผู้ใช้ แปลงค่าเป็นทศนิยม
-                const initialRegion = {latitude: newLat, longitude: newLong};
-                this.props.GetLocation(initialRegion);  // Set Value in Store
+                let newLat = parseFloat(position.coords.latitude), newLong = parseFloat(position.coords.longitude);
+                this.props.GetLocation({latitude: newLat, longitude: newLong});  // Set Value in Store
                 this.props.GPS(true);       // set GPS true = Enable GPS
                 if(this.state.OnPressNear){     // ทำงานหลังกดปุ่ม
                     this.GetNear();
                 }
                 this.setState({isLoading: false});  // ปิดการโหลด
-            },
-            () => [Alert.alert(
-                null,
-                'กรุณาเปิดใช้ GPS ก่อนการใช้งาน',
-                [
-                    {text: 'ปฏิเสธ', onPress: () => null},
-                    {text: 'ตั้งค่า', onPress: () => null}
-                ],
-                { cancelable: false }
-            ),navigator.geolocation.clearWatch(this.watchID),this.setState({isLoading: false}),this.props.GPS(false)],
+            }, () => [AlertGPS(), navigator.geolocation.clearWatch(this.watchID),
+                this.setState({isLoading: false}),this.props.GPS(false)],
             {timeout: 0, distanceFilter: 50} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
         );
     };
@@ -90,39 +84,28 @@ class MapScreenStepThree extends Component {
         if(this.props.GPSConnect) {
             this.setState({isLoading: true});   // เปิดการโหลด
             try {
-                let Locations = [];   // เก็บค่า lat, lng และ distance
-                let Distance = [];
+                let Locations = [], Distance = [];   // เก็บค่า lat, lng และ distance
                 for (let i = 0; i < this.props.DataMarker.length; i++) {   // Loop ตามจำนวนค่าที่มี length
                     let distance = geolib.getDistance(
                         // ตำแหน่งผู้ใช้
                         {latitude: this.props.LocationUser.latitude, longitude: this.props.LocationUser.longitude},
-                        // ตำแหน่ง Mark
-                        {latitude: this.props.DataMarker[i].ly, longitude: this.props.DataMarker[i].lx}
+                        {latitude: this.props.DataMarker[i].ly, longitude: this.props.DataMarker[i].lx} // ตำแหน่ง Mark
                     );
-                    Locations.push(  // Add Value in Array {}, +{}
-                        {
-                            lat: this.props.DataMarker[i].ly,   // latitude Mark
-                            lng: this.props.DataMarker[i].lx,   // longitude Mark
-                        }
-                    );
-                    Distance.push(  // Add Value in Array {}, +{}
-                        distance // distance User - Mark : Meter เมตร
-                    );
+                    // Add Value in Array {}, +{}  // locations Mark
+                    Locations.push({lat: this.props.DataMarker[i].ly, lng: this.props.DataMarker[i].lx});
+                    Distance.push(distance); // Add Value in Array {}, +{} // distance User - Mark : Meter เมตร
                 }
                 let IndexLocations = Distance.indexOf(Math.min(...Distance));   //คำนวนค่าน้อยที่สุด และบอกตำแหน่งใน array
                 this.NavigateNear(parseFloat(Locations[IndexLocations].lat), parseFloat(Locations[IndexLocations].lng));
-                this.setState({OnPressNear: false});    // Reset การกดปุ่ม
-                this.setState({isLoading: false});      // ปิดการโหลด
-                navigator.geolocation.clearWatch(this.watchID);
-            } catch (e) {
-
-            }
+                this.setState({OnPressNear: false, isLoading: false});    // Reset การกดปุ่ม // ปิดการโหลด
+                navigator.geolocation.clearWatch(this.watchID); // Reset การเช็คตำแหน่ง GPS อีกครั้ง
+            }catch (error){}
         }else if(this.props.GPSConnect == false){
             this.setState({isLoading: true});       // ปิดการโหลด
         }
     };
 
-    NavigateNear = ( lat,lng) => {
+    NavigateNear = (lat, lng) => {
        try{
            let ss = {
                destination: {  //ปลายทาง
@@ -131,8 +114,7 @@ class MapScreenStepThree extends Component {
                }
            };
            getDirections(ss)
-       }catch (e) {
-       }
+       }catch (error) {}
     };
 
     handleGetDirections = () => { //ฟังก์ชัน นำทาง (เปิด Google MAP)
@@ -164,15 +146,10 @@ class MapScreenStepThree extends Component {
     };
 
     render() {
-        //const { Three } = this.props.navigation.state.params;
         if(this.props.NET == false){    // หากปิด Internet
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
-        }
-
-        if(this.props.CheckFetchDataMap == false){
-            if(this.props.NET == true){
-                this.props.FetchDataMap();
-            }
+        }else if(this.props.CheckFetchDataMap == false){
+            this.props.NET == true ? this.props.FetchDataMap() : '';
             return(
                 <Loading />
             )
@@ -187,57 +164,30 @@ class MapScreenStepThree extends Component {
                             [this.setState({ MapWidth: - 1, HackRender: true }), this.CheckInternetRender()]
                         }
                         onPress={() => this.setState({ShowBTNNavigate: false})}
-
                         check={this.props.CheckFetchDataMap && this.state.HackRender}
                         Data={this.props.DataMarker}
-                        OnMarkPress={(ly,lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
+                        OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
                     />
                     {this.state.isLoading ?
-                        <View style={{
-                            flexDirection: 'column',
-                            backgroundColor: '#FEF9E7',
-                        }}>
-                            <ActivityIndicator size="large" color="green"/>
-                            <Text style={{fontSize:30}}> กำลังโหลด กรุณารอสักครู่ </Text>
-                        </View>
+                        <LoadingButtonFooter />
                         :
                         this.state.ShowBTNNavigate ?
-                            <View style={s.viewHeader}>
-                                <TouchableOpacity
-                                    onPress={() =>
-                                        this.props.navigation.navigate({
-                                            routeName: 'Detail',
-                                            params: { back: "SelectedMap", Tree : this.props.GetTree }
-                                        })
-                                    }
-                                    style={s.ButtonsGroup}
-                                >
-                                    <Icon name={'md-paper'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
-                                    <Text style={s.labelButtonGroup}> {`รายละเอียด`} </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => this.handleGetDirections()}
-                                    style={s.ButtonsGroup}
-                                >
-                                    <Icon name={'md-navigate'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
-                                    <Text style={s.labelButtonGroup}> {`เส้นทาง`} </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => [this.setState({OnPressNear: true}),this.GetNear()]}
-                                    style={[s.ButtonsGroup]}
-                                >
-                                    <MaterialIcons name={'near-me'} size={28} color={'#196F3D'} style={s.iconButtonsGroup}/>
-                                    <Text style={s.labelButtonGroup}> {`เส้นทางใกล้ที่สุด`} </Text>
-                                </TouchableOpacity>
-                            </View>
+                            <ButtonFooterStepThree
+                                buttonDetail={() =>
+                                    this.props.navigation.navigate({
+                                        routeName: 'Detail',
+                                        params: { back: "SelectedMap", Tree : this.props.GetTree }
+                                    })
+                                }
+                                buttonNavigate={() => this.handleGetDirections()}
+                                buttonNavigateNear={() => [this.setState({OnPressNear: true}), this.GetNear()]}
+                            />
                             :
-                            <TouchableOpacity
-                                onPress={() => [this.setState({OnPressNear: true}),this.GetNear()]}
-                                style={s.buttonNear}
-                            >
-                                <MaterialIcons name={'near-me'} size={28} color={'#FEF9E7'} style={s.iconButtonNear}/>
-                                <Text style={s.labelButtonNear}> {`เส้นทางใกล้ที่สุด`} </Text>
-                            </TouchableOpacity>
+                            <ButtonFooterStepThree
+                                ButtonFooter={false}
+                                DisableButtonDetail={true}
+                                buttonNearOutFooter={() => [this.setState({OnPressNear: true}),this.GetNear()]}
+                            />
                     }
                 </View>
             </Container>
@@ -254,63 +204,6 @@ const s = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-    },
-    viewHeader: {
-        flexDirection: 'row',
-        backgroundColor: '#196F3D',
-        justifyContent: 'space-around'
-    },
-    ButtonsGroup: {
-        width: 90,
-        height: 60,
-        borderRadius: 5,
-        borderColor: '#FEF9E7',
-        borderWidth: 1,
-        backgroundColor: '#FEF9E7',
-        flexDirection: 'column',
-        marginBottom: 10,
-        marginLeft: 5,
-        marginTop: 10,
-        flex: 1,
-        justifyContent: 'center',
-        alignItems:'center'
-    },
-    iconButtonsGroup: {
-        marginTop: 10,
-    },
-    labelButtonGroup: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginLeft: 0,
-        marginBottom: 7,
-        marginTop: 0,
-        color: '#196F3D',
-    },
-    buttonNear: {
-        width: '65%',
-        height: 60,
-        borderRadius: 5,
-        borderColor: '#F1C40F',
-        borderWidth: 1,
-        backgroundColor: '#196F3D',
-        flexDirection: 'row',
-        marginBottom: 10,
-        marginLeft: 5,
-        marginRight: 5,
-        marginTop: 10,
-        justifyContent: 'center',
-        alignItems:'center'
-    },
-    iconButtonNear: {
-        marginTop: 5,
-    },
-    labelButtonNear: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginLeft: 10,
-        marginBottom: 7,
-        marginTop: 8,
-        color: '#FEF9E7'
     }
 });
 

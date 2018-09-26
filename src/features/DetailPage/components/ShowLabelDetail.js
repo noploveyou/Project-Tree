@@ -5,7 +5,7 @@ import CommonText from "../../../common/components/CommonText";
 
 const ShowLabelDetail = (props) => {
     return (
-        <View style={[styles.container, props.newLine ? styles.multiLine : styles.singleLine]}>
+        <View style={[styles.container, props.singleLine ? styles.singleLine : styles.multiLine ]}>
             <CommonText text={props.title} style={styles.label} weight={"500"} />
             <CommonText
                 text={props.result == null ? `      -` : `        `+props.result}
@@ -27,13 +27,13 @@ ShowLabelDetail.propTypes = {
         PropTypes.object,
         PropTypes.array
     ]),
-    newLine: PropTypes.bool,
+    singleLine: PropTypes.bool,
     style: Text.propTypes.style
 };
 
 ShowLabelDetail.defaultProps = {
     result: " any text ",
-    newLine: false,
+    singleLine: false,
     style: null
 };
 

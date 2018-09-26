@@ -9,7 +9,7 @@ const CheckDevice = (state={}, action) => {
             state = {
                 ...state,
                 UserLocation: action.payload,
-            }
+            };
         }
             break;
 
