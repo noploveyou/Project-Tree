@@ -6,7 +6,8 @@ import iconsTree from "../IconRequire";
 
 const GoogleMAP = (props) => {
     return(
-        <MapView style={[s.map, props.hackScale]}
+        <MapView style={[s.map, props.hackScale,
+            {top: props.top, bottom: props.bottom,left: props.left, right: props.right}]}
                     initialRegion={{
                         latitude: 13.8770500,
                         longitude: 100.5901700,
@@ -42,15 +43,22 @@ GoogleMAP.propTypes = {
     check: PropTypes.bool,
     Data: PropTypes.array,
     OnMarkPress: PropTypes.func,
+    top: PropTypes.number,
+    left: PropTypes.number,
+    bottom: PropTypes.number,
+    right: PropTypes.number,
+};
+
+GoogleMAP.defaultProps = {
+    top: 10,
+    left: 10,
+    bottom: 10,
+    right: 10
 };
 
 const s = StyleSheet.create({
     map: {
         position: 'absolute',
-        top: 10,
-        left: 10,
-        bottom: 10,
-        right: 10,
     }
 });
 

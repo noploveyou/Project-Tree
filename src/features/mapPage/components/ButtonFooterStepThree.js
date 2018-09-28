@@ -9,13 +9,14 @@ const ButtonFooterStepThree = (props) => {
         props.ButtonFooter ?
             <View style={styles.viewContainer}>
                 {props.DisableButtonDetail ?
-                    <TouchableOpacity
-                        onPress={props.buttonDetail}
-                        style={styles.ButtonsGroup}
-                    >
-                        <Icon name={'md-paper'} size={28} color={'#196F3D'} style={styles.iconButtonsGroup}/>
-                        <Text style={styles.labelButtonGroup}> {`รายละเอียด`} </Text>
-                    </TouchableOpacity> : null
+                    null :
+                <TouchableOpacity
+                    onPress={props.buttonDetail}
+                    style={styles.ButtonsGroup}
+                >
+                    <Icon name={'md-paper'} size={28} color={'#196F3D'} style={styles.iconButtonsGroup}/>
+                    <Text style={styles.labelButtonGroup}> {`รายละเอียด`} </Text>
+                </TouchableOpacity>
                 }
                 <TouchableOpacity
                     onPress={props.buttonNavigate}
@@ -55,7 +56,7 @@ ButtonFooterStepThree.propTypes = {
 };
 
 ButtonFooterStepThree.defaultProps = {
-    DisableButtonDetail: true,
+    DisableButtonDetail: false,
     buttonDetail: null,
     buttonNavigate: null,
     buttonNavigateNear: null,

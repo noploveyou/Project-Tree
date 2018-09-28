@@ -4,10 +4,10 @@ import { Alert } from 'react-native';
 const AlertGPS = () => {
     return(
         Alert.alert(
-            null,
-            'กรุณาเปิดใช้ GPS ก่อนการใช้งาน',
+            'ลองใหม่อีกครั้ง',
+            `กรุณาตรวจสอบสัญญาณ GPS\n** แนะนำ GPS ความแม่นยำสูง **`,
             [
-                {text: 'ปฏิเสธ', onPress: () => null},
+                {text: 'ไว้ก่อน', onPress: () => null},
                 {text: 'ตั้งค่า', onPress: () => null}
             ],
             { cancelable: false }

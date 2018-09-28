@@ -44,7 +44,6 @@ class ListMapScreenStepTwo extends Component {
          this.props.SetSearchListMap("");
          this.props.SetKeySearch(value);
          this.setState({text: ""});
-         this.props.FetchDataListMap();
          this.props.navigation.navigate({routeName: 'SelectedMap', params: { back: "SearchListMap" }})
     };
 

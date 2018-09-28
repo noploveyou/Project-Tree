@@ -36,6 +36,7 @@ class DetailScreen extends Component {
 
     componentDidMount(){
         const { back, Tree } = this.props.navigation.state.params;
+        console.log(back);
         this.props.SetValue(Tree);
         this.props.FetchData();
         setTimeout(() => {if(this.state.seed == null){this.get();}}, 1000);
@@ -187,7 +188,9 @@ class DetailScreen extends Component {
                                 </TabHeading>
                             }
                         >
-                            <Location />
+                            <Location
+                                data={this.state.tabLocation}
+                            />
                         </Tab>
                     </Tabs>
             </Container>

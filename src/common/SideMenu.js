@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, Text, View, Image, StyleSheet } from 'react-native';
 import { List, ListItem, Icon, Left, Right } from 'native-base';
 import { connect } from "react-redux";
+import  { NavigationActions, StackActions } from 'react-navigation';
 
 const LogoPNRU = require('../../public/assets/palntImages/pnru_logo.png');
 
@@ -16,18 +17,33 @@ class SideMenu extends Component {
     }
 
     Btn1 = () => {
-            this.props.navigation.navigate({routeName: 'Home'});
-            this.setState({pressedBtn1: true,pressedBtn2: false,pressedBtn3: false});
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'Home' })],
+        });
+        this.props.navigation.dispatch(resetAction);
+
+        this.setState({pressedBtn1: true,pressedBtn2: false,pressedBtn3: false});
     };
 
     Btn2 = () => {
-            this.props.navigation.navigate({routeName: 'ListTree'});
-            this.setState({pressedBtn2: true,pressedBtn1: false,pressedBtn3: false});
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'ListTree' })],
+        });
+        this.props.navigation.dispatch(resetAction);
+
+        this.setState({pressedBtn2: true,pressedBtn1: false,pressedBtn3: false});
     };
 
     Btn3 = () => {
-            this.props.navigation.navigate({routeName: 'Map'});
-            this.setState({pressedBtn3: true,pressedBtn1: false,pressedBtn2: false});
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'Map' })],
+        });
+        this.props.navigation.dispatch(resetAction);
+
+        this.setState({pressedBtn3: true,pressedBtn1: false,pressedBtn2: false});
     };
 
     render () {

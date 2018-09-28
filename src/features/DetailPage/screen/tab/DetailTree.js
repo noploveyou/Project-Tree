@@ -7,10 +7,6 @@ import Loading from "../../../../common/components/Loading";
 
 class DetailTree extends Component {
     render() {
-        if(this.props.id == null){
-            <Loading />
-        }
-
         return (
             <Container style={styles.container}>
                 <Content>
