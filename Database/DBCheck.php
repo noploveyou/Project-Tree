@@ -1,5 +1,14 @@
 <?php
-include "connect.php";
+$HostName = "localhost";
+$DatabaseName = "tree";
+$HostUser = "root";
+$HostPass = "";
+
+$conn = mysqli_connect($HostName, $HostUser, $HostPass, $DatabaseName);
+mysqli_query($conn,"SET CHARACTER SET UTF8");
+/*if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}*/
 
 $GetPlantName = file_get_contents('php://input');
 $TextPlantName = json_decode($GetPlantName,true);
