@@ -30,16 +30,18 @@ class DetailScreen extends Component {
             flower: null,
             round: null,
             seed: null,
-            imgAll: []
+            imgAll: [],
+            LoadedSuccess: false
         }
     }
 
     componentDidMount(){
         const { back, Tree } = this.props.navigation.state.params;
-        console.log(back);
+        //console.log(back);
         this.props.SetValue(Tree);
-        this.props.FetchData();
-        setTimeout(() => {if(this.state.seed == null){this.get();}}, 1000);
+        setTimeout(() => {this.props.FetchData();}, 0);
+        //setTimeout(() => {this.get(); this.setState({LoadedSuccess: true})}, 0);
+        //setTimeout(() => {this.setState({LoadedSuccess: true})}, 1000);
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate(back));
@@ -47,6 +49,8 @@ class DetailScreen extends Component {
 
     componentWillUnmount() {
         this.backHandler.remove();
+        this.props.Reset([]);
+        //alert("1")
     }
 
     get = () => {
@@ -135,8 +139,6 @@ class DetailScreen extends Component {
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }else if(this.props.CheckData == false){
             return  <Loading />
-        }else if(this.state.seed == null){
-            return  <Loading />
         }
 
         return (
@@ -189,7 +191,7 @@ class DetailScreen extends Component {
                             }
                         >
                             <Location
-                                data={this.state.tabLocation}
+
                             />
                         </Tab>
                     </Tabs>
@@ -211,10 +213,12 @@ export default connect(
     (state) => ({
         NET : state.CheckDevice.InternetIsConnect,         // ตรวจสอบ Internet
         DataSource : state.DataDetailScreen.DataSource,
-        Search : state.DataDetailScreen.Search
+        Search : state.DataDetailScreen.Search,
+        CheckData: state.DataDetailScreen.CheckData
     }),
     (dispatch) => ({
         FetchData: (value) => {dispatch({type: "CALL_DATA_DETAIL", payload: value})},
-        SetValue: (value) => {dispatch({type: "SET_VALUE_DETAIL", payload: value})}
+        SetValue: (value) => {dispatch({type: "SET_VALUE_DETAIL", payload: value})},
+        Reset: (value) => {dispatch({type: "ADD_DATA_DETAIL", payload: value})}
     })
 )(DetailScreen);
