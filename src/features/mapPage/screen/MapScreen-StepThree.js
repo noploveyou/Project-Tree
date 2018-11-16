@@ -164,7 +164,7 @@ class MapScreenStepThree extends PureComponent {
                                 buttonDetail={() =>
                                     this.props.navigation.navigate({
                                         routeName: 'Detail',
-                                        params: { back: "SelectedMap", Tree : this.props.GetTree }
+                                        params: { back : "SelectedMap", Tree : this.props.GetTree }
                                     })
                                 }
                                 buttonNavigate={() => this.handleGetDirections()}

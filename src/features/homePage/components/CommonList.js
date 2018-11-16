@@ -9,8 +9,11 @@ class CommonList extends React.PureComponent {
         return (
             <View>
                 <TouchableOpacity onPress={this.props.onPress} style={this.props.style}>
-                    <Text style={{fontSize: 17}}>
-                        {this.props.label}
+                    <Text style={{fontSize: 17, fontWeight: "500"}}>
+                        {this.props.labelTH}
+                    </Text>
+                    <Text style={{fontSize: 16, top: -5}}>
+                        {this.props.labelEN}
                     </Text>
                 </TouchableOpacity>
             </View>

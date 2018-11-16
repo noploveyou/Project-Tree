@@ -16,7 +16,7 @@ $plantName = $TextPlantName['plantName'];
 $Check = $TextPlantName['check'];
 
 if($Check == "Like_HOMEPAGESCREEN"){
-    $sql = "SELECT * FROM plant WHERE plantName LIKE '%".$plantName."%' ";
+    $sql = "SELECT * FROM plant WHERE plantName LIKE '%".$plantName."%' OR plant.plantScience LIKE '%".$plantName."%' ";
     $result = $conn->query($sql);
 
     if($result->num_rows >0){
@@ -47,7 +47,9 @@ if($Check == "Like_HOMEPAGESCREEN"){
     $conn->close();
 
 }else if($Check=="LIKE_LIST_TREE_SCREEN"){
-    $sql = "SELECT * FROM plant WHERE (plantName LIKE '%".$plantName."%' OR plantScience LIKE '%".$plantName."%')";
+    $sql = "SELECT plant.*, images.* FROM plant, images 
+            WHERE (plant.plantName LIKE '%".$plantName."%' OR plant.plantScience LIKE '%".$plantName."%')
+            AND images.plantID = plant.plantID";
     $result = $conn->query($sql);
 
     if($result->num_rows >0){
@@ -69,8 +71,10 @@ if($Check == "Like_HOMEPAGESCREEN"){
                   extraction.extractionName,
                   images.*
                 FROM plant, plantfamily, extraction, propagation, images
-                WHERE (plant.plantName = '$plantName') AND plant.plantID = propagation.plantID 
-                AND propagation.popID = extraction.extractionID AND plantfamily.familyID = plant.plantFamilyID 
+                WHERE (plant.plantName = '$plantName') 
+                AND propagation.plantID = plant.plantID 
+                AND extraction.extractionID = propagation.popID  
+                AND plantfamily.familyID = plant.plantFamilyID 
                 AND images.plantID = plant.plantID";
     $result = $conn->query($sql);
 

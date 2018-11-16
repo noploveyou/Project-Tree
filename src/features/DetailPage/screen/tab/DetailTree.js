@@ -4,6 +4,7 @@ import { Container, Content } from 'native-base';
 import { View, StyleSheet } from 'react-native';
 import ShowLabelDetail from '../../components/ShowLabelDetail';
 import Loading from "../../../../common/components/Loading";
+import CommonText from "../../../../common/components/CommonText";
 
 class DetailTree extends Component {
     constructor (props) {
@@ -62,11 +63,13 @@ class DetailTree extends Component {
         if(this.state.benefity == null){
             return  <Loading />
         }
-        console.log(this.state.benefity);
 
         return (
             <Container style={styles.container}>
                 <Content>
+                    <View style={{width: '100%', height: 30, marginTop: 20, alignItems: 'center'}}>
+                        <CommonText text={this.state.name} size={25} textTitle={true} />
+                    </View>
                     <View style={styles.background}>
                         <ShowLabelDetail title={"รหัสพรรณไม้"} result={this.state.id} />
                     </View>
@@ -109,7 +112,6 @@ const styles = StyleSheet.create({
 export default connect(
     (state) => ({
         DataSource: state.DataDetailScreen.DataSource,
-        Search: state.DataDetailScreen.Search,
-        CheckData: state.DataDetailScreen.CheckData
+        Search: state.DataDetailScreen.Search
     }), null
 )(DetailTree);

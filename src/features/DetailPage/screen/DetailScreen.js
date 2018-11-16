@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Text, Tab, Tabs, TabHeading, Icon } from 'native-base';
-import {BackHandler, NetInfo } from 'react-native';
+import {Alert, BackHandler, NetInfo} from 'react-native';
 import HeaderForm from "../../../common/components/HeaderForm";
 import CheckInternet from "../../../common/components/CheckNET";
+import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import Detail from './tab/DetailTree';
 import Appearance from './tab/Appearance';
 import Location from './tab/Location';
-import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import Loading from '../../../common/components/Loading';
 import imagesRequire from "../../../common/ImagesRequire";
 
@@ -37,11 +37,8 @@ class DetailScreen extends Component {
 
     componentDidMount(){
         const { back, Tree } = this.props.navigation.state.params;
-        //console.log(back);
         this.props.SetValue(Tree);
         setTimeout(() => {this.props.FetchData();}, 0);
-        //setTimeout(() => {this.get(); this.setState({LoadedSuccess: true})}, 0);
-        //setTimeout(() => {this.setState({LoadedSuccess: true})}, 1000);
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate(back));
@@ -50,10 +47,10 @@ class DetailScreen extends Component {
     componentWillUnmount() {
         this.backHandler.remove();
         this.props.Reset([]);
-        //alert("1")
     }
 
     get = () => {
+
         let getId = "", getName= "", getScience= "", getFamilyName= "", getCommonName= "", getSpecies= "",
             getDistribution= "", getExtraction= [], getBenefit= "", getBenefity= "", getStem = "", getLeaf = "",
             getFlower = "", getRound = "", getSeed = "", getImgStem = null, getImgLeaf = null, getImgFlower = null,
@@ -140,7 +137,8 @@ class DetailScreen extends Component {
         }else if(this.props.CheckData == false){
             return  <Loading />
         }
-
+        const { back } = this.props.navigation.state.params;
+        //console.warn(this.props.DataSource);
         return (
             <Container>
                     <Tabs >
@@ -182,18 +180,19 @@ class DetailScreen extends Component {
                                 imgAll={this.state.imgAll}
                             />
                         </Tab>
-                        <Tab
-                            heading={
-                                <TabHeading style={{backgroundColor: "#196F3D"}}>
-                                        <Icon name="apps" />
-                                        <Text style={{fontSize: 16}}>{"สถานที่พบ"}</Text>
-                                </TabHeading>
-                            }
-                        >
-                            <Location
-
-                            />
-                        </Tab>
+                        {
+                            back=="SelectedMap" ? null :
+                                <Tab
+                                    heading={
+                                        <TabHeading style={{backgroundColor: "#196F3D"}}>
+                                            <Icon name="apps" />
+                                            <Text style={{fontSize: 16}}>{"สถานที่พบ"}</Text>
+                                        </TabHeading>
+                                    }
+                                >
+                                    <Location />
+                                </Tab>
+                        }
                     </Tabs>
             </Container>
         );

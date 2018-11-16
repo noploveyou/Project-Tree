@@ -5,13 +5,14 @@ import { StyleSheet } from 'react-native';
 import ShowLabelDetail from '../../components/ShowLabelDetail';
 import CommonDeckSwiper from  '../../components/DeckSwiper';
 import Loading from "../../../../common/components/Loading";
-import CheckInternet from "../../../../common/components/CheckNET";
+import CommonText from "../../../../common/components/CommonText";
 import imagesRequire from "../../../../common/ImagesRequire";
 
 class Appearance  extends Component {
     constructor (props) {
         super(props);
         this.state = {
+            name: null,
             stem: null,
             leaf: null,
             flower: null,
@@ -26,11 +27,12 @@ class Appearance  extends Component {
     }
 
     get = () => {
-        let getStem = "", getLeaf = "", getFlower = "", getRound = "", getSeed = "", getImgStem = null,
+        let getName = "", getStem = "", getLeaf = "", getFlower = "", getRound = "", getSeed = "", getImgStem = null,
             getImgLeaf = null, getImgFlower = null, getImgRound = null, getImgSeed = null;
 
         this.props.DataSource.map(function (item){
             return [
+                getName = item.plantName,
                 getStem = item.plantStem,
                 getLeaf = item.plantLeaf,
                 getFlower = item.plantFlower,
@@ -44,6 +46,7 @@ class Appearance  extends Component {
             ];
         });
         this.setState({
+            name: getName,
             stem: getStem,
             leaf: getLeaf,
             flower: getFlower,
@@ -91,6 +94,9 @@ class Appearance  extends Component {
         return (
             <Container >
                 <Content style={styles.container}>
+                    <View style={{width: '100%', height: 30, marginTop: 20, alignItems: 'center'}}>
+                        <CommonText text={this.state.name} size={25} textTitle={true} />
+                    </View>
                     <CommonDeckSwiper dataSource={this.state.imgAll} />
                     <View style={styles.background}>
                         <ShowLabelDetail title={"ลักษณะลำต้น"} result={this.state.stem} newLine={true} />
@@ -127,7 +133,6 @@ const styles = StyleSheet.create({
 export default connect(
     (state) => ({
         DataSource: state.DataDetailScreen.DataSource,
-        Search: state.DataDetailScreen.Search,
-        CheckData: state.DataDetailScreen.CheckData
+        Search: state.DataDetailScreen.Search
     }), null
 )(Appearance);

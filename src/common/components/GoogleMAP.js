@@ -11,11 +11,11 @@ const GoogleMAP = (props) => {
                     initialRegion={{
                         latitude: 13.8770500,
                         longitude: 100.5901700,
-                        latitudeDelta: 0.000013,  // น้อย =  Zoom
-                        longitudeDelta: 0.000013, // น้อย =  Zoom
+                        latitudeDelta: 0.000015,  // น้อย =  Zoom
+                        longitudeDelta: 0.000015, // น้อย =  Zoom
                     }}     // มุมกล้องเริ่มต้น
                     showsMyLocationButton={true}       // แสดงปุ่ม ตำแหน่งของผู้ใช้
-                    showsUserLocation={true}           // แสดงตำแหน่งของผู้ใช้
+                    showsUserLocation={props.LocationUser}           // แสดงตำแหน่งของผู้ใช้
                     onMapReady={props.onMapReady}
                     onPress={props.onPress}
                     toolbarEnabled={false}
@@ -47,13 +47,15 @@ GoogleMAP.propTypes = {
     left: PropTypes.number,
     bottom: PropTypes.number,
     right: PropTypes.number,
+    LocationUser: PropTypes.bool
 };
 
 GoogleMAP.defaultProps = {
     top: 10,
     left: 10,
     bottom: 10,
-    right: 10
+    right: 10,
+    LocationUser: true
 };
 
 const s = StyleSheet.create({

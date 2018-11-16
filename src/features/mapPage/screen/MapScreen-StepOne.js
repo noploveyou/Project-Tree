@@ -97,10 +97,10 @@ class MapScreenStepOne extends Component {
                 <View style={s.viewHeader}>
                     <TouchableOpacity
                         onPress={() => this.props.navigation.navigate({routeName: 'SearchListMap'})}
-                        style={s.buttonNear}
+                        style={s.buttonSearch}
                     >
-                        <Icon name={'md-search'} size={28} color={'white'} style={s.iconButtonNear}/>
-                        <Text style={s.labelButtonNear}> {`ค้นหา`} </Text>
+                        <Icon name={'md-search'} size={28} color={'white'} style={s.iconButtonSearch}/>
+                        <Text style={s.labelButtonSearch}> {`ค้นหา`} </Text>
                     </TouchableOpacity>
                 </View>
                     <View style={s.container}>
@@ -113,14 +113,16 @@ class MapScreenStepOne extends Component {
                             check={this.props.CheckFetchDataMap && this.state.HackRender}
                             Data={this.props.DataMarker}
                             OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
+                            LocationUser={false}
                         />
                         {this.state.ShowBTNNavigate ?
                             <View style={{marginBottom: 15}}>
                                 <TouchableOpacity onPress={() => this.handleGetDirections()} style={s.btnNavigate}>
-                                    <Icon name={'md-navigate'} size={28} style={s.iconBtnNavigate}/>
+                                    <Icon name={'md-navigate'} size={28} color={'#FEF9E7'} style={s.iconBtnNavigate}/>
                                     <Text style={s.labelBtnNavigate}> เส้นทาง </Text>
                                 </TouchableOpacity>
-                            </View> : null
+                            </View>
+                            : null
                         }
                     </View>
             </Container>
@@ -168,7 +170,7 @@ const s = StyleSheet.create({
         marginTop: 1,
         color: 'white',
     },
-    buttonNear: {
+    buttonSearch: {
         width: 150,
         height: 45,
         borderRadius: 5,
@@ -182,10 +184,10 @@ const s = StyleSheet.create({
         flex: 1,
         justifyContent: 'center'
     },
-    iconButtonNear: {
+    iconButtonSearch: {
         marginTop: 10,
     },
-    labelButtonNear: {
+    labelButtonSearch: {
         fontSize: 14,
         fontWeight: 'bold',
         marginLeft: 10,
@@ -194,21 +196,29 @@ const s = StyleSheet.create({
         color: 'white'
     },
     btnNavigate: {
-        width: 140,
-        height: 50,
-        borderRadius: 50,
-        backgroundColor:'yellow',
-        flexDirection: 'row'
+        width: '100%',
+        height: 60,
+        borderRadius: 5,
+        borderColor: '#F1C40F',
+        borderWidth: 1,
+        backgroundColor: '#196F3D',
+        flexDirection: 'row',
+        marginBottom: 10,
+        marginTop: 10,
+        alignItems:'center'
     },
     iconBtnNavigate: {
-        marginTop: 10,
-        marginLeft: 18
+        marginTop: 5,
+        marginLeft: 20,
     },
     labelBtnNavigate: {
         fontSize: 20,
         fontWeight: 'bold',
         marginLeft: 10,
-        marginTop: 10
+        marginRight: 20,
+        marginBottom: 7,
+        marginTop: 8,
+        color: '#FEF9E7'
     }
 });
 

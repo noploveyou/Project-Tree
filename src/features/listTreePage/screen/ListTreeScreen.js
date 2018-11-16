@@ -3,14 +3,14 @@ import { Container, Icon, Content, View, Item } from 'native-base';
 import { FlatList, BackHandler, NetInfo, Alert, Keyboard, TextInput } from 'react-native';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import HeaderForm from '../../../common/components/HeaderForm';
-import ListItem from '../components/ListItem';
+import ListItemListTree from '../components/ListItemListTree';
 import { connect } from "react-redux";
 import CheckInternet from "../../../common/components/CheckNET";
 import Loading from '../../../common/components/Loading';
 
 class ListTreeScreen extends Component {
     componentDidMount(){
-        this.props.FetchDataList();
+        setTimeout(() => {this.props.FetchDataList();}, 500);
         this.props.SetSearchList('');
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
@@ -28,7 +28,7 @@ class ListTreeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: '',
+            text: ''
         };
     }
 
@@ -56,17 +56,18 @@ class ListTreeScreen extends Component {
             params: { back: "ListTree", Tree : value }
         });   // ไปยังหน้า รายละเอียด
         this.props.SetSearchList('');
-        this.clearText()
+        this.clearText();
+        //alert(value)
     };
 
     _renderItem = ({item}) => {
         return (
-            <ListItem
+            <ListItemListTree
                 //id={item.plantID}
                 labelTreeNameTH={item.plantName}
                 labelTreeNameEN={item.plantScience}
                 onPressItem={() => this._onPressItem(item.plantName)}
-                image={item.plantIcon}
+                image={item.imageFileAll}
             />
         );
     };
@@ -93,9 +94,9 @@ class ListTreeScreen extends Component {
             <Container>
                 <Item>
                     <TextInput
-                        style={{flex: 1,flexDirection: 'row',justifyContent: 'center', fontSize: 18}}
+                        style={{flex: 1,flexDirection: 'row',justifyContent: 'center', fontSize: 18, marginLeft: 5}}
                         ref="SearchInput"
-                        placeholder= "กรอกชื่อพรรณไม้"
+                        placeholder= "กรุณากรอกชื่อพรรณไม้"
                         placeholderTextColor = '#D5D8DC'
                         returnKeyType={"done"}
                         onChangeText={(value) => {this.Search(value)}}
@@ -107,7 +108,7 @@ class ListTreeScreen extends Component {
                         />
                     </View>
                 </Item>
-                <Content>
+                <Content style={{backgroundColor: '#F1C40F'}}>
                     <FlatList
                         data={this.props.DataList}
                         keyExtractor={this._keyExtractor}

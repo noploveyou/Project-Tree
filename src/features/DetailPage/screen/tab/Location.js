@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Container } from 'native-base';
-import { BackHandler, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { connect } from "react-redux";
 import getDirections from "react-native-google-maps-directions";
 import geolib from 'geolib';
@@ -20,12 +20,14 @@ class Location  extends PureComponent {
             SetLongitudeToNavigate: null,   // Longitude ที่ปลายทาง
             ShowBTNNavigate: false,     // แสดงปุ่ม นำเส้นทาง (เปิด Google MAP)
             HackRender: false,          // สำหรับเช็ค กัน Error (ให้ MAP พร้อม และ Hack เสร็จก่อนค่อย Get Mark)
-            isLoading: false
+            isLoading: false,
+            name: ""
         }
     }
 
     componentDidMount(){
         this.CheckGPS(false);    // ตรวจ GPS
+        this.get();
     }
 
     componentWillUnmount() {
@@ -33,6 +35,14 @@ class Location  extends PureComponent {
         this.setState({HackRender: false, isLoading: false});
         this.props.GetLocation(null); // set value UserLocation = null in store
     }
+
+    get = () => {
+        let getName = "";
+        this.props.DataSource.map(function (item) {
+            return getName = item.plantName;
+        });
+        this.setState({name: getName});
+    };
 
     CheckInternetRender = () => {           // ทำงานเมื่อ MAP พร้อมใช้งาน (หลังปิด - เปิด Internet)
         setTimeout(() => {
@@ -125,8 +135,8 @@ class Location  extends PureComponent {
     };
 
     render() {
-        console.log(this.props.DataMarker);
-        console.log();
+        //console.log(this.props.DataMarker);
+        //console.log();
 
         return (
             <Container>
@@ -136,8 +146,8 @@ class Location  extends PureComponent {
                     </View>
                     :
                     <View style={s.container}>
-                        <View style={{width: '100%',height: 30, backgroundColor: 'red'}}>
-                            <CommonText text={"111111111111111111111111111"} size={25}/>
+                        <View style={{width: '100%', height: 30, marginTop: 20, alignItems: 'center'}}>
+                            <CommonText text={this.state.name} size={25} textTitle={true} />
                         </View>
                         <View style={s.viewMap}>
                             <GoogleMAP
@@ -149,7 +159,7 @@ class Location  extends PureComponent {
                                 check={this.props.CheckFetchDataMap && this.state.HackRender}
                                 Data={this.props.DataMarker}
                                 OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
-                                top={20}
+                                //top={10}
                             />
                         </View>
                         {this.state.isLoading ?
@@ -184,7 +194,7 @@ const s = StyleSheet.create({
         backgroundColor: '#FEF9E7'
     },
     viewMap: {
-        height: '83%',
+        height: '78%',
         width: '100%',
         justifyContent: 'flex-end',
         alignItems: 'center',
@@ -198,6 +208,7 @@ export default connect(
         GPSConnect : state.CheckDevice.GPSConnect,
         DataMarker : state.DataDetailScreen.DataLocationSource,     // ตำแหน่ง Mark ต้นไม้
         CheckFetchDataMap : state.DataDetailScreen.CheckLocationData,     // ตรวจสอบว่า โหลดข้อมูลเสร็จหรือไม่
+        DataSource: state.DataDetailScreen.DataSource
     }),
     (dispatch) => ({
         GetLocation : (value) => {dispatch({type: "GET_USER_LOCATION", payload: value})},    // รับตำแหน่งผู้ใช้

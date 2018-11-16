@@ -167,7 +167,7 @@ class HomeScreen extends Component {
                                 hideResults={this.state.DisableListResults}     // true = ปิด - false = เปิด List
                                 listContainerStyle={s.CustomListSuggest}        // Custom List
                                 inputContainerStyle={s.inputContainer}          //Custom Input
-                                renderItem={({plantName}) => (
+                                renderItem={({plantName,plantScience}) => (
                                     <CommonList
                                         onPress={() =>
                                             [this.setState({
@@ -179,7 +179,8 @@ class HomeScreen extends Component {
                                             ]
                                         }
                                         style={s.labelListSuggest}
-                                        label={plantName}
+                                        labelTH={plantName}
+                                        labelEN={plantScience}
                                     />
                                 )}
                             />
@@ -259,7 +260,7 @@ const s = StyleSheet.create({
         borderWidth: 0
     },
     labelListSuggest: {
-        marginLeft: 5,
+        marginLeft: 10,
         marginBottom: 5
     },
     buttonNear: {
@@ -280,7 +281,7 @@ const s = StyleSheet.create({
     },
     CustomListSuggest: {
         height: 190,
-        width: 320,
+        width: 350,
         paddingLeft: -10,
     },
     inputContainer: {
