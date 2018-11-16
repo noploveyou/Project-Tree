@@ -7,6 +7,7 @@ import ListItemListTree from '../components/ListItemListTree';
 import { connect } from "react-redux";
 import CheckInternet from "../../../common/components/CheckNET";
 import Loading from '../../../common/components/Loading';
+import { NavigationActions,StackActions } from 'react-navigation';
 
 class ListTreeScreen extends Component {
     componentDidMount(){
@@ -51,13 +52,19 @@ class ListTreeScreen extends Component {
     _keyExtractor = (item) => item.plantID;
 
     _onPressItem = (value) => {
-        this.props.navigation.navigate({
-            routeName: 'Detail',
-            params: { back: "ListTree", Tree : value }
-        });   // ไปยังหน้า รายละเอียด
+        this.props
+            .navigation
+            .dispatch(StackActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName: 'Detail',
+                        params: { back: "ListTree", Tree : value  },
+                    }),
+                ],
+            }));
         this.props.SetSearchList('');
         this.clearText();
-        //alert(value)
     };
 
     _renderItem = ({item}) => {
@@ -67,7 +74,7 @@ class ListTreeScreen extends Component {
                 labelTreeNameTH={item.plantName}
                 labelTreeNameEN={item.plantScience}
                 onPressItem={() => this._onPressItem(item.plantName)}
-                image={item.imageFileAll}
+                image={item.imageFileAll} //imageFileAll
             />
         );
     };
