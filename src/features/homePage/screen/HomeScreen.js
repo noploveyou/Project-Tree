@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Thumbnail, Text, Content } from 'native-base';
 import { View, TouchableOpacity, StyleSheet, Keyboard, Alert, NetInfo, BackHandler } from 'react-native';
+import { NavigationActions, StackActions } from "react-navigation";
 import Autocomplete from 'react-native-autocomplete-input';
 import CommonList from '../components/CommonList';
 import HeaderForm from '../../../common/components/HeaderForm';
 import Icon from "react-native-vector-icons/FontAwesome";
 import CheckInternet from '../../../common/components/CheckNET';
 import NoInternetScreen from '../../../common/components/NoInternetScreen';
+import CheckExitApp from '../../../common/components/CheckExitApp';
 
 const LogoPage = require('../../../../public/assets/palntImages/Tree.jpg');
 
@@ -15,12 +17,13 @@ class HomeScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
-            () => [this.props.navigation.navigate('Home'),this.checkExitApp()]);
+            () => [this.props.navigation.navigate('Home'), CheckExitApp()]);
     }
 
     componentWillUnmount() {
         this.props.SetValueSearchHomePage('');
         this.backHandler.remove();
+        this.setState({ValueInput: ""});
     }
 
     constructor(props) {
@@ -33,18 +36,6 @@ class HomeScreen extends Component {
             ShowButtonClear: false,     // แสดง - ซ่อน ปุ่ม x (ลบ) false = ซ่อน
             InputIsEmpty: true,    // ค่าใน Input ว่าง  true = ว่าง
         }
-    };
-
-    checkExitApp = () => {
-        Alert.alert(
-            null,
-            'คุณต้องการออกจากแอพพลิเคชันหรือไม่ ?',
-            [
-                {text: 'ไม่ใช่', onPress: () => null, style: 'cancel'},
-                {text: 'ใช่', onPress: () => BackHandler.exitApp()},
-            ],
-            { cancelable: false }
-        )
     };
 
     _keyboardDidShow = () => {
@@ -70,19 +61,23 @@ class HomeScreen extends Component {
             this.props.SetValueSearchHomePage(value);   // Action -> set Search in Store
             this.props.FetchDataHomePage();         // where Like
             this.props.FetchCheckDataHomePage();    // เช็คค่า true, false จาก ฐานข้อมูล (เช็คค่าว่ามีในฐานข้อมูลหรือไม่)
-
-
         }
     }
 
-    NavToDetail (){     // ปุ่มค้นหา
+    NavToDetail = () =>{     // ปุ่มค้นหา
         if((this.props.CheckData)){
-            this.props.navigation.navigate({
-                routeName: 'Detail',
-                params: { back: "Home", Tree : this.state.ValueInput }
-            });   // ไปยังหน้า รายละเอียด
-            this.setState({ValueInput: ""});
-            this.props.SetValueSearchHomePage("");
+            // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
+            this.props.navigation.dispatch(
+                StackActions.reset({
+                    index: 0,
+                    actions: [
+                        NavigationActions.navigate({
+                            routeName: 'Detail',
+                            params: { back: "Home", Tree : this.state.ValueInput  },
+                        }),
+                    ],
+                })
+            );
         }else {
             if (this.state.InputIsEmpty){    // เช็คค่า Input ว่างหรือไม่
                 Alert.alert(
@@ -108,7 +103,7 @@ class HomeScreen extends Component {
                 )
             }
         }
-    }
+    };
 
     BtnClear(){ // ปุ่ม x (ลบ)
         this.props.SetValueCheckInDatabaseHomePage(false);  // ค่า CheckData ว่าค่าตรงหรือไม่ false = หาค่าใน Data ไม่เจอ
@@ -167,7 +162,7 @@ class HomeScreen extends Component {
                                 hideResults={this.state.DisableListResults}     // true = ปิด - false = เปิด List
                                 listContainerStyle={s.CustomListSuggest}        // Custom List
                                 inputContainerStyle={s.inputContainer}          //Custom Input
-                                renderItem={({plantName,plantScience}) => (
+                                renderItem={({plantName, plantScience}) => (
                                     <CommonList
                                         onPress={() =>
                                             [this.setState({
@@ -192,7 +187,7 @@ class HomeScreen extends Component {
                         }
                         {this.state.ShowLogoTitle ?
                             <View style={{flexDirection:'row'}}>
-                                <TouchableOpacity onPress={() => this.NavToDetail()} style={s.buttonNear}>
+                                <TouchableOpacity onPress={() => this.NavToDetail()} style={s.buttonSearch}>
                                     <Icon name={'search'} size={22} />
                                     <Text style={s.labelBtn}>{'ค้นหา'}</Text>
                                 </TouchableOpacity>
@@ -253,7 +248,8 @@ const s = StyleSheet.create({
         width: '90%'
     },
     inputAutoCP: {
-        borderRadius: 0,
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20,
         backgroundColor: 'white',
         fontSize: 18,
         paddingLeft: 10,
@@ -263,25 +259,26 @@ const s = StyleSheet.create({
         marginLeft: 10,
         marginBottom: 5
     },
-    buttonNear: {
+    buttonSearch: {
         height: 50,
-        width: 80,
+        width: 85,
         backgroundColor: '#F4D03F',
         justifyContent: 'center',
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 0,
+        borderTopRightRadius: 20,
+        borderBottomRightRadius: 20,
         borderWidth: 0,
         borderLeftWidth: 0
     },
     labelBtn: {
         fontSize: 18,
-        fontWeight: '400',
+        fontWeight: '500',
         marginLeft: 2
     },
     CustomListSuggest: {
         height: 190,
-        width: 350,
+        width: 320,
         paddingLeft: -10,
     },
     inputContainer: {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { createDrawerNavigator, createStackNavigator, NavigationActions } from 'react-navigation';
-import SideMenu from '../Project-Tree/src/common/SideMenu';
+import SideMenu from '../ProjectTrees/src/common/SideMenu';
 import HomeScreen from './src/features/homePage/screen/HomeScreen';
 import ListTreeScreen from './src/features/listTreePage/screen/ListTreeScreen';
 import MapScreen from './src/features/mapPage/screen/MapScreen-StepOne'

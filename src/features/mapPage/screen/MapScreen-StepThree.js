@@ -12,6 +12,7 @@ import Loading from '../../../common/components/Loading';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import ButtonFooterStepThree from  '../components/ButtonFooterStepThree';
 import LoadingButtonFooter from '../components/LoadingButtonFooter';
+import {NavigationActions, StackActions} from "react-navigation";
 
 class MapScreenStepThree extends PureComponent {
     componentDidMount(){
@@ -162,10 +163,21 @@ class MapScreenStepThree extends PureComponent {
                         this.state.ShowBTNNavigate ?
                             <ButtonFooterStepThree
                                 buttonDetail={() =>
-                                    this.props.navigation.navigate({
+                                    /*this.props.navigation.navigate({
                                         routeName: 'Detail',
                                         params: { back : "SelectedMap", Tree : this.props.GetTree }
-                                    })
+                                    })*/
+                                    this.props.navigation.dispatch(
+                                        StackActions.reset({
+                                            index: 0,
+                                            actions: [
+                                                NavigationActions.navigate({
+                                                    routeName: 'Detail',
+                                                    params: { back: "SelectedMap", Tree : this.props.GetTree },
+                                                }),
+                                            ],
+                                        })
+                                    )
                                 }
                                 buttonNavigate={() => this.handleGetDirections()}
                                 buttonNavigateNear={() => this.CheckGPS(true)}
@@ -184,7 +196,19 @@ class MapScreenStepThree extends PureComponent {
 }
 
 MapScreenStepThree.navigationOptions = ({ navigation }) => ({
-    header: <HeaderForm btn={() => navigation.goBack()} iconName={'arrow-left'}  titlePage={'แผนที่พรรณไม้'} />
+    header: <HeaderForm
+        btn={() =>
+            navigation.dispatch(StackActions.reset({
+                    index: 0,
+                    actions: [
+                        NavigationActions.navigate({routeName: navigation.getParam('back'), params: { back: "Map" }})
+                    ],
+                })
+            )
+        }
+        iconName={'arrow-left'}
+        titlePage={'แผนที่พรรณไม้'}
+    />
 });
 
 const s = StyleSheet.create({

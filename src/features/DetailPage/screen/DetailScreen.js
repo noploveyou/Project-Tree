@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Text, Tab, Tabs, TabHeading, Icon } from 'native-base';
-import {Alert, BackHandler, NetInfo} from 'react-native';
+import { BackHandler, NetInfo} from 'react-native';
 import HeaderForm from "../../../common/components/HeaderForm";
 import CheckInternet from "../../../common/components/CheckNET";
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
@@ -10,6 +10,7 @@ import Appearance from './tab/Appearance';
 import Location from './tab/Location';
 import Loading from '../../../common/components/Loading';
 import imagesRequire from "../../../common/ImagesRequire";
+import { NavigationActions, StackActions } from "react-navigation";
 
 class DetailScreen extends Component {
     constructor (props) {
@@ -30,8 +31,7 @@ class DetailScreen extends Component {
             flower: null,
             round: null,
             seed: null,
-            imgAll: [],
-            LoadedSuccess: false
+            imgAll: []
         }
     }
 
@@ -50,7 +50,6 @@ class DetailScreen extends Component {
     }
 
     get = () => {
-
         let getId = "", getName= "", getScience= "", getFamilyName= "", getCommonName= "", getSpecies= "",
             getDistribution= "", getExtraction= [], getBenefit= "", getBenefity= "", getStem = "", getLeaf = "",
             getFlower = "", getRound = "", getSeed = "", getImgStem = null, getImgLeaf = null, getImgFlower = null,
@@ -138,7 +137,7 @@ class DetailScreen extends Component {
             return  <Loading />
         }
         const { back } = this.props.navigation.state.params;
-        //console.warn(this.props.DataSource);
+
         return (
             <Container>
                     <Tabs >
@@ -201,11 +200,16 @@ class DetailScreen extends Component {
 
 DetailScreen.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm
-        btn={() => navigation.goBack()}
+        btn={() => navigation.dispatch(StackActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({routeName: navigation.getParam('back'), params: { back: "SearchListMap" }})
+                ],
+            })
+        )}
         iconName={'arrow-left'}
         titlePage={'รายละเอียดพรรณไม้'}
     />
-
 });
 
 export default connect(

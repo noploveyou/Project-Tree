@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
 import { Container } from 'native-base';
-import { Alert, BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { NavigationActions, StackActions } from "react-navigation";
+import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import getDirections from "react-native-google-maps-directions";
-import { connect } from "react-redux";
 import HeaderForm from '../../../common/components/HeaderForm';
 import CheckInternet from '../../../common/components/CheckNET';
 import SearchListMap from "./ListMapScreen-StepTwo";
 import GoogleMAP from '../../../common/components/GoogleMAP'
 import Loading from '../../../common/components/Loading';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
+import CheckExitApp from '../../../common/components/CheckExitApp';
 
 class MapScreenStepOne extends Component {
-    componentDidMount(){
+    componentDidMount(){    //เริ่มการทำงานของ class นี้
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
-            () => [this.props.navigation.navigate('Map'), this.checkExitApp()]);     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
-        this.props.FetchDataMap();
+            () => [this.props.navigation.navigate('Map'), CheckExitApp()]);     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
+        this.props.FetchDataMap();  //เชื่อมต่อฐานข้อมูล
     }
 
     componentWillUnmount() {
-        this.backHandler.remove();
+        this.backHandler.remove(); //ลบ Event ปุ่ม back ของ Android
     }
 
     constructor(props){
@@ -34,18 +36,6 @@ class MapScreenStepOne extends Component {
             HackRender: false,          // สำหรับเช็ค กัน Error (ให้ MAP พร้อม และ Hack เสร็จก่อนค่อย Get Mark)
         }
     }
-
-    checkExitApp = () => {
-        Alert.alert(
-            null,
-            'คุณต้องการออกจากแอพพลิเคชันหรือไม่ ?',
-            [
-                {text: 'ไม่ใช่', onPress: () => null},
-                {text: 'ใช่', onPress: () => BackHandler.exitApp()},
-            ],
-            { cancelable: false }
-        )
-    };
 
     CheckInternetRender = () => {           // ทำงานเมื่อ MAP พร้อมใช้งาน (หลังปิด - เปิด Internet)
         setTimeout(() => {
@@ -96,7 +86,19 @@ class MapScreenStepOne extends Component {
             <Container>
                 <View style={s.viewHeader}>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate({routeName: 'SearchListMap'})}
+                        onPress={() => // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
+                            this.props.navigation.dispatch(
+                                StackActions.reset({
+                                    index: 0,
+                                    actions: [
+                                        NavigationActions.navigate({
+                                            routeName: 'SearchListMap',
+                                            params: { back: "Map" },
+                                        }),
+                                    ],
+                                })
+                            )
+                        }
                         style={s.buttonSearch}
                     >
                         <Icon name={'md-search'} size={28} color={'white'} style={s.iconButtonSearch}/>
@@ -232,6 +234,6 @@ export default connect(
     (dispatch) => ({
         GetLocation : (value) => {dispatch({type: "GET_USER_LOCATION", payload: value})},    // รับตำแหน่งผู้ใช้
         FetchDataMap : (value) => {dispatch({type: "CALL_DATA_STEP_ONE", payload: value})},      // เรียกฐานข้อมูล
-        GPS : (value) => {dispatch({type: "USE_GPS", payload: value})}
+        GPS : (value) => {dispatch({type: "USE_GPS", payload: value})}  //ตรวจสอบการเปิดใช้งาน GPS
     })
 )(MapScreenStepOne);

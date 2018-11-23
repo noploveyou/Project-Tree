@@ -7,6 +7,7 @@ import ListItem from '../components/ListItem';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import CheckInternet from "../../../common/components/CheckNET";
 import Loading from '../../../common/components/Loading';
+import {NavigationActions, StackActions} from "react-navigation";
 
 class ListMapScreenStepTwo extends Component {
     componentDidMount(){
@@ -44,7 +45,18 @@ class ListMapScreenStepTwo extends Component {
          this.props.SetSearchListMap("");
          this.props.SetKeySearch(value);
          this.setState({text: ""});
-         this.props.navigation.navigate({routeName: 'SelectedMap', params: { back: "SearchListMap" }})
+         // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
+         this.props.navigation.dispatch(
+             StackActions.reset({
+                 index: 0,
+                 actions: [
+                     NavigationActions.navigate({
+                         routeName: 'SelectedMap',
+                         params: { back: "SearchListMap" },
+                     }),
+                 ],
+             })
+         );
     };
 
     _renderItem = ({item}) => {
@@ -77,6 +89,8 @@ class ListMapScreenStepTwo extends Component {
             return <Loading />     // แสดงหน้า Screen NoInternet
         }
 
+        //console.warn(this.props.navigation.getParam('back'));
+
         return (
             <Container>
                 <Item>
@@ -108,7 +122,18 @@ class ListMapScreenStepTwo extends Component {
 }
 
 ListMapScreenStepTwo.navigationOptions = ({ navigation }) => ({
-    header: <HeaderForm btn={() => navigation.goBack()} iconName={'arrow-left'} titlePage={'ค้นหาตำแหน่งพรรณไม้'} />
+    header: <HeaderForm
+        btn={() =>
+            navigation.dispatch(StackActions.reset({
+                    index: 0,
+                    actions: [
+                        NavigationActions.navigate({routeName: navigation.getParam('back')})
+                    ],
+                })
+            )
+        }
+        iconName={'arrow-left'}
+        titlePage={'ค้นหาตำแหน่งพรรณไม้'} />
 });
 
 export default connect(
