@@ -12,7 +12,7 @@ import { NavigationActions,StackActions } from 'react-navigation';
 
 class ListTreeScreen extends Component {
     componentDidMount(){
-        setTimeout(() => {this.props.FetchDataList();}, 500);   //เชื่อมต่อฐานข้อมูลใน 0.5 วินาที
+        setTimeout(() => {this.props.FetchDataList();}, 0);   //เชื่อมต่อฐานข้อมูลใน 0.5 วินาที
         this.props.SetSearchList('');   //ค่าที่ใช้ค้นหาในฐานข้อมูล '' = ทั้งหมด
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',

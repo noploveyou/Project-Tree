@@ -24,7 +24,7 @@ class DetailTree extends Component {
     }
 
     componentDidMount(){
-        setTimeout(() => {this.get();}, 500);
+        setTimeout(() => {this.get();}, 800);
     }
 
     get = () => {
