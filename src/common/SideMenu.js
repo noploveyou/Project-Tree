@@ -13,7 +13,8 @@ export default class SideMenu extends Component {
         this.state = {
             pressedBtn1: true,  /* ค่าแรกเริ่ม ให้กดปุ่ม ลากิจไว้ */
             pressedBtn2: false, /* ยังไม่กด */
-            pressedBtn3: false  /* ยังไม่กด */
+            pressedBtn3: false,  /* ยังไม่กด */
+            pressedBtn4: false  /* ยังไม่กด */
         }
     }
 
@@ -28,7 +29,7 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn1: true, pressedBtn2: false, pressedBtn3: false});
+        this.setState({pressedBtn1: true, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false});
     };
 
     Btn2 = () => {
@@ -42,7 +43,7 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn2: true, pressedBtn1: false, pressedBtn3: false});
+        this.setState({pressedBtn2: true, pressedBtn1: false, pressedBtn3: false, pressedBtn4: false});
     };
 
     Btn3 = () => {
@@ -56,7 +57,20 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn3: true, pressedBtn1: false, pressedBtn2: false});
+        this.setState({pressedBtn3: true, pressedBtn1: false, pressedBtn2: false, pressedBtn4: false});
+    };
+    Btn4 = () => {
+        this.props.navigation.dispatch(
+            StackActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName: 'QrCode'
+                    }),
+                ],
+            })
+        );
+        this.setState({pressedBtn4: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false});
     };
 
     render () {
@@ -111,6 +125,22 @@ export default class SideMenu extends Component {
                                             text={'แผนที่พรรณไม้'}
                                             size={18}
                                             weight={this.state.pressedBtn3 ? '500': '400'}
+                                        />
+                                    </Left>
+                                    <Right style={styles.viewIcon}>
+                                        <Icon name="map-marker" style={styles.iconColor} size={24} />
+                                    </Right>
+                                </ListItem>
+                                <ListItem
+                                    noIndent
+                                    style={[styles.button, this.state.pressedBtn4 ? [styles.buttonSelected] : {}]}
+                                    onPress={this.Btn4}
+                                >
+                                    <Left>
+                                        <CommonText
+                                            text={'สแกน QR Code'}
+                                            size={18}
+                                            weight={this.state.pressedBtn4 ? '500': '400'}
                                         />
                                     </Left>
                                     <Right style={styles.viewIcon}>
