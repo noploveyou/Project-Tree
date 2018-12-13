@@ -144,7 +144,7 @@ export default class SideMenu extends Component {
                                         />
                                     </Left>
                                     <Right style={styles.viewIcon}>
-                                        <Icon name="map-marker" style={styles.iconColor} size={24} />
+                                        <Icon name="qrcode" style={styles.iconColor} size={24} />
                                     </Right>
                                 </ListItem>
                             </List>
@@ -179,7 +179,8 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor:'#FEF9E7',
         height: 40,
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        borderBottomWidth: 1
     },
     buttonSelected: {
         backgroundColor: '#F1C40F'
