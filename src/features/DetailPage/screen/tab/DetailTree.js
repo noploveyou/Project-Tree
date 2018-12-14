@@ -24,8 +24,10 @@ class DetailTree extends Component {
     }
 
     componentDidMount(){
-        setTimeout(() => {this.get();}, 800);
+        setTimeout(() => {this.get();}, 1000);
     }
+
+
 
     get = () => {
         let getId = "", getName= "", getScience= "", getFamilyName= "", getCommonName= "", getSpecies= "",
@@ -60,7 +62,7 @@ class DetailTree extends Component {
     };
 
     render() {
-        if(this.state.benefity == null){
+        if(this.state.name == null){
             return  <Loading />
         }
 

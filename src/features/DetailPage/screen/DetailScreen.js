@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Text, Tab, Tabs, TabHeading, Icon } from 'native-base';
+import { Container, Text, Tab, Tabs, TabHeading } from 'native-base';
 import { BackHandler, NetInfo} from 'react-native';
+import Icon from "react-native-vector-icons/FontAwesome";
 import HeaderForm from "../../../common/components/HeaderForm";
 import CheckInternet from "../../../common/components/CheckNET";
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
@@ -10,6 +11,7 @@ import Appearance from './tab/Appearance';
 import Location from './tab/Location';
 import Loading from '../../../common/components/Loading';
 import imagesRequire from "../../../common/ImagesRequire";
+import CommonText from '../../../common/components/CommonText';
 import { NavigationActions, StackActions } from "react-navigation";
 
 class DetailScreen extends Component {
@@ -38,7 +40,7 @@ class DetailScreen extends Component {
     componentDidMount(){
         const { back, Tree } = this.props.navigation.state.params;
         this.props.SetValue(Tree);
-        setTimeout(() => {this.props.FetchData();}, 0);
+        setTimeout(() => {this.props.FetchData();}, 200);
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate(back));
@@ -144,8 +146,8 @@ class DetailScreen extends Component {
                         <Tab
                             heading={
                                 <TabHeading style={{backgroundColor: "#196F3D"}}>
-                                        <Icon name="camera" style={{marginLeft: 10}}/>
-                                        <Text style={{fontSize: 16}}>{"รายละเอียด"}</Text>
+                                        <Icon name="pagelines" style={{marginRight: 5, marginTop: 3}} size={20} color={'white'}/>
+                                        <CommonText text={'รายละเอียด'} size={16} color={'white'}  />
                                 </TabHeading>
                             }
                         >
@@ -165,8 +167,8 @@ class DetailScreen extends Component {
                         <Tab
                             heading={
                                 <TabHeading style={{backgroundColor: "#196F3D"}}>
-                                        <Icon name="camera" />
-                                        <Text style={{fontSize: 16}}>{"ลักษณะ"}</Text>
+                                        <Icon name="envira" style={{marginRight: 5, marginTop: 3}} size={20} color={'white'}/>
+                                    <CommonText text={'ลักษณะ'} size={16} color={'white'}  />
                                 </TabHeading>
                             }
                         >
@@ -184,8 +186,8 @@ class DetailScreen extends Component {
                                 <Tab
                                     heading={
                                         <TabHeading style={{backgroundColor: "#196F3D"}}>
-                                            <Icon name="apps" />
-                                            <Text style={{fontSize: 16}}>{"สถานที่พบ"}</Text>
+                                            <Icon name="map-marker" style={{marginRight: 5, marginTop: 3}} size={20} color={'white'}/>
+                                            <CommonText text={'สถานที่พบ'} size={16} color={'white'}  />
                                         </TabHeading>
                                     }
                                 >

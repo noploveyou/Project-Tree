@@ -8,12 +8,14 @@ import CheckInternet from "../../../common/components/CheckNET";
 import { NavigationActions, StackActions } from "react-navigation";
 import CommonText from '../../../common/components/CommonText';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
+import Loading from '../../../common/components/Loading';
 
 class QrCode extends Component {
     constructor() {
         super();
         this.state = {
-            value: null
+            value: null,
+            loading: false
         }
     }
 
@@ -29,20 +31,24 @@ class QrCode extends Component {
 
     onSuccess = (data) => {//รับค่า e มาทั้งหมด แล้วเช็ดค่า ในe จะมี ค่าไรไม่รุ้มาเต้มเลย เช่นe.data e.type
         //console.warn('Type: ' + e.type + '\nData: ' + e.data) //โชว์ค่า 2 ค่า type และ data
-        this.setState({value: data});
+        this.setState({value: data, loading: true});
         this.props.SetValue(data.data);
+        this.props.FetchData();
         setTimeout(() => {
-            if (this.props.CheckData != false) {
-                this.props.navigation.dispatch(
-                    StackActions.reset({
-                        index: 0,
-                        actions: [
-                            NavigationActions.navigate({
-                                routeName: 'Detail', params: { back: 'QrCode' }
-                            }),
-                        ],
-                    })
-                )
+            if (this.props.CheckData == true) {
+
+                setTimeout(() => {
+                    this.props.navigation.dispatch(
+                        StackActions.reset({
+                            index: 0,
+                            actions: [
+                                NavigationActions.navigate({
+                                    routeName: 'Detail', params: { back: 'QrCode', Tree: data.data }
+                                }),
+                            ],
+                        })
+                    );
+                },this.setState({loading: false}), 200);
             } else {
                 Alert.alert(
                     null,
@@ -73,6 +79,8 @@ class QrCode extends Component {
     render() {
             if(this.props.NET == false){    // หากปิด Internet
                 return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
+            }else if(this.state.loading == true){
+                return <Loading />
             }
 
         return (
@@ -135,5 +143,6 @@ export default connect(
     }),
     (dispatch) => ({
         SetValue: (value) => {dispatch({type: "SET_VALUE_DETAIL", payload: value})},
+        FetchData: (value) => {dispatch({type: "CALL_DATA_DETAIL", payload: value})},
     })
 )(QrCode);

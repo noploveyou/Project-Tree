@@ -18,12 +18,18 @@ class HomeScreen extends Component {
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => [this.props.navigation.navigate('Home'), CheckExitApp()]);
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow',
+            this._keyboardDidShow); // เมื่อเปิด keyboard
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide',
+            this._keyboardDidHide) // เมื่อปิด keyboard
     }
 
     componentWillUnmount() {
         this.props.SetValueSearchHomePage('');
         this.backHandler.remove();
         this.setState({ValueInput: ""});
+        this.keyboardDidHideListener.remove();
+        this.keyboardDidShowListener.remove();
     }
 
     constructor(props) {
@@ -135,17 +141,10 @@ class HomeScreen extends Component {
                         >
                             <Autocomplete underlineColorAndroid='transparent'
                                 style={s.inputAutoCP}
-                                onFocus={() => [
-                                    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow',
-                                        this._keyboardDidShow), // เมื่อเปิด keyboard
-                                    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide',
-                                        this._keyboardDidHide) // เมื่อปิด keyboard
-                                ]}
+                                onFocus={() => [this._keyboardDidShow, this._keyboardDidHide]}
                                 onBlur={() => [
                                     // เมื่อปิด keyboard ปิด DisableListResults แสดง Logo
                                     this.setState({ShowLogoTitle: true, DisableListResults: true}),
-                                    // ลบ Listener ** หากไม่ปิด การทำงานนี้จะทำงานที่ Feature อื่นด้วย
-                                    this.keyboardDidShowListener.remove(), this.keyboardDidHideListener.remove(),
                                 ]}
                                 ref="input"
                                 data={this.props.DataSource}                        
@@ -154,8 +153,6 @@ class HomeScreen extends Component {
                                 onSubmitEditing={() => [
                                     // เมื่อปิด keyboard ปิด DisableListResults แสดง Logo
                                     this.setState({ShowLogoTitle: true, DisableListResults: true}),
-                                    // ลบ Listener ** หากไม่ปิด การทำงานนี้จะทำงานที่ Feature อื่นด้วย
-                                    this.keyboardDidShowListener.remove(), this.keyboardDidHideListener.remove()
                                 ]}
                                 placeholder="กรุณากรอกชื่อพรรณไม้"
                                 placeholderTextColor='gray'

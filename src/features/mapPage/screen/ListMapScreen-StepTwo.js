@@ -17,7 +17,7 @@ class ListMapScreenStepTwo extends Component {
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate('Map'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide',
-            this._keyboardDidHide); // เมื่อปิด keyboard
+            this._keyboardDidHide) // เมื่อปิด keyboard
     }
 
     componentWillUnmount() {
@@ -45,6 +45,7 @@ class ListMapScreenStepTwo extends Component {
          this.props.SetSearchListMap("");
          this.props.SetKeySearch(value);
          this.setState({text: ""});
+         this.keyboardDidHideListener.remove();
          // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
          this.props.navigation.dispatch(
              StackActions.reset({
@@ -102,6 +103,7 @@ class ListMapScreenStepTwo extends Component {
                         returnKeyType={"done"}
                         onChangeText={(value) => {this.Search(value)}}
                         value={this.state.text}
+                        onBlur={() => this._keyboardDidHide}
                     />
                     <View>
                         <Icon name='close' style={{fontSize: 25, color: 'red',marginRight: 15}}

@@ -136,7 +136,7 @@ class Location  extends PureComponent {
 
     render() {
         //console.log(this.props.DataMarker);
-        //console.log();
+        //console.warn(this.props.DataMarker.length);
 
         return (
             <Container>
@@ -146,8 +146,9 @@ class Location  extends PureComponent {
                     </View>
                     :
                     <View style={s.container}>
-                        <View style={{width: '100%', height: 30, marginTop: 20, alignItems: 'center'}}>
+                        <View style={{width: '100%', height: 30, marginTop: 20, alignItems: 'center', flexDirection: 'column'}}>
                             <CommonText text={this.state.name} size={25} textTitle={true} />
+                            <CommonText text={`จำนวนที่พบ  `+this.props.DataMarker.length+`  ต้น`} size={18} weight={'300'}/>
                         </View>
                         <View style={s.viewMap}>
                             <GoogleMAP
@@ -198,6 +199,7 @@ const s = StyleSheet.create({
         width: '100%',
         justifyContent: 'flex-end',
         alignItems: 'center',
+        top: 20
     }
 });
 
