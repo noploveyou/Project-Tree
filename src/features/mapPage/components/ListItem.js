@@ -2,7 +2,7 @@ import React from "react";
 import { TouchableOpacity, View, Text } from 'react-native';
 import { Thumbnail } from 'native-base';
 import PropTypes from 'prop-types';
-import images from "../../../common/ImagesRequire";
+import icons from "../../../common/IconRequire";
 import CommonText from "../../../common/components/CommonText";
 
 class ListItem extends React.PureComponent {
@@ -37,7 +37,7 @@ class ListItem extends React.PureComponent {
                         }
                     }>
                     <View style={{marginLeft: 10, marginBottom: 10}}>
-                        <Thumbnail source={images[this.props.image]} />
+                        <Thumbnail source={icons[this.props.icons]} />
                     </View>
                     <View
                         style={
@@ -58,14 +58,14 @@ ListItem.propTypes = {
     labelTreeNameTH: PropTypes.string,
     labelTreeNameEN: PropTypes.string,
     onPressItem: PropTypes.func,
-    image: PropTypes.string
+    icons: PropTypes.string
 };
 
 ListItem.defaultProps = {
     labelTreeNameTH: "",
     labelTreeNameEN: "",
     onPressItem: null,
-    image: ""
+    icons: ""
 };
 
 export default ListItem;

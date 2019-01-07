@@ -8,6 +8,9 @@ import DetailScreen from  './src/features/DetailPage/screen/DetailScreen';
 import SearchListMap from "./src/features/mapPage/screen/ListMapScreen-StepTwo";
 import SelectedMap from "./src/features/mapPage/screen/MapScreen-StepThree";
 import QrCode from "./src/features/QrCodePage/screen/QrCode";
+import GuideScreen from "./src/features/guideToUse/screen/GuideScreen";
+import DetailZoneScreen from "./src/features/DetailZone/screen/DetailZoneScreen";
+import DetailProjectScreen from "./src/features/DetailProject/screen/DetailProjectScreen";
 
 export const RootStack = createStackNavigator({
     Home: {
@@ -30,6 +33,15 @@ export const RootStack = createStackNavigator({
     },
     QrCode: {
         screen: QrCode
+    },
+    Guide: {
+        screen: GuideScreen
+    },
+    Zone: {
+        screen: DetailZoneScreen
+    },
+    DetailProject: {
+        screen: DetailProjectScreen
     }
 
 },{

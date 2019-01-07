@@ -14,7 +14,10 @@ export default class SideMenu extends Component {
             pressedBtn1: true,  /* ค่าแรกเริ่ม ให้กดปุ่ม ลากิจไว้ */
             pressedBtn2: false, /* ยังไม่กด */
             pressedBtn3: false,  /* ยังไม่กด */
-            pressedBtn4: false  /* ยังไม่กด */
+            pressedBtn4: false,  /* ยังไม่กด */
+            pressedBtn5: false, /* ยังไม่กด */
+            pressedBtn6: false,  /* ยังไม่กด */
+            pressedBtn7: false  /* ยังไม่กด */
         }
     }
 
@@ -29,7 +32,7 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn1: true, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false});
+        this.setState({pressedBtn1: true, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false});
     };
 
     Btn2 = () => {
@@ -43,7 +46,7 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn2: true, pressedBtn1: false, pressedBtn3: false, pressedBtn4: false});
+        this.setState({pressedBtn2: true, pressedBtn1: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
     };
 
     Btn3 = () => {
@@ -57,7 +60,7 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn3: true, pressedBtn1: false, pressedBtn2: false, pressedBtn4: false});
+        this.setState({pressedBtn3: true, pressedBtn1: false, pressedBtn2: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
     };
     Btn4 = () => {
         this.props.navigation.dispatch(
@@ -70,7 +73,46 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn4: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false});
+        this.setState({pressedBtn4: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
+    };
+    Btn5 = () => {
+        this.props.navigation.dispatch(
+            StackActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName: 'Guide'
+                    }),
+                ],
+            })
+        );
+        this.setState({pressedBtn5: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn6: false, pressedBtn7: false});
+    };
+    Btn6 = () => {
+        this.props.navigation.dispatch(
+            StackActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName: 'Zone'
+                    }),
+                ],
+            })
+        );
+        this.setState({pressedBtn6: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn7: false});
+    };
+    Btn7 = () => {
+        this.props.navigation.dispatch(
+            StackActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName: 'DetailProject'
+                    }),
+                ],
+            })
+        );
+        this.setState({pressedBtn7: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false});
     };
 
     render () {
@@ -145,6 +187,54 @@ export default class SideMenu extends Component {
                                     </Left>
                                     <Right style={styles.viewIcon}>
                                         <Icon name="qrcode" style={styles.iconColor} size={24} />
+                                    </Right>
+                                </ListItem>
+                                <ListItem
+                                    noIndent
+                                    style={[styles.button, this.state.pressedBtn5 ? [styles.buttonSelected] : {}]}
+                                    onPress={this.Btn5}
+                                >
+                                    <Left>
+                                        <CommonText
+                                            text={'วิธีการใช้งาน'}
+                                            size={18}
+                                            weight={this.state.pressedBtn5 ? '500': '400'}
+                                        />
+                                    </Left>
+                                    <Right style={styles.viewIcon}>
+                                        <Icon name="book" style={styles.iconColor} size={24} />
+                                    </Right>
+                                </ListItem>
+                                <ListItem
+                                    noIndent
+                                    style={[styles.button, this.state.pressedBtn6 ? [styles.buttonSelected] : {}]}
+                                    onPress={this.Btn6}
+                                >
+                                    <Left>
+                                        <CommonText
+                                            text={'รายละเอียด Zone'}
+                                            size={18}
+                                            weight={this.state.pressedBtn6 ? '500': '400'}
+                                        />
+                                    </Left>
+                                    <Right style={styles.viewIcon}>
+                                        <Icon name="flag" style={styles.iconColor} size={24} />
+                                    </Right>
+                                </ListItem>
+                                <ListItem
+                                    noIndent
+                                    style={[styles.button, this.state.pressedBtn7 ? [styles.buttonSelected] : {}]}
+                                    onPress={this.Btn7}
+                                >
+                                    <Left>
+                                        <CommonText
+                                            text={'เกี่ยวกับโครงการ'}
+                                            size={18}
+                                            weight={this.state.pressedBtn7 ? '500': '400'}
+                                        />
+                                    </Left>
+                                    <Right style={styles.viewIcon}>
+                                        <Icon name="graduation-cap" style={styles.iconColor} size={24} />
                                     </Right>
                                 </ListItem>
                             </List>

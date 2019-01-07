@@ -68,7 +68,7 @@ class ListMapScreenStepTwo extends Component {
                 labelTreeNameTH={item.plantName}
                 labelTreeNameEN={item.plantScience}
                 onPressItem={() => this._onPressItem(item.plantName)}
-                image={item.plantIcon}
+                icons={item.plantIcon}
             />
         );
     };
@@ -90,7 +90,7 @@ class ListMapScreenStepTwo extends Component {
         }else if(this.props.DataList == null){    // หากปิด Internet
             return <Loading />     // แสดงหน้า Screen NoInternet
         }
-
+        //console.warn(this.props.DataList);
         //console.warn(this.props.navigation.getParam('back'));
 
         return (
