@@ -32,7 +32,7 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn1: true, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false});
+        this.setState({pressedBtn1: true, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
     };
 
     Btn2 = () => {
