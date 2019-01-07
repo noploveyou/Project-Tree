@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
 import { Container } from 'native-base';
-import { Alert, BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { BackHandler, NetInfo, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { NavigationActions, StackActions } from "react-navigation";
+import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import getDirections from "react-native-google-maps-directions";
-import { connect } from "react-redux";
 import HeaderForm from '../../../common/components/HeaderForm';
 import CheckInternet from '../../../common/components/CheckNET';
 import SearchListMap from "./ListMapScreen-StepTwo";
 import GoogleMAP from '../../../common/components/GoogleMAP'
 import Loading from '../../../common/components/Loading';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
+import CheckExitApp from '../../../common/components/CheckExitApp';
 
 class MapScreenStepOne extends Component {
-    componentDidMount(){
+    componentDidMount(){    //เริ่มการทำงานของ class นี้
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
-            () => [this.props.navigation.navigate('Map'), this.checkExitApp()]);     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
-        setTimeout(() => this.props.FetchDataMap(), 0);    // กำหนดระยะเวลา เริ่มทำงานเมื่อผ่านไป 0 วินาที
-        this.CheckGPS();
+            () => [this.props.navigation.navigate('Map'), CheckExitApp()]);     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
+        this.props.FetchDataMap();  //เชื่อมต่อฐานข้อมูล
     }
 
     componentWillUnmount() {
-        this.backHandler.remove();
-        navigator.geolocation.clearWatch(this.watchID); // set value UserLocation = null in store
+        this.backHandler.remove(); //ลบ Event ปุ่ม back ของ Android
     }
 
     constructor(props){
@@ -37,22 +37,9 @@ class MapScreenStepOne extends Component {
         }
     }
 
-    checkExitApp = () => {
-        Alert.alert(
-            null,
-            'คุณต้องการออกจากแอพพลิเคชันหรือไม่ ?',
-            [
-                {text: 'ไม่ใช่', onPress: () => null},
-                {text: 'ใช่', onPress: () => BackHandler.exitApp()},
-            ],
-            { cancelable: false }
-        )
-    };
-
     CheckInternetRender = () => {           // ทำงานเมื่อ MAP พร้อมใช้งาน (หลังปิด - เปิด Internet)
         setTimeout(() => {
             if(this.props.NET){                 // Internet เปิดใช้งาน
-                //this.props.FetchDataMap();      // เรียกฐานข้อมูลอีกครั้ง หลังจาก เปิด Internet
                 switch (this.state.MapHeight) {     // Hack MAP เพื่อแสดงปุ่ม UserLocation
                     case '100%':
                         this.setState({MapHeight: '101%', ShowBTNNavigate: false});
@@ -68,52 +55,14 @@ class MapScreenStepOne extends Component {
         }, 5000)    // เริ่มทำงานหลังจาก 5 วินาที
     };
 
-    CheckGPS = () => {
-        this.watchID = navigator.geolocation.watchPosition(
-            (position) => {
-                let newLat = parseFloat(position.coords.latitude); //คำสั่งsetที่อยุ่ตามเครื่อง +แปรงค่าเป้นทศนิยม
-                let newLong = parseFloat(position.coords.longitude);
-                const initialRegion = {
-                    latitude: newLat,
-                    longitude: newLong
-                };
-                this.props.GetLocation(initialRegion);  // Set Value in Store
-            },
-            () => [Alert.alert(
-                null,
-                'กรุณาเปิดใช้ GPS ก่อนการใช้งาน',
-                [
-                    {text: 'ปฏิเสธ', onPress: () => null},
-                    {text: 'ตั้งค่า', onPress: () => null}
-                ],
-                { cancelable: false }
-            ),navigator.geolocation.clearWatch(this.watchID)],
-            {timeout: 0, distanceFilter: 50} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
-        );
-    };
-
     handleGetDirections = () => { //ฟังก์ชัน นำทาง (เปิด Google MAP)
-        try {   // เปิด GPS
-            const data = {
-                source: {      //จุดเริ่มต้น ตำแหน่งผู้ใช้
-                    latitude:  this.props.MyPosition.latitude,
-                    longitude: this.props.MyPosition.longitude
-                },
-                destination: {  //ปลายทาง
-                    latitude: this.state.SetLatitudeToNavigate,
-                    longitude: this.state.SetLongitudeToNavigate,
-                }
-            };
-            getDirections(data)
-        }catch (positionNull) {     // ปิด GPS
-            const data = {
-                destination: {      // ปลายทาง
-                    latitude: this.state.SetLatitudeToNavigate,
-                    longitude: this.state.SetLongitudeToNavigate,
-                }
-            };
-            getDirections(data)
-        }
+        const data = {
+            destination: {      // ปลายทาง
+                latitude: this.state.SetLatitudeToNavigate,
+                longitude: this.state.SetLongitudeToNavigate,
+            }
+        };
+        getDirections(data);
     };
 
     SetLocationToNavigate = (lat, lng) => {
@@ -124,7 +73,6 @@ class MapScreenStepOne extends Component {
         if(this.props.NET == false){    // หากปิด Internet
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }
-
         if(this.props.CheckFetchDataMap == false){
             if(this.props.NET == true){
                 this.props.FetchDataMap();
@@ -138,11 +86,23 @@ class MapScreenStepOne extends Component {
             <Container>
                 <View style={s.viewHeader}>
                     <TouchableOpacity
-                        onPress={() => [this.props.navigation.navigate({routeName: 'SearchListMap',}),
-                            navigator.geolocation.clearWatch(this.watchID)]} style={s.buttonNear}
+                        onPress={() => // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
+                            this.props.navigation.dispatch(
+                                StackActions.reset({
+                                    index: 0,
+                                    actions: [
+                                        NavigationActions.navigate({
+                                            routeName: 'SearchListMap',
+                                            params: { back: "Map" },
+                                        }),
+                                    ],
+                                })
+                            )
+                        }
+                        style={s.buttonSearch}
                     >
-                        <Icon name={'md-search'} size={28} color={'white'} style={s.iconButtonNear}/>
-                        <Text style={s.labelButtonNear}> {`ค้นหา`} </Text>
+                        <Icon name={'md-search'} size={28} color={'white'} style={s.iconButtonSearch}/>
+                        <Text style={s.labelButtonSearch}> {`ค้นหา`} </Text>
                     </TouchableOpacity>
                 </View>
                     <View style={s.container}>
@@ -152,18 +112,19 @@ class MapScreenStepOne extends Component {
                             [this.setState({ MapWidth: - 1, HackRender: true }), this.CheckInternetRender()]
                             }
                             onPress={() => this.setState({ShowBTNNavigate: false})}
-
                             check={this.props.CheckFetchDataMap && this.state.HackRender}
                             Data={this.props.DataMarker}
-                            OnMarkPress={(ly,lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
+                            OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
+                            LocationUser={false}
                         />
                         {this.state.ShowBTNNavigate ?
                             <View style={{marginBottom: 15}}>
                                 <TouchableOpacity onPress={() => this.handleGetDirections()} style={s.btnNavigate}>
-                                    <Icon name={'md-navigate'} size={28} style={s.iconBtnNavigate}/>
+                                    <Icon name={'md-navigate'} size={28} color={'#FEF9E7'} style={s.iconBtnNavigate}/>
                                     <Text style={s.labelBtnNavigate}> เส้นทาง </Text>
                                 </TouchableOpacity>
-                            </View> : null
+                            </View>
+                            : null
                         }
                     </View>
             </Container>
@@ -211,7 +172,7 @@ const s = StyleSheet.create({
         marginTop: 1,
         color: 'white',
     },
-    buttonNear: {
+    buttonSearch: {
         width: 150,
         height: 45,
         borderRadius: 5,
@@ -225,10 +186,10 @@ const s = StyleSheet.create({
         flex: 1,
         justifyContent: 'center'
     },
-    iconButtonNear: {
+    iconButtonSearch: {
         marginTop: 10,
     },
-    labelButtonNear: {
+    labelButtonSearch: {
         fontSize: 14,
         fontWeight: 'bold',
         marginLeft: 10,
@@ -237,21 +198,29 @@ const s = StyleSheet.create({
         color: 'white'
     },
     btnNavigate: {
-        width: 140,
-        height: 50,
-        borderRadius: 50,
-        backgroundColor:'yellow',
-        flexDirection: 'row'
+        width: '100%',
+        height: 60,
+        borderRadius: 5,
+        borderColor: '#F1C40F',
+        borderWidth: 1,
+        backgroundColor: '#196F3D',
+        flexDirection: 'row',
+        marginBottom: 10,
+        marginTop: 10,
+        alignItems:'center'
     },
     iconBtnNavigate: {
-        marginTop: 10,
-        marginLeft: 18
+        marginTop: 5,
+        marginLeft: 20,
     },
     labelBtnNavigate: {
         fontSize: 20,
         fontWeight: 'bold',
         marginLeft: 10,
-        marginTop: 10
+        marginRight: 20,
+        marginBottom: 7,
+        marginTop: 8,
+        color: '#FEF9E7'
     }
 });
 
@@ -265,6 +234,6 @@ export default connect(
     (dispatch) => ({
         GetLocation : (value) => {dispatch({type: "GET_USER_LOCATION", payload: value})},    // รับตำแหน่งผู้ใช้
         FetchDataMap : (value) => {dispatch({type: "CALL_DATA_STEP_ONE", payload: value})},      // เรียกฐานข้อมูล
-        GPS : (value) => {dispatch({type: "USE_GPS", payload: value})}
+        GPS : (value) => {dispatch({type: "USE_GPS", payload: value})}  //ตรวจสอบการเปิดใช้งาน GPS
     })
 )(MapScreenStepOne);

@@ -1,6 +1,7 @@
 import homeReducer from '../features/homePage/redux/HomeRuducer';
 import MapReducer from '../features/mapPage/redux/MapReducer';
 import ListTreeReducer from '../features/listTreePage/redux/ListTreeReducer';
+import DetailReducer from  '../features/DetailPage/redux/DetailReducer';
 
 const CheckDevice = (state={}, action) => {
     switch (action.type){
@@ -8,7 +9,7 @@ const CheckDevice = (state={}, action) => {
             state = {
                 ...state,
                 UserLocation: action.payload,
-            }
+            };
         }
             break;
 
@@ -37,7 +38,8 @@ const rootReducer = {
     CheckDevice: CheckDevice,
     DataHomeScreen: homeReducer,
     DataMapScreen: MapReducer,
-    DataListTreeScreen : ListTreeReducer
+    DataListTreeScreen : ListTreeReducer,
+    DataDetailScreen: DetailReducer
 };
 
 export default rootReducer;

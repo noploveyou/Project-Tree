@@ -2,7 +2,8 @@ import React from "react";
 import { TouchableOpacity, View, Text } from 'react-native';
 import { Thumbnail } from 'native-base';
 import PropTypes from 'prop-types';
-import images from "../../../common/IconRequire";
+import icons from "../../../common/IconRequire";
+import CommonText from "../../../common/components/CommonText";
 
 class ListItem extends React.PureComponent {
     _onPress = () => {
@@ -17,12 +18,14 @@ class ListItem extends React.PureComponent {
                 onPress={this._onPress}
                 style={
                     {
-                        width: '100%',
-                        height: 70,
-                        backgroundColor: 'yellow',
-                        marginBottom: 10,
-                        borderBottomWidth: 1,
-                        borderBottomColor: 'gray'
+                        width: '97%',
+                        height: 80,
+                        borderRadius: 10,
+                        backgroundColor: 'white',
+                        marginBottom: 8,
+                        left: 5,
+                        right: 5,
+                        top: 5
                     }
                 }>
                 <View
@@ -33,21 +36,17 @@ class ListItem extends React.PureComponent {
                             marginTop: 10
                         }
                     }>
-                    <View>
-                        <Thumbnail square source={images[this.props.image]} />
+                    <View style={{marginLeft: 10, marginBottom: 10}}>
+                        <Thumbnail source={icons[this.props.icons]} />
                     </View>
                     <View
                         style={
                             {
-                                marginLeft: 10
+                                marginLeft: 10, marginTop: 5
                             }
                         }>
-                        <Text style={{ color: 'black' }}>
-                            {this.props.labelTreeNameTH}
-                        </Text>
-                        <Text style={{ color: 'black' }}>
-                            {this.props.labelTreeNameEN}
-                        </Text>
+                        <CommonText text={this.props.labelTreeNameTH} size={16} weight={'600'} />
+                        <CommonText text={this.props.labelTreeNameEN} size={16} />
                     </View>
                 </View>
             </TouchableOpacity>
@@ -59,14 +58,14 @@ ListItem.propTypes = {
     labelTreeNameTH: PropTypes.string,
     labelTreeNameEN: PropTypes.string,
     onPressItem: PropTypes.func,
-    image: PropTypes.string
+    icons: PropTypes.string
 };
 
 ListItem.defaultProps = {
     labelTreeNameTH: "",
     labelTreeNameEN: "",
     onPressItem: null,
-    image: ""
+    icons: ""
 };
 
 export default ListItem;

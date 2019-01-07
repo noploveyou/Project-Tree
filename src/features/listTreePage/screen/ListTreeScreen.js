@@ -3,98 +3,107 @@ import { Container, Icon, Content, View, Item } from 'native-base';
 import { FlatList, BackHandler, NetInfo, Alert, Keyboard, TextInput } from 'react-native';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import HeaderForm from '../../../common/components/HeaderForm';
-import ListItem from '../components/ListItem';
+import ListItemListTree from '../components/ListItemListTree';
 import { connect } from "react-redux";
 import CheckInternet from "../../../common/components/CheckNET";
+import Loading from '../../../common/components/Loading';
+import CheckExitApp from '../../../common/components/CheckExitApp';
+import { NavigationActions,StackActions } from 'react-navigation';
 
 class ListTreeScreen extends Component {
     componentDidMount(){
-        this.props.FetchDataList();
-        this.props.SetSearchList('');
+        setTimeout(() => {this.props.FetchDataList();}, 0);   //เชื่อมต่อฐานข้อมูลใน 0.5 วินาที
+        this.props.SetSearchList('');   //ค่าที่ใช้ค้นหาในฐานข้อมูล '' = ทั้งหมด
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
-            () => [this.props.navigation.navigate('ListTree'),this.checkExitApp()]);
+            () => [this.props.navigation.navigate('ListTree'),CheckExitApp()]);    //เมื่อกดปุ่ม back บนแอนดรอยด์
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide',
-            this._keyboardDidHide); // เมื่อปิด keyboard
+            this._keyboardDidHide) // เมื่อปิด keyboard
     }
 
     componentWillUnmount() {
-        this.backHandler.remove();
+        this.backHandler.remove();  //ลบ Event ปุ่ม back
+        this.props.SetSearchList('');   //ค่าที่ใช้ค้นหาในฐานข้อมูล '' = ทั้งหมด
         this.keyboardDidHideListener.remove();
     }
 
     constructor(props) {
         super(props);
         this.state = {
-            text: '',
+            text: '' //ค่าในช่อง Input
         };
     }
 
-    _keyboardDidHide = () => {
-        this.refs['SearchInput'].blur();
-    };
-
-    checkExitApp = () => {
-        Alert.alert(
-            null,
-            'คุณต้องการออกจากแอพพลิเคชันหรือไม่ ?',
-            [
-                {text: 'ไม่ใช่', onPress: () => null},
-                {text: 'ใช่', onPress: () => BackHandler.exitApp()},
-            ],
-            { cancelable: false }
-        )
-    };
-
-    _keyExtractor = (item) => item.plantID;
+    _keyExtractor = (item) => item.plantID; // Key Array ของ FlatList
 
     _onPressItem = (value) => {
-        this.props.navigation.navigate({
-            routeName: 'Detail',
-            params: { back: "ListTree", Tree : value }
-        });   // ไปยังหน้า รายละเอียด
+        // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
+        this.keyboardDidHideListener.remove();
+        this.props.navigation.dispatch(
+            StackActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName: 'Detail',
+                        params: { back: "ListTree", Tree : value  },
+                    }),
+                ],
+            })
+        );
+
         this.props.SetSearchList('');
+        this.clearText();
     };
 
     _renderItem = ({item}) => {
         return (
-            <ListItem
+            <ListItemListTree
                 //id={item.plantID}
-                labelTreeNameTH={item.plantName}
-                labelTreeNameEN={item.plantScience}
-                onPressItem={() => this._onPressItem(item.plantName)}
-                image={item.plantIcon}
+                labelTreeNameTH={item.plantName}    //ชื่อพรรณไม้
+                labelTreeNameEN={item.plantScience} //ชื่อวิทยาศาสตร์พรรณไม้
+                onPressItem={() => this._onPressItem(item.plantName)} //action เมื่อกดที่รายชื่อ
+                image={item.imageFileAll} //imageFileAll ภาพพรรณไม้
             />
         );
     };
 
     Search(value){
-        this.setState({text: value});
-        this.props.SetSearchList(value);
-        this.props.FetchDataList();
+        this.setState({text: value});   // text มีค่าเท่ากับ ค่าในช่อง Input
+        this.props.SetSearchList(value);    //Set ค่าที่เรียกไปยังฐานข้อมูล
+        this.props.FetchDataList();     // เรียกฐานข้อมูล
     }
 
     clearText(){
-        this.setState({text:''});
-        this.componentDidMount();
+        this.setState({text:''});   //ค่าในช่อง Input
+        this.componentDidMount();   //ออกจากฟังก์ชัน
     }
+
+
+
+    _keyboardDidHide = () => {  //เมื่อปิด Keyboard ลง
+        this.refs['ListInput'].blur();
+    };
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
+        }else if(this.props.DataList == null){    // หากปิด Internet
+            return <Loading />     // แสดงหน้า Screen NoInternet
         }
-        //console.log(this.props.DataList);
+
+        
         return (
             <Container>
                 <Item>
                     <TextInput
-                        style={{flex: 1,flexDirection: 'row',justifyContent: 'center', fontSize: 18}}
-                        ref="SearchInput"
-                        placeholder= "กรอกชื่อพรรณไม้"
+                        style={{flex: 1,flexDirection: 'row',justifyContent: 'center', fontSize: 18, marginLeft: 5}}
+                        ref="ListInput"
+                        placeholder= "กรุณากรอกชื่อพรรณไม้"
                         placeholderTextColor = '#D5D8DC'
                         returnKeyType={"done"}
                         onChangeText={(value) => {this.Search(value)}}
                         value={this.state.text}
+                        onFocus={() => this._keyboardDidHide}
                     />
                     <View>
                         <Icon name='close' style={{fontSize: 25, color: 'red',marginRight: 15}}
@@ -102,7 +111,7 @@ class ListTreeScreen extends Component {
                         />
                     </View>
                 </Item>
-                <Content>
+                <Content style={{backgroundColor: '#F1C40F'}}>
                     <FlatList
                         data={this.props.DataList}
                         keyExtractor={this._keyExtractor}

@@ -5,10 +5,9 @@ class Loading extends Component{
     render(){
         return(
             <View style={styles.viewContainer}>
-                <View>
                     <ActivityIndicator size="large" color="green" />
-                    <Text style={styles.labelLoading}>{"กำลังโหลด กรุณารอสักครู่"}</Text>
-                </View>
+                    <Text style={styles.labelLoading}>{"กำลังโหลด"}</Text>
+                <Text style={styles.labelLoading}>{"กรุณารอสักครู่"}</Text>
             </View>
         )
     }
@@ -18,7 +17,7 @@ const styles = StyleSheet.create({
    viewContainer: {
        flex: 1,
        alignItems: 'center',
-       flexDirection: 'row',
+       flexDirection: 'column',
        justifyContent: 'center'
    },
     labelLoading: {
