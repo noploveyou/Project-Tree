@@ -3,11 +3,12 @@ import { Container, Icon, Content, View, Item } from 'native-base';
 import { FlatList, BackHandler, NetInfo, Keyboard, TextInput } from 'react-native';
 import HeaderForm from '../../../common/components/HeaderForm';
 import { connect } from "react-redux";
-import ListItem from '../components/ListItem';
+//import ListItem from '../components/ListItem';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import CheckInternet from "../../../common/components/CheckNET";
 import Loading from '../../../common/components/Loading';
 import {NavigationActions, StackActions} from "react-navigation";
+import ListItem from '../components/ListItem';
 
 class ListMapScreenStepTwo extends Component {
     componentDidMount(){
@@ -111,7 +112,7 @@ class ListMapScreenStepTwo extends Component {
                         />
                     </View>
                 </Item>
-                <Content>
+                <Content style={{backgroundColor: '#F1C40F'}}>
                     <FlatList
                         data={this.props.DataList}
                         keyExtractor={this._keyExtractor}

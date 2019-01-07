@@ -95,11 +95,11 @@ class QrCode extends Component {
                             <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '40%', width: '100%'}}/>
                         </View>
                         <View style={{position: 'absolute',height: '100%', width: '100%', justifyContent: 'space-between',flexDirection: 'row',alignItems:'center'}}>
-                            <View style={{bottom: 45.8,backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: '20%'}}/>
-                            <View style={{bottom: 45.8,backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: '20%'}}/>
+                            <View style={{bottom: 45.3,backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: '20%'}}/>
+                            <View style={{bottom: 45.3,backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: '20%'}}/>
                         </View>
                         <View style={{position: 'absolute',height: '100%', width: '100%', alignItems:'center', justifyContent: 'center'}}>
-                            <View style={{bottom: 45.8,height: '35%', width: '60%', borderWidth: 5, borderColor: '#F1C40F'}}/>
+                            <View style={{bottom: 45.9,height: '35%', width: '60%', borderWidth: 5, borderColor: '#F1C40F'}}/>
 
                         </View>
                     </View>
