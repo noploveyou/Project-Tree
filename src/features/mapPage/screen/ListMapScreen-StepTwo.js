@@ -30,7 +30,7 @@ class ListMapScreenStepTwo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: '',
+            valueInput: '',
             selected: (new Map()),
             isLoading: true,
         };
@@ -45,7 +45,7 @@ class ListMapScreenStepTwo extends Component {
      _onPressItem = (value) => {
          this.props.SetSearchListMap("");
          this.props.SetKeySearch(value);
-         this.setState({text: ""});
+         this.setState({valueInput: ""});
          this.keyboardDidHideListener.remove();
          // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
          this.props.navigation.dispatch(
@@ -74,13 +74,13 @@ class ListMapScreenStepTwo extends Component {
     };
 
     Search(value){
-        this.setState({text: value});
+        this.setState({valueInput: value});
         this.props.SetSearchListMap(value);
         this.props.FetchDataListMap();
     }
 
     clearText(){
-        this.setState({text:''});
+        this.setState({valueInput:''});
         this.componentDidMount();
     }
 
@@ -103,7 +103,7 @@ class ListMapScreenStepTwo extends Component {
                         placeholderTextColor = '#D5D8DC'
                         returnKeyType={"done"}
                         onChangeText={(value) => {this.Search(value)}}
-                        value={this.state.text}
+                        value={this.state.valueInput}
                         onBlur={() => this._keyboardDidHide}
                     />
                     <View>

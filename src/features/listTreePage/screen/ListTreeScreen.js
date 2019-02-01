@@ -30,7 +30,7 @@ class ListTreeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: '' //ค่าในช่อง Input
+            valueInput: '' //ค่าในช่อง Input
         };
     }
 
@@ -68,13 +68,13 @@ class ListTreeScreen extends Component {
     };
 
     Search(value){
-        this.setState({text: value});   // text มีค่าเท่ากับ ค่าในช่อง Input
+        this.setState({valueInput: value});   // text มีค่าเท่ากับ ค่าในช่อง Input
         this.props.SetSearchList(value);    //Set ค่าที่เรียกไปยังฐานข้อมูล
         this.props.FetchDataList();     // เรียกฐานข้อมูล
     }
 
     clearText(){
-        this.setState({text:''});   //ค่าในช่อง Input
+        this.setState({valueInput:''});   //ค่าในช่อง Input
         this.componentDidMount();   //ออกจากฟังก์ชัน
     }
 
@@ -102,7 +102,7 @@ class ListTreeScreen extends Component {
                         placeholderTextColor = '#D5D8DC'
                         returnKeyType={"done"}
                         onChangeText={(value) => {this.Search(value)}}
-                        value={this.state.text}
+                        value={this.state.valueInput}
                         onFocus={() => this._keyboardDidHide}
                     />
                     <View>
