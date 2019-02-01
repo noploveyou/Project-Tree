@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet, BackHandler} from 'react-native';
 import ShowLabelDetail from '../../components/ShowLabelDetail';
 import Loading from "../../../../common/components/Loading";
 import CommonText from "../../../../common/components/CommonText";
@@ -20,20 +20,19 @@ class DetailTree extends Component {
             extraction: null,
             benefit: null,
             benefity: null,
+            finished: false
         }
     }
 
     componentDidMount(){
-        setTimeout(() => {this.get();}, 1000);
+        setTimeout(() => {this.get();}, 1200);
     }
 
-
-
     get = () => {
-        let getId = "", getName= "", getScience= "", getFamilyName= "", getCommonName= "", getSpecies= "",
-            getDistribution= "", getExtraction= [], getBenefit= "", getBenefity= "";
+        let getId = "", getName = "", getScience = "", getFamilyName = "", getCommonName = "", getSpecies = "",
+            getDistribution = "", getExtraction = [], getBenefit = "", getBenefity = "";
 
-        this.props.DataSource.map(function (item){
+        this.props.DataSource.map(function (item) {
             return [
                 getId = item.plantID,
                 getName = item.plantName,
@@ -59,10 +58,17 @@ class DetailTree extends Component {
             benefit: getBenefit,
             benefity: getBenefity,
         });
+
+        if (getId || getName || getScience || getFamilyName || getCommonName || getSpecies || getDistribution ||
+            getExtraction != "") {
+            this.setState({finished: true});
+        }else {
+            alert("กรุณาลองใหม่อีกครั้ง")
+        }
     };
 
     render() {
-        if(this.state.name == null){
+        if(this.state.finished == false){
             return  <Loading />
         }
 

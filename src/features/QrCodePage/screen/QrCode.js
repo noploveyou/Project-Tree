@@ -36,7 +36,6 @@ class QrCode extends Component {
         this.props.FetchData();
         setTimeout(() => {
             if (this.props.CheckData == true) {
-
                 setTimeout(() => {
                     this.props.navigation.dispatch(
                         StackActions.reset({
