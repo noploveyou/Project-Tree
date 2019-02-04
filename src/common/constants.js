@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/SQLCommandForMobile.php';
+export const BASE_URL = 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/SQLCommandsForMobile.php';
