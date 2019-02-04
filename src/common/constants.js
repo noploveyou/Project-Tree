@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://192.168.100.2/DBCheck.php'; // 193
+export const BASE_URL = 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/SQLCommandForMobile.php';
