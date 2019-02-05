@@ -10,33 +10,10 @@ import Detail from './tab/DetailTree';
 import Appearance from './tab/Appearance';
 import Location from './tab/Location';
 import Loading from '../../../common/components/Loading';
-import imagesRequire from "../../../common/ImagesRequire";
 import CommonText from '../../../common/components/CommonText';
 import { NavigationActions, StackActions } from "react-navigation";
 
 class DetailScreen extends Component {
-    constructor (props) {
-        super(props);
-        this.state = {
-            id: null,
-            name: null,
-            science: null,
-            familyName: null,
-            commonName: null,
-            species: null,
-            distribution: null,
-            extraction: null,
-            benefit: null,
-            benefity: null,
-            stem: null,
-            leaf: null,
-            flower: null,
-            round: null,
-            seed: null,
-            imgAll: []
-        }
-    }
-
     componentDidMount(){
         const { back, Tree } = this.props.navigation.state.params;
         this.props.SetValue(Tree);
@@ -50,87 +27,6 @@ class DetailScreen extends Component {
         this.backHandler.remove();
         this.props.Reset([]);
     }
-
-    get = () => {
-        let getId = "", getName= "", getScience= "", getFamilyName= "", getCommonName= "", getSpecies= "",
-            getDistribution= "", getExtraction= [], getBenefit= "", getBenefity= "", getStem = "", getLeaf = "",
-            getFlower = "", getRound = "", getSeed = "", getImgStem = null, getImgLeaf = null, getImgFlower = null,
-            getImgRound = null, getImgSeed = null;
-
-        this.props.DataSource.map(function (item){
-            return [
-                getId = item.plantID,
-                getName = item.plantName,
-                getScience = item.plantScience,
-                getFamilyName = item.plantFamilyName,
-                getCommonName = item.plantCommonname,
-                getSpecies = item.plantSpecies,
-                getDistribution = item.plantDistribution,
-                getExtraction.push(item.extractionName),
-                getBenefit = item.plantbenefit,
-                getBenefity = item.plantbenefity,
-                getStem = item.plantStem,
-                getLeaf = item.plantLeaf,
-                getFlower = item.plantFlower,
-                getRound = item.plantRound,
-                getSeed = item.plantSeed,
-                getImgStem = item.imageFileStem,
-                getImgLeaf = item.imageFileLeaf,
-                getImgFlower = item.imageFileFlower,
-                getImgRound = item.imageFileRound,
-                getImgSeed = item.imageFileSeed
-            ];
-        });
-        this.setState({
-            id: getId,
-            name: getName,
-            science: getScience,
-            familyName: getFamilyName,
-            commonName: getCommonName,
-            species: getSpecies,
-            distribution: getDistribution,
-            extraction: getExtraction,
-            benefit: getBenefit,
-            benefity: getBenefity,
-            stem: getStem,
-            leaf: getLeaf,
-            flower: getFlower,
-            round: getRound,
-            seed: getSeed
-        });
-
-        if(getImgStem != null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgStem]]
-            }))
-        }
-        if(getImgLeaf != null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgLeaf]]
-            }))
-        }
-        if(getImgFlower != null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgFlower]]
-            }))
-        }
-        if(getImgRound != null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgRound]]
-            }))
-        }
-        if(getImgSeed != null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgSeed]]
-            }))
-        }
-        if(getImgStem == null && getImgLeaf == null && getImgFlower == null && getImgRound == null
-            && getImgSeed == null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire["null"]]
-            }))
-        }
-    };
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
@@ -151,18 +47,7 @@ class DetailScreen extends Component {
                                 </TabHeading>
                             }
                         >
-                            <Detail
-                                id={this.state.id}
-                                name={this.state.name}
-                                science={this.state.science}
-                                familyName={this.state.familyName}
-                                commonName={this.state.commonName}
-                                species={this.state.species}
-                                distribution={this.state.distribution}
-                                extraction={this.state.extraction}
-                                benefit={this.state.benefit}
-                                benefity={this.state.benefity}
-                            />
+                            <Detail />
                         </Tab>
                         <Tab
                             heading={
@@ -172,14 +57,7 @@ class DetailScreen extends Component {
                                 </TabHeading>
                             }
                         >
-                            <Appearance
-                                stem={this.state.stem}
-                                leaf={this.state.leaf}
-                                flower={this.state.flower}
-                                round={this.state.round}
-                                seed={this.state.seed}
-                                imgAll={this.state.imgAll}
-                            />
+                            <Appearance />
                         </Tab>
                         {
                             back=="SelectedMap" ? null :

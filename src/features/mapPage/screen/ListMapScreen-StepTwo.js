@@ -31,7 +31,6 @@ class ListMapScreenStepTwo extends Component {
         super(props);
         this.state = {
             valueInput: '',
-            selected: (new Map()),
             isLoading: true,
         };
     }

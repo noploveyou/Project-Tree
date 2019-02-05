@@ -1,5 +1,5 @@
 <?php
-include "connect.php";
+include "../Connections/connectForMobile.php";
 
 $GetPlantName = file_get_contents('php://input');
 $TextPlantName = json_decode($GetPlantName, true);
@@ -108,10 +108,9 @@ if($Check == "Like_HOMEPAGESCREEN"){    /* SearchInput In Page HomeScreen */
     $conn->close();
 
 }else if($Check == "MAPSCREEN_STEP_TWO"){        /* Page ListMapScreen When Use Search Function */
-    $sql = "SELECT plant.plantID, plant.plantName, plant.plantScience ,plant.plantIcon, area.areaID
-                FROM plant, area  WHERE (plant.plantName LIKE '%".$plantName."%' 
-                OR plant.plantScience LIKE '%".$plantName."%') AND area.plantID = plant.plantID 
-                AND lx != 0.0 AND ly != 0.0 ";
+    $sql = "SELECT plant.plantID, plant.plantName, plant.plantScience ,plant.plantIcon
+                FROM plant WHERE (plant.plantName LIKE '%".$plantName."%' 
+                OR plant.plantScience LIKE '%".$plantName."%') ";
     $result = $conn->query($sql);
 
     if ($result->num_rows >0) {
