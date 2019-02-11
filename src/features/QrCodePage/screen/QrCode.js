@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking, View, TouchableOpacity, Text, StyleSheet, NetInfo, BackHandler, Alert } from 'react-native';
+import { Linking, View, TouchableOpacity, Text, StyleSheet, NetInfo, BackHandler, Alert, Dimensions } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { connect } from "react-redux";
 import HeaderForm from '../../../common/components/HeaderForm';
@@ -15,7 +15,9 @@ class QrCode extends Component {
         super();
         this.state = {
             value: null,
-            loading: false
+            loading: false,
+            screenHeight: Dimensions.get('window').height,
+            screenWidth: Dimensions.get('window').width,
         }
     }
 
@@ -85,21 +87,23 @@ class QrCode extends Component {
         return (
             <QRCodeScanner
                 onRead={this.onSuccess}//คำสั่งเมื่ออ่านแล้วให้ทำงานอะไร ในนี้คือการส่งค่าไปในฟังก์ชั่น
-                cameraStyle={{height: '100%'}}
+                cameraStyle={{height: this.state.screenHeight-100, width: this.state.screenWidth}}
                 showMarker={true} //ให้แสดงกรอบ4เหลี่ยม
+                containerStyle={{backgroundColor: 'rgba(52, 52, 52, 0.8)'}}
                 customMarker={
-                    <View style={{height: '100%', width: '100%'}}>
-                        <View style={{position: 'absolute',height: '100%', width: '100%', justifyContent: 'space-between',flexDirection: 'column'}}>
-                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '25%', width: '100%'}}/>
-                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '40%', width: '100%'}}/>
+                    <View style={{height: this.state.screenHeight, width: this.state.screenWidth}}>
+                        <View style={{position: 'absolute',height: this.state.screenHeight , width: this.state.screenWidth, justifyContent: 'space-between',flexDirection: 'column'}}>
+                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '32.5%', width: this.state.screenWidth}}/>
+                            <View style={{position: 'absolute',height: this.state.screenHeight , width: this.state.screenWidth, flexDirection: 'column', justifyContent: 'flex-end'}}>
+                                <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '32.5%', width: this.state.screenWidth}}/>
+                            </View>
                         </View>
-                        <View style={{position: 'absolute',height: '100%', width: '100%', justifyContent: 'space-between',flexDirection: 'row',alignItems:'center'}}>
-                            <View style={{bottom: 45.9,backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: '20%'}}/>
-                            <View style={{bottom: 45.9,backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: '20%'}}/>
+                        <View style={{position: 'absolute',height: this.state.screenHeight, width: this.state.screenWidth, justifyContent: 'space-between',flexDirection: 'row',alignItems:'center'}}>
+                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)', height: '35%', width: '20%'}}/>
+                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)', height: '35%', width: '20%'}}/>
                         </View>
-                        <View style={{position: 'absolute',height: '100%', width: '100%', alignItems:'center', justifyContent: 'center'}}>
-                            <View style={{bottom: 45.9,height: '35%', width: '60%', borderWidth: 5, borderColor: '#F1C40F'}}/>
-
+                        <View style={{position: 'absolute',height: this.state.screenHeight, width: this.state.screenWidth, alignItems:'center', justifyContent: 'center'}}>
+                            <View style={{height: '35%', width: '60%', borderWidth: 5, borderColor: '#F1C40F'}}/>
                         </View>
                     </View>
                 }
