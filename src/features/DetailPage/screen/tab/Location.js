@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Container } from 'native-base';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import { connect } from "react-redux";
 import getDirections from "react-native-google-maps-directions";
 import geolib from 'geolib';
@@ -21,7 +21,9 @@ class Location  extends PureComponent {
             ShowBTNNavigate: false,     // แสดงปุ่ม นำเส้นทาง (เปิด Google MAP)
             HackRender: false,          // สำหรับเช็ค กัน Error (ให้ MAP พร้อม และ Hack เสร็จก่อนค่อย Get Mark)
             isLoading: false,
-            name: ""
+            name: "",
+            screenHeight: Dimensions.get('screen').height,
+            screenWidth: Dimensions.get('screen').width
         }
     }
 
@@ -142,11 +144,11 @@ class Location  extends PureComponent {
             <Container>
                 {this.props.CheckFetchDataMap == false ?
                     <View style={s.container}>
-                        <CommonText text={"ไม่พบตำแหน่ง"}/>
+                        <CommonText text={"ไม่พบตำแหน่ง"} size={20} weight={'500'}/>
                     </View>
                     :
                     <View style={s.container}>
-                        <View style={{width: '100%', height: 30, marginTop: 20, alignItems: 'center', flexDirection: 'column'}}>
+                        <View style={{width: '100%', height: 30, top: -15, alignItems: 'center', flexDirection: 'column'}}>
                             <CommonText text={this.state.name} size={25} textTitle={true} />
                             <CommonText text={`จำนวนที่พบ  `+this.props.DataMarker.length+`  ต้น`} size={18} weight={'300'}/>
                         </View>
@@ -163,22 +165,24 @@ class Location  extends PureComponent {
                                 //top={10}
                             />
                         </View>
-                        {this.state.isLoading ?
-                            <LoadingButtonFooter />
-                            :
-                            this.state.ShowBTNNavigate ?
-                                <ButtonFooterStepThree
-                                    DisableButtonDetail={true}
-                                    buttonNavigate={() => this.handleGetDirections()}
-                                    buttonNavigateNear={() => this.CheckGPS(true)}
-                                />
+                        <View style={{width: '100%', justifyContent: 'center', alignItems: 'center', top: 30}} >
+                            {this.state.isLoading ?
+                                <LoadingButtonFooter />
                                 :
-                                <ButtonFooterStepThree
-                                    ButtonFooter={false}
-                                    DisableButtonDetail={true}
-                                    buttonNearOutFooter={() => this.CheckGPS(true)}
-                                />
-                        }
+                                this.state.ShowBTNNavigate ?
+                                    <ButtonFooterStepThree
+                                        DisableButtonDetail={true}
+                                        buttonNavigate={() => this.handleGetDirections()}
+                                        buttonNavigateNear={() => this.CheckGPS(true)}
+                                    />
+                                    :
+                                    <ButtonFooterStepThree
+                                        ButtonFooter={false}
+                                        DisableButtonDetail={true}
+                                        buttonNearOutFooter={() => this.CheckGPS(true)}
+                                    />
+                            }
+                        </View>
                     </View>
                 }
                     
@@ -195,11 +199,11 @@ const s = StyleSheet.create({
         backgroundColor: '#FEF9E7'
     },
     viewMap: {
-        height: '78%',
+        height: '70%',
         width: '100%',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        top: 20
+        top: 15
     }
 });
 

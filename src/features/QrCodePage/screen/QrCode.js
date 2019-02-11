@@ -16,8 +16,8 @@ class QrCode extends Component {
         this.state = {
             value: null,
             loading: false,
-            screenHeight: Dimensions.get('window').height,
-            screenWidth: Dimensions.get('window').width,
+            screenHeight: Dimensions.get('screen').height,
+            screenWidth: Dimensions.get('screen').width,
         }
     }
 
@@ -87,28 +87,25 @@ class QrCode extends Component {
         return (
             <QRCodeScanner
                 onRead={this.onSuccess}//คำสั่งเมื่ออ่านแล้วให้ทำงานอะไร ในนี้คือการส่งค่าไปในฟังก์ชั่น
-                cameraStyle={{height: this.state.screenHeight-100, width: this.state.screenWidth}}
+                cameraStyle={{height: this.state.screenHeight, width: this.state.screenWidth}}
                 showMarker={true} //ให้แสดงกรอบ4เหลี่ยม
-                containerStyle={{backgroundColor: 'rgba(52, 52, 52, 0.8)'}}
                 customMarker={
-                    <View style={{height: this.state.screenHeight, width: this.state.screenWidth}}>
+                    <View style={{height: this.state.screenHeight+200, width: this.state.screenWidth}}>
                         <View style={{position: 'absolute',height: this.state.screenHeight , width: this.state.screenWidth, justifyContent: 'space-between',flexDirection: 'column'}}>
-                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '32.5%', width: this.state.screenWidth}}/>
-                            <View style={{position: 'absolute',height: this.state.screenHeight , width: this.state.screenWidth, flexDirection: 'column', justifyContent: 'flex-end'}}>
-                                <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '32.5%', width: this.state.screenWidth}}/>
-                            </View>
+                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: this.state.screenWidth}}/>
+                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: this.state.screenWidth}}/>
                         </View>
                         <View style={{position: 'absolute',height: this.state.screenHeight, width: this.state.screenWidth, justifyContent: 'space-between',flexDirection: 'row',alignItems:'center'}}>
-                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)', height: '35%', width: '20%'}}/>
-                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)', height: '35%', width: '20%'}}/>
+                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)', height: '30%', width: '20%'}}/>
+                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)', height: '30%', width: '20%'}}/>
                         </View>
                         <View style={{position: 'absolute',height: this.state.screenHeight, width: this.state.screenWidth, alignItems:'center', justifyContent: 'center'}}>
-                            <View style={{height: '35%', width: '60%', borderWidth: 5, borderColor: '#F1C40F'}}/>
+                            <View style={{height: '30%', width: '60%', borderWidth: 5, borderColor: '#F1C40F'}}/>
                         </View>
                     </View>
                 }
                 bottomContent={
-                    <CommonText text={`ใช้กล้องสแกน QR Code ในช่องสี่เหลี่ยม`} style={styles.centerText} color={'white'} weight={'400'} />
+                    <CommonText text={`ใช้กล้องสแกน QR Code ในช่องสี่เหลี่ยม`} style={styles.centerText} color={'white'} weight={'400'} size={18}/>
                 }
             />
         );
@@ -121,8 +118,7 @@ QrCode.navigationOptions  = ({ navigation }) => ({
 
 const styles = StyleSheet.create({
     centerText: {
-
-        bottom: 130,
+        bottom: 250,
     },
     textBold: {
         fontWeight: '500',

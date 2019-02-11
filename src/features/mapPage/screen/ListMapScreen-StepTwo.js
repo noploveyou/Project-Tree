@@ -81,6 +81,7 @@ class ListMapScreenStepTwo extends Component {
     clearText(){
         this.setState({valueInput:''});
         this.componentDidMount();
+        this.Search('');
     }
 
     render() {
@@ -96,9 +97,9 @@ class ListMapScreenStepTwo extends Component {
             <Container>
                 <Item>
                     <TextInput
-                        style={{flex: 1,flexDirection: 'row',justifyContent: 'center', fontSize: 18}}
+                        style={{flex: 1,flexDirection: 'row',justifyContent: 'center', fontSize: 18, marginLeft: 5}}
                         ref="SearchInput"
-                        placeholder= "Search In Here"
+                        placeholder= "กรุณากรอกชื่อพรรณไม้"
                         placeholderTextColor = '#D5D8DC'
                         returnKeyType={"done"}
                         onChangeText={(value) => {this.Search(value)}}

@@ -16,6 +16,7 @@ class ListItem extends React.PureComponent {
         return (
             <TouchableOpacity
                 onPress={this._onPress}
+
                 style={
                     {
                         width: '97%',
@@ -42,11 +43,11 @@ class ListItem extends React.PureComponent {
                     <View
                         style={
                             {
-                                marginLeft: 10, marginTop: 5
+                                marginLeft: 10, marginTop: 5, borderLeftWidth: 0.5, borderLeftColor: 'gray', paddingLeft: 10
                             }
                         }>
-                        <CommonText text={this.props.labelTreeNameTH} size={16} weight={'600'} />
-                        <CommonText text={this.props.labelTreeNameEN} size={16} />
+                        <CommonText text={this.props.labelTreeNameTH} size={16} weight={'600'} style={{marginLeft: 5}}  />
+                        <CommonText text={this.props.labelTreeNameEN} size={16} style={{marginLeft: 5, width: '80%'}} lines={1}/>
                     </View>
                 </View>
             </TouchableOpacity>

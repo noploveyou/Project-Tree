@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor:'#FEF9E7',
-        height: 40,
+        height: 45,
         alignItems: 'flex-start',
         borderBottomWidth: 1
     },

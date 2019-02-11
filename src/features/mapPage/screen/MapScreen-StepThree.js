@@ -158,15 +158,14 @@ class MapScreenStepThree extends PureComponent {
                         OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
                     />
                     {this.state.isLoading ?
-                        <LoadingButtonFooter />
+                        <View style={{width: '100%', justifyContent: 'flex-end', alignItems: 'center', top: 20}}>
+                            <LoadingButtonFooter />
+                        </View>
                         :
                         this.state.ShowBTNNavigate ?
+                        <View style={{width: '100%',justifyContent: 'flex-end', alignItems: 'center', top: 20}}>
                             <ButtonFooterStepThree
                                 buttonDetail={() =>
-                                    /*this.props.navigation.navigate({
-                                        routeName: 'Detail',
-                                        params: { back : "SelectedMap", Tree : this.props.GetTree }
-                                    })*/
                                     this.props.navigation.dispatch(
                                         StackActions.reset({
                                             index: 0,
@@ -182,12 +181,15 @@ class MapScreenStepThree extends PureComponent {
                                 buttonNavigate={() => this.handleGetDirections()}
                                 buttonNavigateNear={() => this.CheckGPS(true)}
                             />
+                        </View>
                             :
-                            <ButtonFooterStepThree
-                                ButtonFooter={false}
-                                DisableButtonDetail={true}
-                                buttonNearOutFooter={() => this.CheckGPS(true)}
-                            />
+                            <View style={{width: '100%',justifyContent: 'flex-end', alignItems: 'center', top: 20}}>
+                                <ButtonFooterStepThree
+                                    ButtonFooter={false}
+                                    DisableButtonDetail={true}
+                                    buttonNearOutFooter={() => this.CheckGPS(true)}
+                                />
+                            </View>
                     }
                 </View>
             </Container>
@@ -213,9 +215,10 @@ MapScreenStepThree.navigationOptions = ({ navigation }) => ({
 
 const s = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
+        width: '100%',
+        height: '97%'
     }
 });
 

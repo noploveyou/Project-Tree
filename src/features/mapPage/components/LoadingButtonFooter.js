@@ -6,7 +6,7 @@ class LoadingButtonFooter extends Component{
         return(
             <View style={styles.container}>
                 <ActivityIndicator size="large" color="green" />
-                <Text style={{fontSize:30}}> กำลังโหลด กรุณารอสักครู่ </Text>
+                <Text style={{fontSize: 25}}> กำลังโหลด กรุณารอสักครู่ </Text>
             </View>
         )
     }
@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         backgroundColor: '#FEF9E7',
+        width: '100%',
+        height: '40%',
+        alignItems: 'center'
     }
 });
 

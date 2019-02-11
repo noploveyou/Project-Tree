@@ -18,7 +18,7 @@ class ListTreeScreen extends Component {
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => [this.props.navigation.navigate('ListTree'),CheckExitApp()]);    //เมื่อกดปุ่ม back บนแอนดรอยด์
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide',
-            this._keyboardDidHide) // เมื่อปิด keyboard
+            this._keyboardDidHideList) // เมื่อปิด keyboard
     }
 
     componentWillUnmount() {
@@ -76,11 +76,12 @@ class ListTreeScreen extends Component {
     clearText(){
         this.setState({valueInput:''});   //ค่าในช่อง Input
         this.componentDidMount();   //ออกจากฟังก์ชัน
+        this.Search('');
     }
 
 
 
-    _keyboardDidHide = () => {  //เมื่อปิด Keyboard ลง
+    _keyboardDidHideList = () => {  //เมื่อปิด Keyboard ลง
         this.refs['ListInput'].blur();
     };
 
@@ -103,7 +104,7 @@ class ListTreeScreen extends Component {
                         returnKeyType={"done"}
                         onChangeText={(value) => {this.Search(value)}}
                         value={this.state.valueInput}
-                        onFocus={() => this._keyboardDidHide}
+                        onFocus={() => this._keyboardDidHideList}
                     />
                     <View>
                         <Icon name='close' style={{fontSize: 25, color: 'red',marginRight: 15}}

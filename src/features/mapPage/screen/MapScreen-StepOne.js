@@ -118,7 +118,7 @@ class MapScreenStepOne extends Component {
                             LocationUser={false}
                         />
                         {this.state.ShowBTNNavigate ?
-                            <View style={{marginBottom: 15}}>
+                            <View>
                                 <TouchableOpacity onPress={() => this.handleGetDirections()} style={s.btnNavigate}>
                                     <Icon name={'md-navigate'} size={28} color={'#FEF9E7'} style={s.iconBtnNavigate}/>
                                     <Text style={s.labelBtnNavigate}> เส้นทาง </Text>
@@ -138,9 +138,11 @@ MapScreenStepOne.navigationOptions = ({ navigation }) => ({
 
 const s = StyleSheet.create({
     container: {
-        flex: 1,
+
         justifyContent: 'flex-end',
         alignItems: 'center',
+        width: '100%',
+        height: '88%'
     },
     viewHeader: {
         marginBottom: 0,
