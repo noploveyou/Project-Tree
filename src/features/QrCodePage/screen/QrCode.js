@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import { Linking, View, TouchableOpacity, Text, StyleSheet, NetInfo, BackHandler, Alert, Dimensions } from 'react-native';
+import { Linking, View, StyleSheet, NetInfo, BackHandler, Alert, Dimensions } from 'react-native';
+import { NavigationActions, StackActions } from 'react-navigation';
+import { connect } from 'react-redux';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { connect } from "react-redux";
-import HeaderForm from '../../../common/components/HeaderForm';
-import CheckExitApp from "../../../common/components/CheckExitApp";
-import CheckInternet from "../../../common/components/CheckNET";
-import { NavigationActions, StackActions } from "react-navigation";
-import CommonText from '../../../common/components/CommonText';
-import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import Loading from '../../../common/components/Loading';
+import HeaderForm from '../../../common/components/HeaderForm';
+import CheckExitApp from '../../../common/components/CheckExitApp';
+import CheckInternet from '../../../common/components/CheckNET';
+import CommonText from '../../../common/components/CommonText';
+import NoInternetScreen from '../../../common/components/NoInternetScreen';
 
 class QrCode extends Component {
     constructor() {
         super();
         this.state = {
-            value: null,
-            loading: false,
-            screenHeight: Dimensions.get('screen').height,
-            screenWidth: Dimensions.get('screen').width,
+            value: null,    //ค่าที่สแกนได้จากบาร์โค้ด
+            loading: false, //if true = loadingScreen
+            screenHeight: Dimensions.get('screen').height,  //รับค่าขนาดหน้าจอเครื่อง
+            screenWidth: Dimensions.get('screen').width,    //รับค่าขนาดหน้าจอเครื่อง
         }
     }
 
@@ -28,14 +28,13 @@ class QrCode extends Component {
     }
 
     componentWillUnmount() {
-        this.backHandler.remove();
+        this.backHandler.remove();  //remove event
     }
 
-    onSuccess = (data) => {//รับค่า e มาทั้งหมด แล้วเช็ดค่า ในe จะมี ค่าไรไม่รุ้มาเต้มเลย เช่นe.data e.type
-        //console.warn('Type: ' + e.type + '\nData: ' + e.data) //โชว์ค่า 2 ค่า type และ data
-        this.setState({value: data, loading: true});
-        this.props.SetValue(data.data);
-        this.props.FetchData();
+    onSuccess = (data) => {     //get 2 Value : data.type & data.data
+        this.setState({value: data, loading: true});    // set ค่า value ตัวแปรที่กำหนด
+        this.props.SetValue(data.data);     //Set Value For Detail About Tree
+        this.props.FetchData();     // เชื่อมต่อฐานข้อมูล
         setTimeout(() => {
             if (this.props.CheckData == true) {
                 setTimeout(() => {
@@ -71,10 +70,9 @@ class QrCode extends Component {
                 )
             }
         }, 500);
-
         Linking
-            .openURL(data.data) //ถ้าค่าที่ได้ เป็นลิงค์ จะเปิด URL ตาม ค่าที่ได้ใน e.data
-            .catch(() => null);
+            .openURL(data.data) //ถ้าค่าที่ได้ เป็น Link จะเปิด URL ตาม ค่าที่ได้ใน data.data
+            .catch(() => null); // catch error
     };
 
     render() {
@@ -86,26 +84,32 @@ class QrCode extends Component {
 
         return (
             <QRCodeScanner
-                onRead={this.onSuccess}//คำสั่งเมื่ออ่านแล้วให้ทำงานอะไร ในนี้คือการส่งค่าไปในฟังก์ชั่น
-                cameraStyle={{height: this.state.screenHeight, width: this.state.screenWidth}}
+                onRead={this.onSuccess} //เมื่ออ่านค่าเสร็จ
+                cameraStyle={styles.cameraSize}
                 showMarker={true} //ให้แสดงกรอบ4เหลี่ยม
                 customMarker={
-                    <View style={{height: this.state.screenHeight+200, width: this.state.screenWidth}}>
-                        <View style={{position: 'absolute',height: this.state.screenHeight , width: this.state.screenWidth, justifyContent: 'space-between',flexDirection: 'column'}}>
-                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: this.state.screenWidth}}/>
-                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: this.state.screenWidth}}/>
+                    <View style={styles.viewContainer}>
+                        <View style={{position: 'absolute', height: this.state.screenHeight, width: this.state.screenWidth, justifyContent: 'space-between', flexDirection: 'column'}}>
+                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: this.state.screenWidth}} />
+                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: this.state.screenWidth}} />
                         </View>
-                        <View style={{position: 'absolute',height: this.state.screenHeight, width: this.state.screenWidth, justifyContent: 'space-between',flexDirection: 'row',alignItems:'center'}}>
-                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)', height: '30%', width: '20%'}}/>
-                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)', height: '30%', width: '20%'}}/>
+                        <View style={{position: 'absolute', height: this.state.screenHeight, width: this.state.screenWidth, justifyContent: 'space-between', flexDirection: 'row', alignItems:'center'}}>
+                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)', height: '30%', width: '20%'}} />
+                            <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)', height: '30%', width: '20%'}} />
                         </View>
-                        <View style={{position: 'absolute',height: this.state.screenHeight, width: this.state.screenWidth, alignItems:'center', justifyContent: 'center'}}>
-                            <View style={{height: '30%', width: '60%', borderWidth: 5, borderColor: '#F1C40F'}}/>
+                        <View style={{position: 'absolute', height: this.state.screenHeight, width: this.state.screenWidth, alignItems:'center', justifyContent: 'center'}}>
+                            <View style={{height: '30%', width: '60%', borderWidth: 5, borderColor: '#F1C40F'}} />
                         </View>
                     </View>
                 }
                 bottomContent={
-                    <CommonText text={`ใช้กล้องสแกน QR Code ในช่องสี่เหลี่ยม`} style={styles.centerText} color={'white'} weight={'400'} size={18}/>
+                    <CommonText
+                        text={`ใช้กล้องสแกน QR Code ในช่องสี่เหลี่ยม`}
+                        style={styles.viewBottomText}
+                        color={'white'}
+                        weight={'400'}
+                        size={18}
+                    />
                 }
             />
         );
@@ -117,31 +121,26 @@ QrCode.navigationOptions  = ({ navigation }) => ({
 });
 
 const styles = StyleSheet.create({
-    centerText: {
-        bottom: 250,
+    viewBottomText: {
+        bottom: 250
     },
-    textBold: {
-        fontWeight: '500',
-        color: '#000',
+    cameraSize: {
+        height: this.state.screenHeight,
+        width: this.state.screenWidth
     },
-    buttonText: {
-        fontSize: 21,
-        color: 'rgba(52, 52, 52, 50)',
-    },
-    buttonTouchable: {
-        backgroundColor: "black",
-        bottom: 230,
-
-    },
+    viewContainer: {
+        height: this.state.screenHeight + 200,
+        width: this.state.screenWidth
+    }
 });
 
 export default connect(
     (state) => ({
-        NET : state.CheckDevice.InternetIsConnect,         // ตรวจสอบ Internet
-        CheckData: state.DataDetailScreen.CheckData      // ตรวจสอบว่า โหลดข้อมูลเสร็จหรือไม่
+        NET : state.CheckDevice.InternetIsConnect,  // ตรวจสอบ Internet
+        CheckData: state.DataDetailScreen.CheckData // ตรวจสอบว่า โหลดข้อมูลเสร็จหรือไม่
     }),
     (dispatch) => ({
-        SetValue: (value) => {dispatch({type: "SET_VALUE_DETAIL", payload: value})},
-        FetchData: (value) => {dispatch({type: "CALL_DATA_DETAIL", payload: value})},
+        SetValue: (value) => {dispatch({type: "SET_VALUE_DETAIL", payload: value})}, //Set ค่าที่จะค้นหา
+        FetchData: (value) => {dispatch({type: "CALL_DATA_DETAIL", payload: value})} //เชื่อมต่อฐานข้อมูล
     })
 )(QrCode);
