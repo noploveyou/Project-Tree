@@ -85,10 +85,10 @@ class QrCode extends Component {
         return (
             <QRCodeScanner
                 onRead={this.onSuccess} //เมื่ออ่านค่าเสร็จ
-                cameraStyle={styles.cameraSize}
+                cameraStyle={{height: this.state.screenHeight, width: this.state.screenWidth}}
                 showMarker={true} //ให้แสดงกรอบ4เหลี่ยม
                 customMarker={
-                    <View style={styles.viewContainer}>
+                    <View style={{height: this.state.screenHeight + 200, width: this.state.screenWidth}}>
                         <View style={{position: 'absolute', height: this.state.screenHeight, width: this.state.screenWidth, justifyContent: 'space-between', flexDirection: 'column'}}>
                             <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: this.state.screenWidth}} />
                             <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: this.state.screenWidth}} />
@@ -123,14 +123,6 @@ QrCode.navigationOptions  = ({ navigation }) => ({
 const styles = StyleSheet.create({
     viewBottomText: {
         bottom: 250
-    },
-    cameraSize: {
-        height: this.state.screenHeight,
-        width: this.state.screenWidth
-    },
-    viewContainer: {
-        height: this.state.screenHeight + 200,
-        width: this.state.screenWidth
     }
 });
 

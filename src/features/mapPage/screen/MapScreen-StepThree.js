@@ -19,9 +19,9 @@ class MapScreenStepThree extends PureComponent {
         this.CheckGPS(false);    // ตรวจ GPS
         FuncCheckNet; // ตรวจสอบ internet
         this.props.FetchDataMap();
-        const { back } = this.props.navigation.state.params;
+        //const { back } = this.props.navigation.state.params;
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
-            () => this.props.navigation.navigate(back));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
+            () => this.props.navigation.navigate("SearchListMap"));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
     }
 
     componentWillUnmount() {

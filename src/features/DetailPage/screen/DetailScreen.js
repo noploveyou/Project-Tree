@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Text, Tab, Tabs, TabHeading } from 'native-base';
+import { Container, Tab, Tabs, TabHeading } from 'native-base';
 import { BackHandler, NetInfo} from 'react-native';
 import Icon from "react-native-vector-icons/FontAwesome";
 import HeaderForm from "../../../common/components/HeaderForm";
