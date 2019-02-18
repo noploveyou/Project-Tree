@@ -121,9 +121,9 @@ export default class SideMenu extends Component {
                 <ScrollView>
                     <View style={styles.viewImageTitle}>
                         <Image source={titleLogoImage} style={styles.titleImage} />
-                        <CommonText text={'มหาวิทยาลัยราชภัฏพระนคร'} color={'white'} size={18} weight={'400'}/>
-                    </View >
-                        <View >
+                        <CommonText text={'มหาวิทยาลัยราชภัฏพระนคร'} color={'white'} size={18} weight={'400'} style={{marginTop: 5}}/>
+                    </View>
+                        <View>
                             <List>
                                 <ListItem
                                     noIndent
