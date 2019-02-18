@@ -2,7 +2,6 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Thumbnail } from  'native-base';
 import CommonText from './CommonText';
-import AndroidOpenSettings from 'react-native-android-open-settings';
 
 const NoNET = require('../../../public/assets/otherImage/Trex.jpg');
 
@@ -23,7 +22,7 @@ NoInternetScreen = () =>{
                 weight={'bold'}
             />
             <TouchableOpacity
-                onPress={() => AndroidOpenSettings.wirelessSettings()}
+                onPress={() => null}
                 style={{
                     backgroundColor: '#F1C40F',
                     height: 50,

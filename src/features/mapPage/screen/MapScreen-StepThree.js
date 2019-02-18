@@ -12,14 +12,14 @@ import Loading from '../../../common/components/Loading';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import ButtonFooterStepThree from  '../components/ButtonFooterStepThree';
 import LoadingButtonFooter from '../components/LoadingButtonFooter';
-import { NavigationActions, StackActions } from "react-navigation";
+import {NavigationActions, StackActions} from "react-navigation";
 import CommonText from "../../../common/components/CommonText";
 import CheckInternet from "../../../common/components/CheckNET";
 
 class MapScreenStepThree extends PureComponent {
     componentDidMount(){
         this.CheckGPS(false);    // ตรวจ GPS
-        FuncCheckNet(); // ตรวจสอบ internet
+        FuncCheckNet; // ตรวจสอบ internet
         this.props.FetchDataMap();
         //const { back } = this.props.navigation.state.params;
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
@@ -61,7 +61,7 @@ class MapScreenStepThree extends PureComponent {
                     default:
                 }
             }
-        }, 0)
+        }, 5000)    // เริ่มทำงานหลังจาก 5 วินาที
     };
 
     CheckGPS = (OnPressNear) => {
@@ -106,7 +106,6 @@ class MapScreenStepThree extends PureComponent {
             }
         } else if (this.props.GPSConnect == false) {
             this.setState({isLoading: true});
-
         }
 
     };

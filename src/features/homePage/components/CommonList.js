@@ -1,25 +1,20 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { View } from "native-base";
-import CommonText from "../../../common/components/CommonText";
+import { Text, View } from "native-base";
 
 class CommonList extends React.PureComponent {
     render() {
+        //const textColor = this.props.selected ? "red" : "black";
+
         return (
             <View>
                 <TouchableOpacity onPress={this.props.onPress} style={this.props.style}>
-                    <CommonText
-                        text={this.props.labelTH}
-                        size={17}
-                        weight={'500'}
-                    />
-                    <CommonText
-                        text={this.props.labelEN}
-                        size={14}
-                        weight={'400'}
-                        color={'gray'}
-                        style={{top: -5}}
-                    />
+                    <Text style={{fontSize: 17, fontWeight: "500"}}>
+                        {this.props.labelTH}
+                    </Text>
+                    <Text style={{fontSize: 16, top: -5}}>
+                        {this.props.labelEN}
+                    </Text>
                 </TouchableOpacity>
             </View>
 

@@ -52,7 +52,8 @@ class ListMapScreenStepTwo extends Component {
                  index: 0,
                  actions: [
                      NavigationActions.navigate({
-                         routeName: 'SelectedMap'
+                         routeName: 'SelectedMap',
+                         params: { back: "SearchListMap" },
                      }),
                  ],
              })
