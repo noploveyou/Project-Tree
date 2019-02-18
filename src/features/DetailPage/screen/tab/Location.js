@@ -61,7 +61,7 @@ class Location  extends PureComponent {
                     default:
                 }
             }
-        }, 5000)    // เริ่มทำงานหลังจาก 5 วินาที
+        }, 0)
     };
 
     CheckGPS = (OnPressNear) => {

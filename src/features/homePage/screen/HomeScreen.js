@@ -121,6 +121,8 @@ class HomeScreen extends Component {
         if(this.props.NET == false){
             CheckInternet();
             return <NoInternetScreen />
+        }else if(this.props.NET == true){
+            CheckInternet();
         }
 
         return (
@@ -132,7 +134,7 @@ class HomeScreen extends Component {
                         <View style={s.viewImage}>
                             <Thumbnail style={s.thumbnail} source={LogoPage} />
                             <CommonText
-                                text={'ปีบหรือกาซะลอง เป็นพรรณไม้ประจำมหาวิทยาลัยราชภัฏพระนคร'}
+                                text={'ปีบหรือกาซะลอง เป็นพรรณไม้\n'+'ประจำมหาวิทยาลัยราชภัฏพระนคร'}
                                 size={16}
                                 weight={"500"}
                                 style={{textAlign: 'center', marginTop: 10}}
