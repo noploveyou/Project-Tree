@@ -26,7 +26,7 @@ const GoogleMAP = (props) => {
                         onPress={() => props.OnMarkPress(mark.ly, mark.lx)}
                         coordinate={{latitude: parseFloat(mark.ly), longitude: parseFloat(mark.lx)}}
                         title={mark.plantName}
-                        description={mark.locationName}
+                        description={"โซน : "+mark.locationName}
                         image={iconsTree[mark.plantIcon]}
                         key={index}>
                     </MapView.Marker>

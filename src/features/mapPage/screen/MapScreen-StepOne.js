@@ -71,6 +71,7 @@ class MapScreenStepOne extends Component {
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
+            CheckInternet();
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }
         if(this.props.CheckFetchDataMap == false){

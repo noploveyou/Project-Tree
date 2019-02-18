@@ -30,6 +30,7 @@ class DetailScreen extends Component {
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
+            CheckInternet();
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }else if(this.props.CheckData == false){
             return  <Loading />

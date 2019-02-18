@@ -17,7 +17,7 @@ const HeaderForm = (props) => {
                     </Button>
                 </Left>
                 <Body >
-                    <Title style={{fontSize:20, fontWeight:'400'}}> {props.titlePage} </Title>
+                    <Title style={{fontSize:20, fontWeight:'400', left: -10}}> {props.titlePage} </Title>
                 </Body>
 
             </Header>

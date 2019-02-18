@@ -144,7 +144,7 @@ class Location  extends PureComponent {
             <Container>
                 {this.props.CheckFetchDataMap == false ?
                     <View style={s.container}>
-                        <CommonText text={"ไม่พบตำแหน่ง"} size={20} weight={'500'}/>
+                        <CommonText text={"ไม่พบตำแหน่งพรรณไม้"} size={20} weight={'500'}/>
                     </View>
                     :
                     <View style={s.container}>

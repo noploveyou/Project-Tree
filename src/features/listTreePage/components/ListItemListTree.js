@@ -45,8 +45,8 @@ class ListItemListTree extends React.PureComponent {
                                 marginLeft: 10, marginTop: 5
                             }
                         }>
-                        <CommonText text={this.props.labelTreeNameTH} size={16} weight={'600'} />
-                        <CommonText text={this.props.labelTreeNameEN} size={16} lines={1} style={{width: '80%'}} />
+                        <CommonText text={this.props.labelTreeNameTH} size={18} weight={'600'} />
+                        <CommonText text={this.props.labelTreeNameEN} size={16} lines={1} style={{width: '80%'}} color={'gray'} />
                     </View>
                 </View>
             </TouchableOpacity>

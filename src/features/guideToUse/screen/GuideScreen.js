@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Text, Content } from 'native-base';
-import { StyleSheet, NetInfo, BackHandler } from 'react-native';
+import { StyleSheet, NetInfo, BackHandler, View } from 'react-native';
 import HeaderForm from '../../../common/components/HeaderForm';
 import CheckInternet from '../../../common/components/CheckNET';
 import NoInternetScreen from '../../../common/components/NoInternetScreen';
@@ -22,12 +22,17 @@ class GuideScreen extends Component {
 
     render() {
         if(this.props.NET == false){
+            CheckInternet();
             return <NoInternetScreen />
         }
 
         return (
-            <Container style={s.container}>
-                <CommonText text={'วิธีการใช้งาน'} size={30}/>
+            <Container style={styles.container}>
+                <Content>
+                    <View style={styles.viewAll}>
+                        <CommonText text={'เร็วๆนี้'} size={30}/>
+                    </View>
+                </Content>
             </Container>
         );
     }
@@ -37,7 +42,16 @@ GuideScreen.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm btn={() => navigation.openDrawer()} iconName={'bars'} titlePage={'แนะนำการใช้งาน'} />
 });
 
-const s = StyleSheet.create({
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#F1C40F'
+    },
+    viewAll: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#FEF9E7',
+        flex: 1
+    }
 });
 
 export default GuideScreen;

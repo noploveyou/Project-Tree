@@ -40,14 +40,26 @@ class ListItem extends React.PureComponent {
                     <View style={{marginLeft: 10, marginBottom: 10}}>
                         <Thumbnail source={icons[this.props.icons]} />
                     </View>
-                    <View
-                        style={
-                            {
-                                marginLeft: 10, marginTop: 5, borderLeftWidth: 0.5, borderLeftColor: 'gray', paddingLeft: 10
-                            }
-                        }>
-                        <CommonText text={this.props.labelTreeNameTH} size={16} weight={'600'} style={{marginLeft: 5}}  />
-                        <CommonText text={this.props.labelTreeNameEN} size={16} style={{marginLeft: 5, width: '80%'}} lines={1}/>
+                    <View style={{
+                            marginLeft: 10,
+                            marginTop: 5,
+                            borderLeftWidth: 0.3,
+                            borderLeftColor: 'gray',
+                            paddingLeft: 10
+                        }}>
+                        <CommonText
+                            text={this.props.labelTreeNameTH}
+                            size={18}
+                            weight={'600'}
+                            style={{marginLeft: 5}}
+                        />
+                        <CommonText
+                            text={this.props.labelTreeNameEN}
+                            size={16}
+                            style={{marginLeft: 5, width: '80%'}}
+                            lines={1}
+                            color={'gray'}
+                        />
                     </View>
                 </View>
             </TouchableOpacity>

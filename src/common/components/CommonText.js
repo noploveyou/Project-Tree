@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const CommonText = (props) => {
     return (
-        <Text numberOfLines={props.lines}
+        <Text numberOfLines={props.lines} textBreakStrategy={'balanced'}
             style={props.textTitle ?
                 [{fontSize: 20, color: props.color, fontWeight: "bold"}, props.style]
                 :

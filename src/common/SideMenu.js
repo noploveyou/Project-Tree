@@ -244,7 +244,7 @@ export default class SideMenu extends Component {
                         <CommonText text={'ติดต่อ'} size={18} weight={'400'}/>
                     </View>
                     <View style={styles.viewFooter}>
-                        <CommonText text={'Footer'} size={20} weight={'400'}/>
+                        <CommonText text={'โทร. 02-544-8194 หรือ 02-522-6609'} size={15} weight={'400'}/>
                     </View>
             </View>
         );
@@ -285,12 +285,14 @@ const styles = StyleSheet.create({
     viewContact: {
         backgroundColor: '#FEF9E7',
         flexDirection: 'row',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        marginLeft: 10
     },
     viewFooter: {
         backgroundColor: '#FEF9E7',
         alignItems: 'center',
-        borderTopWidth: 0.3
+        borderTopWidth: 0.3,
+        marginVertical: 5
     },
     viewIcon: {
         alignItems: 'center',

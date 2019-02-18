@@ -10,8 +10,9 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import CheckInternet from '../../../common/components/CheckNET';
 import NoInternetScreen from '../../../common/components/NoInternetScreen';
 import CheckExitApp from '../../../common/components/CheckExitApp';
+import CommonText from "../../../common/components/CommonText";
 
-const LogoPage = require('../../../../public/assets/palntImages/Tree.jpg');
+const LogoPage = require('../../../../public/assets/palntImages/Tree.png');
 
 class HomeScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
@@ -118,6 +119,7 @@ class HomeScreen extends Component {
 
     render() {
         if(this.props.NET == false){
+            CheckInternet();
             return <NoInternetScreen />
         }
 
@@ -129,10 +131,16 @@ class HomeScreen extends Component {
                         this.state.ShowLogoTitle ?  // เช็คว่าแสดง Logo หรือไม่
                         <View style={s.viewImage}>
                             <Thumbnail style={s.thumbnail} source={LogoPage} />
+                            <CommonText
+                                text={'ปีบหรือกาซะลอง เป็นพรรณไม้ประจำมหาวิทยาลัยราชภัฏพระนคร'}
+                                size={16}
+                                weight={"500"}
+                                style={{textAlign: 'center', marginTop: 10}}
+                            />
                         </View> : null
                     }
                     <View style={[s.titlePage,this.state.ShowLogoTitle ? {marginTop: 30} : null]} /*เช็คว่าแสดง Logo หรือไม่*/>
-                        <Text style={s.labelTitlePage}>{'ค้นหาพรรณไม้'}</Text>
+                        <CommonText text={'ค้าหาพรรณไม้'} size={25} weight={"bold"}/>
                     </View>
                     <View style={s.inputFormAll}>
                         <View style={this.state.InputIsEmpty ?   //เช็คว่า Input ว่างหรือไม่
@@ -207,8 +215,9 @@ const s = StyleSheet.create({
         backgroundColor: '#FEF9E7'
     },
     viewImage: {
+        alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'row',
+        flexDirection: 'column',
         marginTop: 30
     },
     thumbnail: {

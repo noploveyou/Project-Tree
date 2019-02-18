@@ -77,6 +77,7 @@ class QrCode extends Component {
 
     render() {
             if(this.props.NET == false){    // หากปิด Internet
+                CheckInternet();
                 return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
             }else if(this.state.loading == true){
                 return <Loading />

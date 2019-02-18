@@ -87,6 +87,7 @@ class ListTreeScreen extends Component {
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
+            CheckInternet();
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }else if(this.props.DataList == null){    // หากปิด Internet
             return <Loading />     // แสดงหน้า Screen NoInternet
@@ -98,6 +99,7 @@ class ListTreeScreen extends Component {
                 <Item>
                     <TextInput
                         style={{flex: 1,flexDirection: 'row',justifyContent: 'center', fontSize: 18, marginLeft: 5}}
+                        underlineColorAndroid='transparent'
                         ref="ListInput"
                         placeholder= "กรุณากรอกชื่อพรรณไม้"
                         placeholderTextColor = '#D5D8DC'
