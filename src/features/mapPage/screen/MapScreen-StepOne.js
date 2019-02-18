@@ -52,7 +52,7 @@ class MapScreenStepOne extends Component {
                     default:
                 }
             }
-        }, 5000)    // เริ่มทำงานหลังจาก 5 วินาที
+        }, 0)
     };
 
     handleGetDirections = () => { //ฟังก์ชัน นำทาง (เปิด Google MAP)
