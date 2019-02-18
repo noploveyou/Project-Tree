@@ -3,6 +3,7 @@ package com.projecttrees;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new SplashScreenReactPackage(),
             new AndroidOpenSettingsPackage(),
             new RNCameraPackage(),
             new MapsPackage(),

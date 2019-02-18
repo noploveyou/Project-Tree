@@ -11,11 +11,13 @@ import CheckInternet from '../../../common/components/CheckNET';
 import NoInternetScreen from '../../../common/components/NoInternetScreen';
 import CheckExitApp from '../../../common/components/CheckExitApp';
 import CommonText from "../../../common/components/CommonText";
+import SplashScreen from 'react-native-splash-screen';
 
 const LogoPage = require('../../../../public/assets/palntImages/Tree.png');
 
 class HomeScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
+        SplashScreen.hide();
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => [this.props.navigation.navigate('Home'), CheckExitApp()]);
