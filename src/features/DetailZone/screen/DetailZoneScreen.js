@@ -39,7 +39,7 @@ class DetailZoneScreen extends Component {
                                 color={'white'}
                             />
                         </View>
-                        <View style={[styles.viewDetail,{}]}>
+                        <View style={[styles.viewDetail, styles.viewDetailHeader]}>
                             <CommonText
                                 text={'รายละเอียด'}
                                 size={18} weight={'500'}
