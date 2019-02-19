@@ -82,7 +82,7 @@ class HomeScreen extends Component {
                     actions: [
                         NavigationActions.navigate({
                             routeName: 'Detail',
-                            params: { back: "Home", Tree : this.state.ValueInput  },
+                            params: { back: "Home", Tree : this.state.ValueInput },
                         }),
                     ],
                 })
@@ -93,9 +93,7 @@ class HomeScreen extends Component {
                     null,
                     'กรุณากรอกชื่อพรรณไม้',
                     [
-                        null,
                         {text: 'ตกลง', onPress: () => null},
-                        null,
                     ],
                     { cancelable: false }
                 )
@@ -104,9 +102,7 @@ class HomeScreen extends Component {
                     null,
                     `ไม่พบพรรณไม้\nกรุณาตรวจสอบอีกครั้ง`,
                     [
-                        null,
                         {text: 'ตกลง', onPress: () => null},
-                        null,
                     ],
                     { cancelable: false }
                 )

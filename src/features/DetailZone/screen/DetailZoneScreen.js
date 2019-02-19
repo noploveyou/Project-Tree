@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Container, Text, Content } from 'native-base';
+import { Container, Content } from 'native-base';
 import { StyleSheet, NetInfo, BackHandler, View } from 'react-native';
 import HeaderForm from '../../../common/components/HeaderForm';
 import CheckInternet from '../../../common/components/CheckNET';
@@ -40,7 +39,7 @@ class DetailZoneScreen extends Component {
                                 color={'white'}
                             />
                         </View>
-                        <View style={[styles.viewDetail,{alignItems: 'center',borderLeftColor: 'white'}]}>
+                        <View style={[styles.viewDetail,{}]}>
                             <CommonText
                                 text={'รายละเอียด'}
                                 size={18} weight={'500'}
@@ -186,6 +185,10 @@ const styles = StyleSheet.create({
         borderLeftWidth: 0.3,
         borderLeftColor: 'gray',
         paddingLeft: 10
+    },
+    viewDetailHeader: {
+        alignItems: 'center',
+        borderLeftColor: 'white'
     },
     viewContainerTable: {
         backgroundColor:'#FEF9E7',

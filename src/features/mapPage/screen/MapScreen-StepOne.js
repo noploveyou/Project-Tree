@@ -42,11 +42,11 @@ class MapScreenStepOne extends Component {
             if(this.props.NET){                 // Internet เปิดใช้งาน
                 switch (this.state.MapHeight) {     // Hack MAP เพื่อแสดงปุ่ม UserLocation
                     case '100%':
-                        this.setState({MapHeight: '101%', ShowBTNNavigate: false});
+                        this.setState({MapHeight: '101%'});
                         break;
 
                     case '101%':
-                        this.setState({MapHeight: '100%', ShowBTNNavigate: false});
+                        this.setState({MapHeight: '100%'});
                         break;
 
                     default:
@@ -84,7 +84,7 @@ class MapScreenStepOne extends Component {
         }
 
         return (
-            <Container>
+            <Container style={s.containerAll}>
                 <View style={s.viewHeader}>
                     <TouchableOpacity
                         onPress={() => // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
@@ -107,6 +107,7 @@ class MapScreenStepOne extends Component {
                     </TouchableOpacity>
                 </View>
                     <View style={s.container}>
+                        <Loading />
                         <GoogleMAP
                             hackScale={{width:this.state.MapWidth, height:this.state.MapHeight}}
                             onMapReady={() =>
@@ -118,6 +119,7 @@ class MapScreenStepOne extends Component {
                             OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
                             LocationUser={false}
                         />
+
                         {this.state.ShowBTNNavigate ?
                             <View>
                                 <TouchableOpacity onPress={() => this.handleGetDirections()} style={s.btnNavigate}>
@@ -138,8 +140,10 @@ MapScreenStepOne.navigationOptions = ({ navigation }) => ({
 });
 
 const s = StyleSheet.create({
+    containerAll: {
+        backgroundColor:"#FEF9E7"
+    },
     container: {
-
         justifyContent: 'flex-end',
         alignItems: 'center',
         width: '100%',

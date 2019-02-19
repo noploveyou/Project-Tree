@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Tab, Tabs, TabHeading } from 'native-base';
-import { BackHandler, NetInfo} from 'react-native';
+import {BackHandler, NetInfo, StyleSheet} from 'react-native';
+import { NavigationActions, StackActions } from "react-navigation";
 import Icon from "react-native-vector-icons/FontAwesome";
 import HeaderForm from "../../../common/components/HeaderForm";
 import CheckInternet from "../../../common/components/CheckNET";
@@ -11,13 +12,12 @@ import Appearance from './tab/Appearance';
 import Location from './tab/Location';
 import Loading from '../../../common/components/Loading';
 import CommonText from '../../../common/components/CommonText';
-import { NavigationActions, StackActions } from "react-navigation";
 
 class DetailScreen extends Component {
     componentDidMount(){
         const { back, Tree } = this.props.navigation.state.params;
-        this.props.SetValue(Tree);
-        setTimeout(() => {this.props.FetchData();}, 200);
+        this.props.SetValue(Tree);  //ค่าที่จะส่งไปหาในฐานข้อมูล
+        this.props.FetchData();     //เชื่อมต่อฐานข้อมูล
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate(back));
@@ -25,7 +25,7 @@ class DetailScreen extends Component {
 
     componentWillUnmount() {
         this.backHandler.remove();
-        this.props.Reset([]);
+        this.props.Reset(null);
     }
 
     render() {
@@ -42,8 +42,8 @@ class DetailScreen extends Component {
                     <Tabs >
                         <Tab
                             heading={
-                                <TabHeading style={{backgroundColor: "#196F3D"}}>
-                                        <Icon name="pagelines" style={{marginRight: 5, marginTop: 3}} size={20} color={'white'}/>
+                                <TabHeading style={styles.tab}>
+                                        <Icon name="pagelines" style={styles.iconTab} size={20} color={'white'}/>
                                         <CommonText text={'รายละเอียด'} size={16} color={'white'}  />
                                 </TabHeading>
                             }
@@ -52,8 +52,8 @@ class DetailScreen extends Component {
                         </Tab>
                         <Tab
                             heading={
-                                <TabHeading style={{backgroundColor: "#196F3D"}}>
-                                        <Icon name="envira" style={{marginRight: 5, marginTop: 3}} size={20} color={'white'}/>
+                                <TabHeading style={styles.tab}>
+                                        <Icon name="envira" style={styles.iconTab} size={20} color={'white'}/>
                                     <CommonText text={'ลักษณะ'} size={16} color={'white'}  />
                                 </TabHeading>
                             }
@@ -64,8 +64,8 @@ class DetailScreen extends Component {
                             back=="SelectedMap" ? null :
                                 <Tab
                                     heading={
-                                        <TabHeading style={{backgroundColor: "#196F3D"}}>
-                                            <Icon name="map-marker" style={{marginRight: 5, marginTop: 3}} size={20} color={'white'}/>
+                                        <TabHeading style={styles.tab}>
+                                            <Icon name="map-marker" style={styles.iconTab} size={20} color={'white'}/>
                                             <CommonText text={'สถานที่พบ'} size={16} color={'white'}  />
                                         </TabHeading>
                                     }
@@ -84,13 +84,26 @@ DetailScreen.navigationOptions = ({ navigation }) => ({
         btn={() => navigation.dispatch(StackActions.reset({
                 index: 0,
                 actions: [
-                    NavigationActions.navigate({routeName: navigation.getParam('back'), params: { back: "SearchListMap" }})
+                    NavigationActions.navigate({
+                        routeName: navigation.getParam('back'),
+                        params: { back: "SearchListMap"
+                    }})
                 ],
             })
         )}
         iconName={'arrow-left'}
         titlePage={'รายละเอียดพรรณไม้'}
     />
+});
+
+const styles = StyleSheet.create({
+    iconTab: {
+        marginRight: 5,
+        marginTop: 3
+    },
+    tab: {
+        backgroundColor: "#196F3D"
+    }
 });
 
 export default connect(

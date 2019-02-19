@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Container, Text, Content } from 'native-base';
+import { Container, Content } from 'native-base';
 import { StyleSheet, NetInfo, BackHandler, View } from 'react-native';
 import HeaderForm from '../../../common/components/HeaderForm';
 import CheckInternet from '../../../common/components/CheckNET';

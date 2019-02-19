@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Container, Content, View } from 'native-base';
+import { connect,  } from 'react-redux';
 import { StyleSheet } from 'react-native';
+import { Container, Content, View } from 'native-base';
 import ShowLabelDetail from '../../components/ShowLabelDetail';
 import CommonDeckSwiper from  '../../components/DeckSwiper';
 import Loading from "../../../../common/components/Loading";
@@ -12,47 +12,30 @@ class Appearance  extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            name: null,
-            stem: null,
-            leaf: null,
-            flower: null,
-            round: null,
-            seed: null,
             imgAll: []
         }
     }
 
     componentDidMount(){
-        setTimeout(() => {this.get();}, 500);
+        setTimeout(() => {this.get();}, 0);
     }
 
     get = () => {
-        let getName = "", getStem = "", getLeaf = "", getFlower = "", getRound = "", getSeed = "", getImgStem = null,
-            getImgLeaf = null, getImgFlower = null, getImgRound = null, getImgSeed = null;
+        let getImgStem = null, getImgLeaf = null, getImgFlower = null, getImgRound = null, getImgSeed = null;
 
-        this.props.DataSource.map(function (item){
-            return [
-                getName = item.plantName,
-                getStem = item.plantStem,
-                getLeaf = item.plantLeaf,
-                getFlower = item.plantFlower,
-                getRound = item.plantRound,
-                getSeed = item.plantSeed,
-                getImgStem = item.imageFileStem,
-                getImgLeaf = item.imageFileLeaf,
-                getImgFlower = item.imageFileFlower,
-                getImgRound = item.imageFileRound,
-                getImgSeed = item.imageFileSeed
-            ];
-        });
-        this.setState({
-            name: getName,
-            stem: getStem,
-            leaf: getLeaf,
-            flower: getFlower,
-            round: getRound,
-            seed: getSeed
-        });
+        try {
+            this.props.DataSource.map(function (item){
+                return [
+                    getImgStem = item.imageFileStem,
+                    getImgLeaf = item.imageFileLeaf,
+                    getImgFlower = item.imageFileFlower,
+                    getImgRound = item.imageFileRound,
+                    getImgSeed = item.imageFileSeed
+                ];
+            });
+        }catch (e) {
+            alert("พบความผิดพลาด กรุณาลองใหม่อีกครั้ง")
+        }
 
         if(getImgStem != null){
             this.setState(prevState => ({
@@ -87,31 +70,31 @@ class Appearance  extends Component {
         }
     };
     render() {
-        if(this.state.seed == null){
+        if(this.state.imgAll == null){
             return  <Loading />
         }
 
         return (
             <Container >
                 <Content style={styles.container}>
-                    <View style={{width: '100%', height: 30, marginTop: 20, alignItems: 'center'}}>
-                        <CommonText text={this.state.name} size={25} textTitle={true} />
+                    <View style={styles.viewPicture}>
+                        <CommonText text={this.props.DataSource[0].plantName} size={25} textTitle={true} />
                     </View>
                     <CommonDeckSwiper dataSource={this.state.imgAll} />
                     <View style={styles.background}>
-                        <ShowLabelDetail title={"ลักษณะลำต้น"} result={this.state.stem} newLine={true} />
+                        <ShowLabelDetail title={"ลักษณะลำต้น"} result={this.props.DataSource[0].plantStem} newLine={true} />
                     </View>
                     <View style={styles.background}>
-                        <ShowLabelDetail title={"ลักษณะใบ"} result={this.state.leaf} newLine={true} />
+                        <ShowLabelDetail title={"ลักษณะใบ"} result={this.props.DataSource[0].plantLeaf} newLine={true} />
                     </View>
                     <View style={styles.background}>
-                        <ShowLabelDetail title={"ลักษณะดอก"} result={this.state.flower} newLine={true} />
+                        <ShowLabelDetail title={"ลักษณะดอก"} result={this.props.DataSource[0].plantFlower} newLine={true} />
                     </View>
                     <View style={styles.background}>
-                        <ShowLabelDetail title={"ลักษณะผล"} result={this.state.round} newLine={true} />
+                        <ShowLabelDetail title={"ลักษณะผล"} result={this.props.DataSource[0].plantRound} newLine={true} />
                     </View>
                     <View style={styles.background}>
-                        <ShowLabelDetail title={"ลักษณะเมล็ด"} result={this.state.seed} newLine={true} />
+                        <ShowLabelDetail title={"ลักษณะเมล็ด"} result={this.props.DataSource[0].plantSeed} newLine={true} />
                     </View>
                 </Content>
             </Container>
@@ -127,6 +110,12 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: "white",
         borderRadius: 10
+    },
+    viewPicture: {
+        width: '100%',
+        height: 30,
+        marginTop: 20,
+        alignItems: 'center'
     }
 });
 

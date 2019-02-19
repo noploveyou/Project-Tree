@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     },
     label: {
         marginTop: 5,
+        marginLeft: 10,
         alignItems: "flex-start"
     },
     singleLine: {

@@ -209,7 +209,9 @@ MapScreenStepThree.navigationOptions = ({ navigation }) => ({
             navigation.dispatch(StackActions.reset({
                     index: 0,
                     actions: [
-                        NavigationActions.navigate({routeName: navigation.getParam('back'), params: { back: "Map" }})
+                        NavigationActions.navigate({
+                            routeName: 'SearchListMap',
+                            params: { back: "Map" }})
                     ],
                 })
             )
