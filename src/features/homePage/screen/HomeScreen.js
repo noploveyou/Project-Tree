@@ -140,7 +140,7 @@ class HomeScreen extends Component {
                         </View> : null
                     }
                     <View style={[s.titlePage,this.state.ShowLogoTitle ? {marginTop: 30} : null]} /*เช็คว่าแสดง Logo หรือไม่*/>
-                        <CommonText text={'ค้าหาพรรณไม้'} size={25} weight={"bold"}/>
+                        <CommonText text={'ค้นหาพรรณไม้'} size={25} weight={"bold"}/>
                     </View>
                     <View style={s.inputFormAll}>
                         <View style={this.state.InputIsEmpty ?   //เช็คว่า Input ว่างหรือไม่
