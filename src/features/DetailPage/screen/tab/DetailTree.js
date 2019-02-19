@@ -30,7 +30,7 @@ class DetailTree extends Component {
                 return getExtraction.push(' '+item.extractionName);
             });
         }catch (e) {
-            alert("พบความผิดพลาด กรุณาลองใหม่อีกครั้ง")
+            setTimeout(() => {this.get();}, 50);
         }
         this.setState({extraction: getExtraction});
     };

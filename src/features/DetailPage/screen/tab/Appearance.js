@@ -34,7 +34,7 @@ class Appearance  extends Component {
                 ];
             });
         }catch (e) {
-            alert("พบความผิดพลาด กรุณาลองใหม่อีกครั้ง")
+            setTimeout(() => {this.get();}, 50);
         }
 
         if(getImgStem != null){
