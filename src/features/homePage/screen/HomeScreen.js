@@ -73,6 +73,20 @@ class HomeScreen extends Component {
         }
     }
 
+    ToDetail = (value) => {
+        this.props.navigation.dispatch(
+            StackActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName: 'Detail',
+                        params: { back: "Home", Tree : value },
+                    }),
+                ],
+            })
+        );
+    };
+
     NavToDetail = () =>{     // ปุ่มค้นหา
         if((this.props.CheckData)){
             // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
@@ -160,7 +174,7 @@ class HomeScreen extends Component {
                                 onChangeText={(value) => this.SearchDataSource(value)}
                                 onSubmitEditing={() => [
                                     // เมื่อปิด keyboard ปิด DisableListResults แสดง Logo
-                                    this.setState({ShowLogoTitle: true, DisableListResults: true}),
+                                    this.setState({ShowLogoTitle: true, DisableListResults: true}),this.NavToDetail()
                                 ]}
                                 placeholder="กรุณากรอกชื่อพรรณไม้"
                                 placeholderTextColor='gray'
@@ -169,15 +183,7 @@ class HomeScreen extends Component {
                                 inputContainerStyle={s.inputContainer}          //Custom Input
                                 renderItem={({plantName, plantScience}) => (
                                     <CommonList
-                                        onPress={() =>
-                                            [this.setState({
-                                                InputIsEmpty: false, DisableListResults: true,
-                                                ValueInput: plantName, ShowLogoTitle: true
-                                            }),
-                                            this.props.SetValueSearchHomePage(plantName),
-                                            this.props.SetValueCheckInDatabaseHomePage(true), Keyboard.dismiss()
-                                            ]
-                                        }
+                                        onPress={() => this.ToDetail(plantName)}
                                         style={s.labelListSuggest}
                                         labelTH={plantName}
                                         labelEN={plantScience}
