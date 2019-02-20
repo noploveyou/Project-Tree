@@ -12,6 +12,7 @@ import GoogleMAP from '../../../common/components/GoogleMAP'
 import Loading from '../../../common/components/Loading';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import CheckExitApp from '../../../common/components/CheckExitApp';
+import CommonText from "../../../common/components/CommonText";
 
 class MapScreenStepOne extends Component {
     componentDidMount(){    //เริ่มการทำงานของ class นี้
@@ -103,7 +104,7 @@ class MapScreenStepOne extends Component {
                         style={s.buttonSearch}
                     >
                         <Icon name={'md-search'} size={28} color={'white'} style={s.iconButtonSearch}/>
-                        <Text style={s.labelButtonSearch}> {`ค้นหา`} </Text>
+                        <CommonText text={`ค้นหา`} weight={'bold'} size={17} color={'white'} style={s.labelButtonSearch}/>
                     </TouchableOpacity>
                 </View>
                     <View style={s.container}>
@@ -197,12 +198,9 @@ const s = StyleSheet.create({
         marginTop: 10,
     },
     labelButtonSearch: {
-        fontSize: 14,
-        fontWeight: 'bold',
         marginLeft: 10,
         marginBottom: 7,
         marginTop: 10,
-        color: 'white'
     },
     btnNavigate: {
         width: '100%',
