@@ -25,7 +25,7 @@ class Location  extends PureComponent {
     }
 
     componentDidMount(){
-        this.CheckGPS(false);    // ตรวจ GPS by not press button near
+        this.props.CheckFetchDataMap != false ? this.CheckGPS(false): null;    // ตรวจ GPS by not press button near
     }
 
     componentWillUnmount() {

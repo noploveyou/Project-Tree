@@ -32,7 +32,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn1: true, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn1: true,
+            pressedBtn2: false,
+            pressedBtn3: false,
+            pressedBtn4: false,
+            pressedBtn5: false,
+            pressedBtn6: false,
+            pressedBtn7: false
+        });
     };
 
     Btn2 = () => {
@@ -46,7 +54,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn2: true, pressedBtn1: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn2: true,
+            pressedBtn1: false,
+            pressedBtn3: false,
+            pressedBtn4: false,
+            pressedBtn5: false,
+            pressedBtn6: false,
+            pressedBtn7: false
+        });
     };
 
     Btn3 = () => {
@@ -60,7 +76,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn3: true, pressedBtn1: false, pressedBtn2: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn3: true,
+            pressedBtn1: false,
+            pressedBtn2: false,
+            pressedBtn4: false,
+            pressedBtn5: false,
+            pressedBtn6: false,
+            pressedBtn7: false
+        });
     };
     Btn4 = () => {
         this.props.navigation.dispatch(
@@ -73,7 +97,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn4: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn4: true,
+            pressedBtn1: false,
+            pressedBtn2: false,
+            pressedBtn3: false,
+            pressedBtn5: false,
+            pressedBtn6: false,
+            pressedBtn7: false
+        });
     };
     Btn5 = () => {
         this.props.navigation.dispatch(
@@ -86,7 +118,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn5: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn6: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn5: true,
+            pressedBtn1: false,
+            pressedBtn2: false,
+            pressedBtn3: false,
+            pressedBtn4: false,
+            pressedBtn6: false,
+            pressedBtn7: false
+        });
     };
     Btn6 = () => {
         this.props.navigation.dispatch(
@@ -99,7 +139,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn6: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn6: true,
+            pressedBtn1: false,
+            pressedBtn2: false,
+            pressedBtn3: false,
+            pressedBtn4: false,
+            pressedBtn5: false,
+            pressedBtn7: false
+        });
     };
     Btn7 = () => {
         this.props.navigation.dispatch(
@@ -112,7 +160,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn7: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false});
+        this.setState({
+            pressedBtn7: true,
+            pressedBtn1: false,
+            pressedBtn2: false,
+            pressedBtn3: false,
+            pressedBtn4: false,
+            pressedBtn5: false,
+            pressedBtn6: false
+        });
     };
 
     render () {
@@ -272,7 +328,8 @@ const styles = StyleSheet.create({
         backgroundColor:'#FEF9E7',
         height: 45,
         alignItems: 'flex-start',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        borderBottomColor: '#F1C40F'
     },
     buttonSelected: {
         backgroundColor: '#F1C40F'

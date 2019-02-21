@@ -220,9 +220,7 @@ class GuideScreen extends Component {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <View style={styles.viewTitle}>
-                            <CommonText text={'อื่นๆ'} size={20} weight={'bold'} style={styles.label} />
-                        </View>
+
                         <View style={styles.viewZoneButton}>
                             <View style={styles.viewButton}>
                                 <TouchableOpacity onPress={() =>
@@ -280,7 +278,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FEF9E7',
         flex: 1,
         alignItems: 'center',
-        margin: 10
+        margin: 7
     },
     viewTitle: {
         alignItems: 'flex-start',
@@ -288,7 +286,7 @@ const styles = StyleSheet.create({
     },
     label: {
         textAlign: 'center',
-        marginLeft: 10
+        marginLeft: 20
     },
     viewButton: {
         alignItems: 'center',

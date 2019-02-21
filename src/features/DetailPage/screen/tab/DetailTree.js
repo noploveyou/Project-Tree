@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     },
     background: {
         margin: 10,
-        backgroundColor: "white",
+        backgroundColor: "#FEF9E7",
         borderRadius: 10
     },
     titleNamePlant: {

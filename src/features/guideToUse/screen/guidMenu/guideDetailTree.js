@@ -85,7 +85,7 @@ class guideDetailTree extends Component {
                             weight={'400'}
                             style={[styles.label, {marginTop: 10}]}
                         />
-                        <Thumbnail square style={[styles.image,{height: 350}]} source={Image3} />
+                        <Thumbnail square style={[styles.image,{height: 400}]} source={Image3} />
                         <CommonText
                             text={'แสดงข้อมูลดังนี้\n' +
                             '   - รูปภาพพรรณไม้\n'+
@@ -99,9 +99,7 @@ class guideDetailTree extends Component {
                             style={styles.label}
                         />
                         <CommonText
-                            text={'สามารถเลื่อนรูปภาพถัดไปและก่อนหน้าได้\n' +
-                            'โดยกดปุ่มลูกศร → เพื่อเลื่อนไปภาพถัดไป\n' +
-                            'กดปุ่มลูกศร ← เพื่อดูภาพก่อนหน้า'}
+                            text={'     สามารถเลื่อนรูปภาพถัดไป โดยกดปุ่ม "ภาพถัดไป ►"\n'}
                             size={16}
                             color={'gray'}
                             weight={'400'}

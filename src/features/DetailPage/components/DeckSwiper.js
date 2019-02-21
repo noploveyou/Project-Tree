@@ -1,17 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { DeckSwiper, Card, CardItem, Icon, View } from 'native-base';
+import { DeckSwiper, Card, CardItem, View } from 'native-base';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Loading from '../../../common/components/Loading';
+import CommonText from "../../../common/components/CommonText";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const CommonDeckSwiper = (props) =>{
     return (
         <View style={styles.container}>
-            <View style={styles.viewButton}>
-                <TouchableOpacity onPress={() => this.deckSwiper._root.swipeLeft()} style={styles.button}>
-                    <Icon name="arrow-back" />
-                </TouchableOpacity>
-            </View>
             <View style={styles.viewDeckSwiper}>
                 <DeckSwiper
                     ref={(c) => this.deckSwiper = c}
@@ -22,7 +19,8 @@ const CommonDeckSwiper = (props) =>{
             </View>
             <View style={styles.viewButton}>
                 <TouchableOpacity onPress={() => this.deckSwiper._root.swipeRight()} style={styles.button}>
-                    <Icon name="arrow-forward" />
+                    <CommonText text={'ภาพถัดไป'} size={20} weight={'bold'} color={'white'} style={{marginRight: 10}}/>
+                    <Icon name="caret-right" size={30} color={'white'}/>
                 </TouchableOpacity>
             </View>
         </View>
@@ -57,46 +55,50 @@ CommonDeckSwiper.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
-        margin: 10
+        alignItems: 'center',
+        height: 200,
+        marginVertical: 80
     },
     viewButton: {
         alignItems: "center",
         flexDirection: 'row',
-        width: '12.5%',
+        width: 200,
+        height: 50,
         justifyContent: "center"
     },
     button: {
-        borderRadius: 5,
-        backgroundColor: '#fffcb8',
-        width: '100%',
-        height: '50%' ,
+        borderRadius: 50,
+        backgroundColor: '#196F3D',
+        width: 250,
+        height: 50,
         alignItems: "center",
         flexDirection: 'row',
-        justifyContent: "center"
+        justifyContent: "center",
+        marginTop: 10
     },
     viewDeckSwiper: {
-        height: 250,
-        width: '75%',
+        height: 300,
+        width: 250,
         backgroundColor: "#F1C40F"
     },
     viewRenderCard: {
         alignItems: "center"
     },
     renderCardEmpty: {
-        height: 240,
-        width: 240,
+        height: 300,
+        width: 250,
         alignItems: "center"
     },
     renderCard: {
-        height: 240,
-        flex: 1,
+        height: 300,
+        width: 250,
         alignItems: "center"
     },
     image: {
-        height: 240,
-        width: 240
+        height: 300,
+        width: 250,
     }
 });
 

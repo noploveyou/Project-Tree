@@ -21,7 +21,8 @@ class Appearance  extends Component {
     }
 
     get = () => {
-        let getImgStem = null, getImgLeaf = null, getImgFlower = null, getImgRound = null, getImgSeed = null;
+        let getImgStem = null, getImgLeaf = null, getImgFlower = null, getImgRound = null, getImgSeed = null,
+            getImgAll = null;
 
         try {
             this.props.DataSource.map(function (item){
@@ -30,7 +31,8 @@ class Appearance  extends Component {
                     getImgLeaf = item.imageFileLeaf,
                     getImgFlower = item.imageFileFlower,
                     getImgRound = item.imageFileRound,
-                    getImgSeed = item.imageFileSeed
+                    getImgSeed = item.imageFileSeed,
+                    getImgAll = item.imageFileAll
                 ];
             });
         }catch (e) {
@@ -62,8 +64,13 @@ class Appearance  extends Component {
                 imgAll: [...prevState.imgAll, imagesRequire[getImgSeed]]
             }))
         }
+        if(getImgAll != null){
+            this.setState(prevState => ({
+                imgAll: [...prevState.imgAll, imagesRequire[getImgAll]]
+            }))
+        }
         if(getImgStem == null && getImgLeaf == null && getImgFlower == null && getImgRound == null
-            && getImgSeed == null){
+            && getImgSeed == null && getImgAll == null){
             this.setState(prevState => ({
                 imgAll: [...prevState.imgAll, imagesRequire["null"]]
             }))
@@ -104,16 +111,16 @@ class Appearance  extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#F1C40F"
+        backgroundColor: "#F1C40F",
+        flex: 1
     },
     background: {
         margin: 10,
-        backgroundColor: "white",
+        backgroundColor: "#FEF9E7",
         borderRadius: 10
     },
     viewPicture: {
         width: '100%',
-        height: 30,
         marginTop: 20,
         alignItems: 'center'
     }

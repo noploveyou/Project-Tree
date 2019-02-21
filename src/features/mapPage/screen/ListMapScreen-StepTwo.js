@@ -113,6 +113,8 @@ class ListMapScreenStepTwo extends Component {
                         data={this.props.DataList}
                         keyExtractor={this._keyExtractor}
                         renderItem={this._renderItem}
+                        initialNumToRender={10}
+                        maxToRenderPerBatch={10}
                     />
                 </Content>
             </Container>

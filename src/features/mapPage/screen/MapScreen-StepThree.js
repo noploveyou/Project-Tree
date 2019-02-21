@@ -17,7 +17,7 @@ import CheckInternet from "../../../common/components/CheckNET";
 
 class MapScreenStepThree extends PureComponent {
     componentDidMount(){
-        this.CheckGPS(false);    // ตรวจ GPS
+        this.props.CheckFetchDataMap != false ? this.CheckGPS(false): null;    // ตรวจ GPS
         FuncCheckNet(); // ตรวจสอบ internet
         this.props.FetchDataMap();
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
