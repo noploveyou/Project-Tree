@@ -118,11 +118,11 @@ export default class SideMenu extends Component {
     render () {
         return (
             <View style={styles.container}>
+                <View style={styles.viewImageTitle}>
+                    <Image source={titleLogoImage} style={styles.titleImage} />
+                    <CommonText text={'มหาวิทยาลัยราชภัฏพระนคร'} color={'white'} size={18} weight={'400'} style={{marginTop: 5}}/>
+                </View>
                 <ScrollView>
-                    <View style={styles.viewImageTitle}>
-                        <Image source={titleLogoImage} style={styles.titleImage} />
-                        <CommonText text={'มหาวิทยาลัยราชภัฏพระนคร'} color={'white'} size={18} weight={'400'} style={{marginTop: 5}}/>
-                    </View>
                         <View>
                             <List>
                                 <ListItem
@@ -257,13 +257,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#FEF9E7'
     },
     viewImageTitle: {
-        height: 210,
+        height: '35%',
+        width: '100%',
         backgroundColor: '#196F3D',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     titleImage: {
-        height: 160,
-        width: 130,
+        height: '65%',
+        width: '40%',
         marginTop: 10
     },
     button: {

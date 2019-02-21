@@ -151,23 +151,11 @@ const s = StyleSheet.create({
         height: '88%'
     },
     viewHeader: {
-        marginBottom: 0,
-        flexDirection: 'row',
+        width: '100%',
         backgroundColor: '#196F3D',
-        justifyContent: 'space-around'
-    },
-    ButtonsGroup: {
-        width: 190,
-        height: 45,
-        borderRadius: 5,
-        borderColor: '#F1C40F',
-        borderWidth: 1,
-        backgroundColor: '#196F3D',
-        flexDirection: 'row',
-        marginBottom: 5,
-        marginLeft: 5,
-        flex: 2,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
     },
     iconButtonsGroup: {
         marginTop: 10,
@@ -181,18 +169,14 @@ const s = StyleSheet.create({
         color: 'white',
     },
     buttonSearch: {
-        width: 150,
-        height: 45,
-        borderRadius: 5,
+        width: '50%',
+        borderRadius: 20,
         borderColor: '#F1C40F',
-        borderWidth: 1,
+        borderWidth: 2,
         backgroundColor: '#196F3D',
         flexDirection: 'row',
-        marginBottom: 5,
-        marginLeft: 5,
-        marginRight: 5,
-        flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginBottom: 10
     },
     iconButtonSearch: {
         marginTop: 10,

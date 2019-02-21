@@ -20,7 +20,7 @@ class CommonList extends React.PureComponent {
                         size={14}
                         weight={'400'}
                         color={'gray'}
-                        style={{top: -5}}
+                        style={{top: -5, fontStyle: 'italic'}}
                     />
                 </TouchableOpacity>
             </View>

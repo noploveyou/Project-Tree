@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Container, Icon, Content, View, Item } from 'native-base';
+import { Container, Content, View, Item } from 'native-base';
 import { connect } from "react-redux";
-import { FlatList, BackHandler, NetInfo, Keyboard, TextInput, StyleSheet } from 'react-native';
+import { FlatList, BackHandler, NetInfo, Keyboard, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import HeaderForm from '../../../common/components/HeaderForm';
 import {NavigationActions, StackActions} from "react-navigation";
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import CheckInternet from "../../../common/components/CheckNET";
 import Loading from '../../../common/components/Loading';
 import ListItem from '../components/ListItem';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 class ListMapScreenStepTwo extends Component {
     componentDidMount(){
@@ -38,7 +39,7 @@ class ListMapScreenStepTwo extends Component {
         this.refs['SearchInput'].blur();
     };
 
-    _keyExtractor = (item ) => item.areaID;
+    _keyExtractor = (item ) => item.plantID;
 
      _onPressItem = (value) => {
          this.props.SetSearchListMap("");
@@ -103,11 +104,9 @@ class ListMapScreenStepTwo extends Component {
                         value={this.state.valueInput}
                         onBlur={() => this._keyboardDidHide}
                     />
-                    <View>
-                        <Icon name='close' style={styles.buttonClear}
-                              onPress={() => {this.clearText()}}
-                        />
-                    </View>
+                    <TouchableOpacity onPress={() => this.clearText()} style={styles.btnClear}>
+                        <Icon name={'close'} size={22} style={{color: 'red'}}/>
+                    </TouchableOpacity>
                 </Item>
                 <Content style={styles.container}>
                     <FlatList
@@ -144,10 +143,14 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginLeft: 5
     },
-    buttonClear: {
-        fontSize: 25,
-        color: 'red',
-        marginRight: 15
+    btnClear: {
+        height:50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingRight: 10,
+        paddingLeft: 10,
+        backgroundColor: 'white'
     },
     container: {
         backgroundColor: '#F1C40F'

@@ -30,31 +30,42 @@ class DetailProjectScreen extends Component {
             <Container style={styles.container}>
                 <Content>
                    <View style={styles.viewAll}>
-                       <CommonText
-                           text={DetailProject['Title']}
-                           size={18} weight={'bold'}
-                           style={styles.title}
-                       />
-                       <CommonText
-                           text={DetailProject['TitleDetail']}
-                           size={17} weight={'600'}
-                           style={styles.titleDetail}
-                       />
-                       <CommonText
-                           text={DetailProject['DetailAboutProject']}
-                           size={16} style={styles.detailAboutProject}
-                       />
-                       <CommonText
-                           text={DetailProject['TitleProvider']}
-                           size={17}
-                           weight={'600'}
-                           style={styles.titleProvider}
-                       />
-                       <CommonText
-                           text={DetailProject['Provider']}
-                           size={16}
-                           style={styles.provider}
-                       />
+                       <View style={{backgroundColor: "#FEF9E7", borderRadius: 10, margin: 10}}>
+                           <CommonText
+                               text={DetailProject['Title']}
+                               size={18} weight={'bold'}
+                               style={styles.title}
+                           />
+                           <CommonText
+                               text={DetailProject['TitleDetail']}
+                               size={17} weight={'600'}
+                               style={styles.titleDetail}
+                           />
+                       </View>
+                       <View style={{backgroundColor: "#FEF9E7", borderRadius: 10, margin: 10, top: -40}}>
+                           <CommonText
+                               text={DetailProject['TitleDetailAbout']}
+                               size={17} weight={'600'}
+                               style={styles.titleDetailAbout}
+                           />
+                           <CommonText
+                               text={DetailProject['DetailAboutProject']}
+                               size={16} style={styles.detailAboutProject}
+                           />
+                       </View>
+                       <View style={{backgroundColor: "#FEF9E7", borderRadius: 10, margin: 10, top: -30}}>
+                           <CommonText
+                               text={DetailProject['TitleProvider']}
+                               size={17}
+                               weight={'600'}
+                               style={styles.titleProvider}
+                           />
+                           <CommonText
+                               text={DetailProject['Provider']}
+                               size={16}
+                               style={styles.provider}
+                           />
+                       </View>
                    </View>
                 </Content>
             </Container>
@@ -72,9 +83,10 @@ const styles = StyleSheet.create({
     },
     viewAll: {
         alignItems: 'center',
-        margin: 10,
         borderRadius: 10,
-        backgroundColor: '#FEF9E7'
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center'
     },
     title: {
         textAlign: 'center',
@@ -85,12 +97,17 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal: 3
     },
+    titleDetailAbout: {
+        textAlign: 'center',
+        marginHorizontal: 3,
+        marginTop: 10
+    },
     detailAboutProject: {
-        margin: 15
+        marginHorizontal: 20
     },
     titleProvider: {
         textAlign: 'center',
-        margin: 15
+        marginTop: 10
     },
     provider: {
         textAlign: 'center',

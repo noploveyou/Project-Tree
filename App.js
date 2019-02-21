@@ -11,6 +11,14 @@ import QrCode from "./src/features/QrCodePage/screen/QrCode";
 import GuideScreen from "./src/features/guideToUse/screen/GuideScreen";
 import DetailZoneScreen from "./src/features/DetailZone/screen/DetailZoneScreen";
 import DetailProjectScreen from "./src/features/DetailProject/screen/DetailProjectScreen";
+import guideHome from "./src/features/guideToUse/screen/guidMenu/guideHome";
+import guideListTree from "./src/features/guideToUse/screen/guidMenu/guideListTree";
+import guideMAP from "./src/features/guideToUse/screen/guidMenu/guideMAP";
+import guideQRCode from "./src/features/guideToUse/screen/guidMenu/guideQRCode";
+import guideDetailZone from "./src/features/guideToUse/screen/guidMenu/guideDetailZone";
+import guideAboutProject from "./src/features/guideToUse/screen/guidMenu/guideAboutProject";
+import guideDetailTree from  "./src/features/guideToUse/screen/guidMenu/guideDetailTree"
+import guideGuide from "./src/features/guideToUse/screen/guidMenu/guideGuide";
 
 export const RootStack = createStackNavigator({
     Home: {
@@ -42,6 +50,30 @@ export const RootStack = createStackNavigator({
     },
     DetailProject: {
         screen: DetailProjectScreen
+    },
+    guideHome: {
+        screen: guideHome
+    },
+    guideListTree: {
+        screen: guideListTree
+    },
+    guideMAP: {
+        screen: guideMAP
+    },
+    guideQRCode: {
+        screen: guideQRCode
+    },
+    guideDetailZone: {
+        screen: guideDetailZone
+    },
+    guideAboutProject: {
+        screen: guideAboutProject
+    },
+    guideDetailTree: {
+        screen: guideDetailTree
+    },
+    guideGuide: {
+        screen: guideGuide
     }
 
 },{

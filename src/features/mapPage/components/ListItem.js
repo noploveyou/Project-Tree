@@ -56,7 +56,7 @@ class ListItem extends React.PureComponent {
                         <CommonText
                             text={this.props.labelTreeNameEN}
                             size={16}
-                            style={{marginLeft: 5, width: '80%'}}
+                            style={{marginLeft: 5, width: '80%',fontStyle: 'italic'}}
                             lines={1}
                             color={'gray'}
                         />

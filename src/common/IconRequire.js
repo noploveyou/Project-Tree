@@ -92,6 +92,25 @@ const Icons = {
     '91.png': require('../../public/assets/iconsMark/91.png'),
     '92.png': require('../../public/assets/iconsMark/92.png'),
     '93.png': require('../../public/assets/iconsMark/93.png'),
+    '94.png': require('../../public/assets/iconsMark/tree.png'),  //-
+    '95.png': require('../../public/assets/iconsMark/tree.png'),
+    '96.png': require('../../public/assets/iconsMark/tree.png'),
+    '97.png': require('../../public/assets/iconsMark/tree.png'),
+    '98.png': require('../../public/assets/iconsMark/tree.png'),
+    '99.png': require('../../public/assets/iconsMark/tree.png'),
+    '100.png': require('../../public/assets/iconsMark/tree.png'),
+    '101.png': require('../../public/assets/iconsMark/tree.png'),
+    '102.png': require('../../public/assets/iconsMark/tree.png'),
+    '103.png': require('../../public/assets/iconsMark/tree.png'),
+    '104.png': require('../../public/assets/iconsMark/tree.png'),
+    '105.png': require('../../public/assets/iconsMark/tree.png'),
+    '106.png': require('../../public/assets/iconsMark/tree.png'),
+    '107.png': require('../../public/assets/iconsMark/tree.png'),
+    '108.png': require('../../public/assets/iconsMark/tree.png'),
+    '109.png': require('../../public/assets/iconsMark/tree.png'),
+    '110.png': require('../../public/assets/iconsMark/tree.png'),
+    '111.png': require('../../public/assets/iconsMark/tree.png'),
+    '112.png': require('../../public/assets/iconsMark/tree.png'),
 };
 
 export default Icons;

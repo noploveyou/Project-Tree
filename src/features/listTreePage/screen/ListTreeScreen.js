@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Icon, Content, View, Item } from 'native-base';
+import { Container, Content, View, Item } from 'native-base';
 import { connect } from "react-redux";
-import { FlatList, BackHandler, NetInfo, Keyboard, TextInput, StyleSheet } from 'react-native';
+import { FlatList, BackHandler, NetInfo, Keyboard, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationActions,StackActions } from 'react-navigation';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import HeaderForm from '../../../common/components/HeaderForm';
@@ -9,12 +9,13 @@ import ListItemListTree from '../components/ListItemListTree';
 import CheckInternet from "../../../common/components/CheckNET";
 import Loading from '../../../common/components/Loading';
 import CheckExitApp from '../../../common/components/CheckExitApp';
-
+import Icon from "react-native-vector-icons/FontAwesome";
 
 class ListTreeScreen extends Component {
     componentDidMount(){
-        this.props.FetchDataList();
+
         this.props.SetSearchList('');   //ค่าที่ใช้ค้นหาในฐานข้อมูล '' = ทั้งหมด
+        setTimeout(()=> {this.props.FetchDataList();}, 0);
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => [this.props.navigation.navigate('ListTree'),CheckExitApp()]);    //เมื่อกดปุ่ม back บนแอนดรอยด์
@@ -57,6 +58,7 @@ class ListTreeScreen extends Component {
     _renderItem = ({item}) => {
         return (
             <ListItemListTree
+                id={item.plantID}
                 labelTreeNameTH={item.plantName}    //ชื่อพรรณไม้
                 labelTreeNameEN={item.plantScience} //ชื่อวิทยาศาสตร์พรรณไม้
                 onPressItem={() => this._onPressItem(item.plantName)} //action เมื่อกดที่รายชื่อ
@@ -103,18 +105,17 @@ class ListTreeScreen extends Component {
                         value={this.state.valueInput}
                         onFocus={() => this._keyboardDidHideList}
                     />
-                    <View>
-                        <Icon name='close' style={styles.buttonClear}
-                              onPress={() => {this.clearText()}}
-                        />
-                    </View>
+                    <TouchableOpacity onPress={() => this.clearText()} style={styles.btnClear}>
+                        <Icon name={'close'} size={22} style={{color: 'red'}}/>
+                    </TouchableOpacity>
                 </Item>
                 <Content style={styles.container}>
                     <FlatList
                         data={this.props.DataList}
                         keyExtractor={this._keyExtractor}
                         renderItem={this._renderItem}
-                        initialNumToRender={7}
+                        initialNumToRender={10}
+                        maxToRenderPerBatch={10}
                     />
                 </Content>
             </Container>
@@ -141,6 +142,16 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: '#F1C40F'
+    },
+    btnClear: {
+        height:50,
+        width: '15%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingRight: 10,
+        paddingLeft: 10,
+        backgroundColor: 'white'
     }
 });
 

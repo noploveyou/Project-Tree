@@ -51,7 +51,10 @@ class DetailTree extends Component {
                     </View>
                     <View style={styles.background}>
                         <ShowLabelDetail title={"ชื่อพื้นเมือง"} result={this.props.DataSource[0].plantName} />
-                        <ShowLabelDetail title={"ชื่อวิทยาศาสตร์"} result={this.props.DataSource[0].plantScience} />
+                        <ShowLabelDetail
+                            title={"ชื่อวิทยาศาสตร์"}
+                            result={this.props.DataSource[0].plantScience}
+                            styleText={{fontStyle: 'italic'}} />
                         <ShowLabelDetail title={"ชื่อวงศ์"} result={this.props.DataSource[0].plantFamilyName} />
                         <ShowLabelDetail title={"ชื่อสามัญ"} result={this.props.DataSource[0].plantCommonname} />
                     </View>

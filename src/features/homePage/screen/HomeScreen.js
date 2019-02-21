@@ -193,7 +193,7 @@ class HomeScreen extends Component {
                         </View>
                         {this.state.InputIsEmpty ?
                             null : <TouchableOpacity onPress={() => this.BtnClear()} style={s.btnClear}>
-                                        <Icon name={'close'} size={18} />
+                                        <Icon name={'close'} size={22} style={{color: 'red'}}/>
                                    </TouchableOpacity>
                         }
                         {this.state.ShowLogoTitle ?
@@ -298,11 +298,12 @@ const s = StyleSheet.create({
     },
     btnClear: {
         height:50,
-        backgroundColor: 'white',
+        justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
         paddingRight: 10,
-        paddingLeft: 10
+        paddingLeft: 10,
+        backgroundColor: 'white'
     }
 });
 
