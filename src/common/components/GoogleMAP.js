@@ -11,8 +11,8 @@ const GoogleMAP = (props) => {
                     initialRegion={{
                         latitude: 13.8770500,
                         longitude: 100.5901700,
-                        latitudeDelta: 0.000015,  // น้อย =  Zoom
-                        longitudeDelta: 0.000015, // น้อย =  Zoom
+                        latitudeDelta: 0.000005,  // น้อย =  Zoom
+                        longitudeDelta: 0.000005, // น้อย =  Zoom
                     }}     // มุมกล้องเริ่มต้น
                     showsMyLocationButton={true}       // แสดงปุ่ม ตำแหน่งของผู้ใช้
                     showsUserLocation={props.LocationUser}           // แสดงตำแหน่งของผู้ใช้

@@ -269,7 +269,8 @@ const s = StyleSheet.create({
     },
     labelListSuggest: {
         marginLeft: 10,
-        marginBottom: 5
+        marginBottom: 5,
+        width: 300
     },
     buttonSearch: {
         height: 50,

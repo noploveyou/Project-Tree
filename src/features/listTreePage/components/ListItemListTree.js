@@ -36,7 +36,7 @@ class ListItemListTree extends React.PureComponent {
                     <View
                         style={
                             {
-                                marginLeft: 10, marginTop: 5
+                                marginLeft: 10, marginTop: 5, width: '75%'
                             }
                         }>
                         <CommonText text={this.props.labelTreeNameTH} size={18} weight={'600'} />
@@ -44,7 +44,7 @@ class ListItemListTree extends React.PureComponent {
                             text={this.props.labelTreeNameEN}
                             size={16}
                             lines={1}
-                            style={{width: '80%',fontStyle: 'italic'}}
+                            style={{fontStyle: 'italic'}}
                             color={'gray'}
                         />
                     </View>
