@@ -5,11 +5,9 @@ import AndroidOpenSettings from 'react-native-android-open-settings';
 const AlertGPS = () => {
     return(
         Alert.alert(
-            'ลองใหม่อีกครั้ง',
-            'กรุณาตรวจสอบสัญญาณ GPS\n\n'+
-            '* หมายเหตุ\n'+
-            'เปิดใช้ GPS ความถูกต้องสูงเท่านั้น\n\n\n'+
-            'หากเปิดใช้ GPS แล้ว กรุณารอสักครู่'+'เพื่อค้นหาตำแหน่งของท่าน\n\n',
+            '           ลองใหม่อีกครั้ง',
+            '       กรุณาเปิดใช้งานแสดงตำแหน่งของผู้ใช้ จึงจะสามารถใช้งานฟังก์ชันเส้นทางใกล้ที่สุดได้\n\n'+
+            '       หากเปิดใช้งานแสดงตำแหน่งของผู้ใช้แล้ว กรุณารอสักครู่\n'+'เพื่อค้นหาตำแหน่งของท่าน\n\n',
             [
                 {text: 'ตกลง', onPress: () => null},
                 {text: 'ตั้งค่า', onPress: () => AndroidOpenSettings.locationSourceSettings()}

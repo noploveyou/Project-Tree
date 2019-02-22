@@ -24,10 +24,6 @@ class Location  extends PureComponent {
         }
     }
 
-    componentDidMount(){
-        this.props.CheckFetchDataMap != false ? this.CheckGPS(false): null;    // ตรวจ GPS by not press button near
-    }
-
     componentWillUnmount() {
         this.props.ResetMark([]);
         this.setState({HackRender: false, isLoading: false});
@@ -64,7 +60,7 @@ class Location  extends PureComponent {
                 }
                 this.setState({isLoading: false});  // ปิดการโหลด
             }, () => [AlertGPS(), this.setState({isLoading: false}), this.props.GPS(false)],
-            {timeout: 0, distanceFilter: 50} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
+            {timeout: 0, distanceFilter: 10, enableHighAccuracy: false} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
         );
     };
 

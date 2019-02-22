@@ -320,8 +320,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     titleImage: {
-        height: '65%',
-        width: '40%',
+        height: 150,
+        width:  '40%',
         marginTop: 10
     },
     button: {

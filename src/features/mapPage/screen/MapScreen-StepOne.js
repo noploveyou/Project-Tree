@@ -118,7 +118,13 @@ class MapScreenStepOne extends Component {
                             check={this.props.CheckFetchDataMap && this.state.HackRender}
                             Data={this.props.DataMarker}
                             OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
-                            LocationUser={false}
+                            LocationUser={true}
+                            initMAP={{
+                                latitude: 13.8770500,
+                                longitude: 100.5901700,
+                                latitudeDelta: 0.000005,  // น้อย =  Zoom
+                                longitudeDelta: 0.000005, // น้อย =  Zoom
+                            }}
                         />
 
                         {this.state.ShowBTNNavigate ?

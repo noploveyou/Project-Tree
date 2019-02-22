@@ -17,7 +17,6 @@ import CheckInternet from "../../../common/components/CheckNET";
 
 class MapScreenStepThree extends PureComponent {
     componentDidMount(){
-        this.props.CheckFetchDataMap != false ? this.CheckGPS(false): null;    // ตรวจ GPS
         FuncCheckNet(); // ตรวจสอบ internet
         this.props.FetchDataMap();
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
@@ -74,7 +73,7 @@ class MapScreenStepThree extends PureComponent {
                 }
                 this.setState({isLoading: false});  // ปิดการโหลด
             }, () => [AlertGPS(), this.setState({isLoading: false}), this.props.GPS(false)],
-                {timeout: 0, distanceFilter: 50} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
+                {timeout: 0, distanceFilter: 10, enableHighAccuracy: false} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
         );
     };
 

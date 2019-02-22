@@ -89,7 +89,7 @@ class QrCode extends Component {
                 cameraStyle={{height: this.state.screenHeight, width: this.state.screenWidth}}
                 showMarker={true} //ให้แสดงกรอบ4เหลี่ยม
                 customMarker={
-                    <View style={{height: this.state.screenHeight + 200, width: this.state.screenWidth}}>
+                    <View style={{height: this.state.screenHeight+150, width: this.state.screenWidth}}>
                         <View style={{position: 'absolute', height: this.state.screenHeight, width: this.state.screenWidth, justifyContent: 'space-between', flexDirection: 'column'}}>
                             <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: this.state.screenWidth}} />
                             <View style={{backgroundColor: 'rgba(52, 52, 52, 0.8)',height: '35%', width: this.state.screenWidth}} />

@@ -8,12 +8,13 @@ const GoogleMAP = (props) => {
     return(
         <MapView style={[s.map, props.hackScale,
             {top: props.top, bottom: props.bottom,left: props.left, right: props.right}]}
-                    initialRegion={{
-                        latitude: 13.8770500,
-                        longitude: 100.5901700,
-                        latitudeDelta: 0.000005,  // น้อย =  Zoom
-                        longitudeDelta: 0.000005, // น้อย =  Zoom
-                    }}     // มุมกล้องเริ่มต้น
+                    initialRegion={props.initMAP}     // มุมกล้องเริ่มต้น
+                 /*{
+                     latitude: 13.8770500,
+                     longitude: 100.5901700,
+                     latitudeDelta: 0.000005,  // น้อย =  Zoom
+                     longitudeDelta: 0.000005, // น้อย =  Zoom
+                 }*/
                     showsMyLocationButton={true}       // แสดงปุ่ม ตำแหน่งของผู้ใช้
                     showsUserLocation={props.LocationUser}           // แสดงตำแหน่งของผู้ใช้
                     onMapReady={props.onMapReady}
@@ -47,7 +48,8 @@ GoogleMAP.propTypes = {
     left: PropTypes.number,
     bottom: PropTypes.number,
     right: PropTypes.number,
-    LocationUser: PropTypes.bool
+    LocationUser: PropTypes.bool,
+    initMAP: PropTypes.object,
 };
 
 GoogleMAP.defaultProps = {
@@ -55,7 +57,13 @@ GoogleMAP.defaultProps = {
     left: 10,
     bottom: 10,
     right: 10,
-    LocationUser: true
+    LocationUser: true,
+    initMAP: {
+        latitude: 13.8770500,
+        longitude: 100.5901700,
+        latitudeDelta: 0.000015,  // น้อย =  Zoom
+        longitudeDelta: 0.000015, // น้อย =  Zoom
+    }
 };
 
 const s = StyleSheet.create({
