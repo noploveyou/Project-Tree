@@ -13,7 +13,7 @@ import CheckExitApp from '../../../common/components/CheckExitApp';
 import CommonText from "../../../common/components/CommonText";
 import SplashScreen from 'react-native-splash-screen';
 
-const LogoPage = require('../../../../public/assets/palntImages/LogoTree.png');
+const LogoPage = require('../../../../public/assets/plantImages/LogoTree.png');
 
 class HomeScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน

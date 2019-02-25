@@ -5,7 +5,7 @@ import  { NavigationActions, StackActions } from 'react-navigation';
 import CommonText from '../common/components/CommonText';
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const titleLogoImage = require('../../public/assets/palntImages/pnru_logo.png');
+const titleLogoImage = require('../../public/assets/plantImages/pnru_logo.png');
 
 export default class SideMenu extends Component {
     constructor() {
