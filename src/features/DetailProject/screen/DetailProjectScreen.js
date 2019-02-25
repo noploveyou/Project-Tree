@@ -21,7 +21,6 @@ class DetailProjectScreen extends Component {
         this.backHandler.remove();
     }
 
-
     render() {
         if(this.props.NET == false){
             CheckInternet();
@@ -32,7 +31,7 @@ class DetailProjectScreen extends Component {
             <Container style={styles.container}>
                 <Content>
                    <View style={styles.viewAll}>
-                       <View style={{backgroundColor: "#FEF9E7", borderRadius: 10, margin: 10}}>
+                       <View style={styles.label}>
                            <CommonText
                                text={DetailProject['Title']}
                                size={18} weight={'bold'}
@@ -44,7 +43,7 @@ class DetailProjectScreen extends Component {
                                style={styles.titleDetail}
                            />
                        </View>
-                       <View style={{backgroundColor: "#FEF9E7", borderRadius: 10, margin: 10, top: -40}}>
+                       <View style={[styles.label, {top: -40}]}>
                            <CommonText
                                text={DetailProject['TitleDetailAbout']}
                                size={17} weight={'600'}
@@ -56,7 +55,7 @@ class DetailProjectScreen extends Component {
                                size={16} style={styles.detailAboutProject}
                            />
                        </View>
-                       <View style={{backgroundColor: "#FEF9E7", borderRadius: 10, margin: 10, top: -30}}>
+                       <View style={[styles.label, {top: -30}]}>}>
                            <CommonText
                                text={DetailProject['TitleProvider']}
                                size={17}
@@ -116,15 +115,21 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal: 15,
         marginBottom: 10
+    },
+    label: {
+        backgroundColor: "#FEF9E7",
+        borderRadius: 10,
+        margin: 10
     }
 });
 
 export default connect(
     (state) => ({
-        DataMarker : state.DataMapScreen.DataMarkStepOne
+        NET : state.CheckDevice.InternetIsConnect,  // ตรวจสอบ Internet
+        DataMarker : state.DataMapScreen.DataMarkStepOne,
+        CheckData: state.DataMapScreen.CheckDataMarkStepOne
     }),
     (dispatch) => ({
         FetchDataMap : (value) => {dispatch({type: "CALL_DATA_STEP_ONE", payload: value})}
     })
 )(DetailProjectScreen);
-

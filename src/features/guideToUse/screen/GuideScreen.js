@@ -11,6 +11,7 @@ import {NavigationActions, StackActions} from "react-navigation";
 import guideQRCode from "./guidMenu/guideQRCode";
 import guideDetailZone from "./guidMenu/guideDetailZone";
 import guideAboutProject from "./guidMenu/guideAboutProject";
+import {connect} from "react-redux";
 
 class GuideScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
@@ -311,5 +312,9 @@ const styles = StyleSheet.create({
     }
 });
 
-export default GuideScreen;
+export default connect(
+    (state) => ({
+        NET : state.CheckDevice.InternetIsConnect,  // ตรวจสอบ Internet
+    }), null
+)(GuideScreen);
 

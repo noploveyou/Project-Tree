@@ -7,6 +7,7 @@ import NoInternetScreen from '../../../common/components/NoInternetScreen';
 import CheckExitApp from '../../../common/components/CheckExitApp';
 import CommonText from '../../../common/components/CommonText';
 import Detail from '../components/DetailZone';
+import {connect} from "react-redux";
 
 class DetailZoneScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
@@ -200,5 +201,10 @@ const styles = StyleSheet.create({
     }
 });
 
-export default DetailZoneScreen;
+export default connect(
+    (state) => ({
+        NET : state.CheckDevice.InternetIsConnect,  // ตรวจสอบ Internet
+    }), null
+)(DetailZoneScreen);
+
 
