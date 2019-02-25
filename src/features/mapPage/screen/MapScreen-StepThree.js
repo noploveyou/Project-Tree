@@ -142,7 +142,7 @@ class MapScreenStepThree extends PureComponent {
         return (
             <Container>
                 {this.props.CheckFetchDataMap == false ?
-                    <View style={s.noLocation}>
+                    <View style={s.container}>
                         <CommonText text={"ไม่พบตำแหน่งพรรณไม้"} size={20} weight={'500'}/>
                     </View>
                     :
@@ -163,32 +163,29 @@ class MapScreenStepThree extends PureComponent {
                                 OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
                             />
                         </View>
+                        <View style={s.footerButton} >
                         {this.state.isLoading ?
-                            <View style={{width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
                                 <LoadingButtonFooter/>
-                            </View>
                             :
                             this.state.ShowBTNNavigate ?
-                                <View
-                                    style={{width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
-                                    <ButtonFooterStepThree
-                                        buttonDetail={() =>
-                                            this.props.navigation.navigate({routeName: "Detail",params: { back: "SelectedMap",Tree: this.props.GetTree }})
-                                        }
-                                        buttonNavigate={() => this.handleGetDirections()}
-                                        buttonNavigateNear={() => this.CheckGPS(true)}
-                                    />
-                                </View>
+                                <ButtonFooterStepThree
+                                    buttonDetail={() =>
+                                        this.props.navigation.navigate({
+                                            routeName: "Detail",
+                                            params: { back: "SelectedMap", Tree: this.props.GetTree}
+                                        })
+                                    }
+                                    buttonNavigate={() => this.handleGetDirections()}
+                                    buttonNavigateNear={() => this.CheckGPS(true)}
+                                />
                                 :
-                                <View
-                                    style={{width: '100%', justifyContent: 'flex-end', alignItems: 'center', marginBottom: 10}}>
-                                    <ButtonFooterStepThree
-                                        ButtonFooter={false}
-                                        DisableButtonDetail={true}
-                                        buttonNearOutFooter={() => this.CheckGPS(true)}
-                                    />
-                                </View>
+                                <ButtonFooterStepThree
+                                    ButtonFooter={false}
+                                    DisableButtonDetail={true}
+                                    buttonNearOutFooter={() => this.CheckGPS(true)}
+                                />
                         }
+                        </View>
                     </View>
                 }
             </Container>
@@ -208,19 +205,13 @@ MapScreenStepThree.navigationOptions = ({ navigation }) => ({
 
 const s = StyleSheet.create({
     container: {
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        flex: 1,
-        backgroundColor: '#FEF9E7'
-    },
-    noLocation: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#FEF9E7'
     },
     viewMap: {
-        height: '80%',
+        height: '75%',
         width: '100%',
         justifyContent: 'flex-end',
         alignItems: 'center',
@@ -229,10 +220,16 @@ const s = StyleSheet.create({
     titlePlantName: {
         width: '100%',
         height: 30,
-        top: -15,
+        top: -7,
         alignItems: 'center',
         flexDirection: 'column'
     },
+    footerButton: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: 22
+    }
 });
 
 export default connect(
