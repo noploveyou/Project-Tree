@@ -2,9 +2,11 @@ const MapReducer = (
     state={
         ValueSearchPlant: "",
         KeyValue: "",
+        DataMarkStepOne: [],
         DataListStepTwo: [],
         CheckDataMarkStepOne: false,
-        CheckDataListStepTwo: false
+        CheckDataListStepTwo: false,
+        DataMarkStepThree: []
     }, action) => {
     switch (action.type){
         case "ADD_MARK_MAP_STEP_ONE" : {    // Mark in MAP StepOne

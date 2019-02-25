@@ -9,7 +9,7 @@ const ShowLabelDetail = (props) => {
             <CommonText text={props.title} style={styles.label} weight={"500"} />
             <CommonText
                 text={props.result == null ? `      -` : `        `+props.result}
-                style={styles.label}
+                style={[styles.label,props.styleText]}
                 color={"#196F3D"}
             />
         </View>
@@ -28,13 +28,15 @@ ShowLabelDetail.propTypes = {
         PropTypes.array
     ]),
     singleLine: PropTypes.bool,
-    style: Text.propTypes.style
+    style: Text.propTypes.style,
+    styleText: Text.propTypes.style
 };
 
 ShowLabelDetail.defaultProps = {
     result: " any text ",
     singleLine: false,
-    style: null
+    style: null,
+    styleText: null,
 };
 
 const styles = StyleSheet.create({
@@ -47,6 +49,7 @@ const styles = StyleSheet.create({
     },
     label: {
         marginTop: 5,
+        marginLeft: 10,
         alignItems: "flex-start"
     },
     singleLine: {

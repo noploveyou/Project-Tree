@@ -6,16 +6,10 @@ import images from "../../../common/ImagesRequire";
 import CommonText from "../../../common/components/CommonText";
 
 class ListItemListTree extends React.PureComponent {
-    _onPress = () => {
-        // Do someting
-        this.props.onPressItem(this.props.labelTreeNameTH);
-        //alert(this.props.TreeName);
-    };
-
     render() {
         return (
             <TouchableOpacity
-                onPress={this._onPress}
+                onPress={this.props.onPressItem}
                 style={
                     {
                         width: '97%',
@@ -42,11 +36,17 @@ class ListItemListTree extends React.PureComponent {
                     <View
                         style={
                             {
-                                marginLeft: 10, marginTop: 5
+                                marginLeft: 10, marginTop: 5, width: '75%'
                             }
                         }>
-                        <CommonText text={this.props.labelTreeNameTH} size={16} weight={'600'} />
-                        <CommonText text={this.props.labelTreeNameEN} size={16} />
+                        <CommonText text={this.props.labelTreeNameTH} size={18} weight={'600'} />
+                        <CommonText
+                            text={this.props.labelTreeNameEN}
+                            size={16}
+                            lines={1}
+                            style={{fontStyle: 'italic'}}
+                            color={'gray'}
+                        />
                     </View>
                 </View>
             </TouchableOpacity>
@@ -65,7 +65,7 @@ ListItemListTree.defaultProps = {
     labelTreeNameTH: "",
     labelTreeNameEN: "",
     onPressItem: null,
-    image: ""
+    image: 'null'
 };
 
 export default ListItemListTree;

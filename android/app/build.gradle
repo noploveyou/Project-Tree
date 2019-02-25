@@ -25,7 +25,7 @@ import com.android.build.OutputFile
  *   bundleInRelease: true,
  *
  *   // whether to bundle JS and assets in another build variant (if configured).
- *   // See http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Build-Variants
+ *   // See http://tools.android.com/tech-docs/new-build-system/user-guideGuide#TOC-Build-Variants
  *   // The configuration property can be in the following formats
  *   //         'bundleIn${productFlavor}${buildType}'
  *   //         'bundleIn${buildType}'
@@ -100,7 +100,18 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 26        // Work for RNCamera
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "26.0.1"
+
+    signingConfigs {
+        release {
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file("my-release-key.keystore")
+                storePassword "123456"
+                keyAlias "my_key_alias"
+                keyPassword "123456"
+            }
+        }
+    }
 
     defaultConfig {
         applicationId "com.projecttrees"
@@ -123,6 +134,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -131,7 +143,7 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
-            // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
+            // http://tools.android.com/tech-docs/new-build-system/user-guideGuide/apk-splits
             def versionCodes = ["armeabi-v7a":1, "x86":2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
@@ -144,7 +156,7 @@ android {
 
 dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
+    compile "com.android.support:appcompat-v7:26.1.0"
     compile "com.facebook.react:react-native:+"                 // From node_modules
     compile project(':react-native-vector-icons')
     compile "com.google.android.gms:play-services-base:+"       // any version
@@ -157,6 +169,8 @@ dependencies {
         exclude group: 'com.google.android.gms', module: 'play-services-base'
         exclude group: 'com.google.android.gms', module: 'play-services-maps'
     }
+    implementation project(':react-native-android-open-settings')
+    compile project(':react-native-splash-screen')
 }
 
 // Run this once to be able to run the application with BUCK

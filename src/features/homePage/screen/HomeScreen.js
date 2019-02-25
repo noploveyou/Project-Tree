@@ -10,11 +10,14 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import CheckInternet from '../../../common/components/CheckNET';
 import NoInternetScreen from '../../../common/components/NoInternetScreen';
 import CheckExitApp from '../../../common/components/CheckExitApp';
+import CommonText from "../../../common/components/CommonText";
+import SplashScreen from 'react-native-splash-screen';
 
-const LogoPage = require('../../../../public/assets/palntImages/Tree.jpg');
+const LogoPage = require('../../../../public/assets/palntImages/LogoTree.png');
 
 class HomeScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
+        SplashScreen.hide();
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => [this.props.navigation.navigate('Home'), CheckExitApp()]);
@@ -70,29 +73,27 @@ class HomeScreen extends Component {
         }
     }
 
+    ToDetail = (value) => {
+        this.props.navigation.navigate({
+                        routeName: 'Detail',
+                        params: { back: "Home", Tree : value },
+                    })
+    };
+
     NavToDetail = () =>{     // ปุ่มค้นหา
         if((this.props.CheckData)){
             // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
-            this.props.navigation.dispatch(
-                StackActions.reset({
-                    index: 0,
-                    actions: [
-                        NavigationActions.navigate({
+            this.props.navigation.navigate({
                             routeName: 'Detail',
-                            params: { back: "Home", Tree : this.state.ValueInput  },
-                        }),
-                    ],
-                })
-            );
+                            params: { back: "Home", Tree : this.state.ValueInput },
+                        })
         }else {
             if (this.state.InputIsEmpty){    // เช็คค่า Input ว่างหรือไม่
                 Alert.alert(
                     null,
                     'กรุณากรอกชื่อพรรณไม้',
                     [
-                        null,
                         {text: 'ตกลง', onPress: () => null},
-                        null,
                     ],
                     { cancelable: false }
                 )
@@ -101,9 +102,7 @@ class HomeScreen extends Component {
                     null,
                     `ไม่พบพรรณไม้\nกรุณาตรวจสอบอีกครั้ง`,
                     [
-                        null,
                         {text: 'ตกลง', onPress: () => null},
-                        null,
                     ],
                     { cancelable: false }
                 )
@@ -118,7 +117,10 @@ class HomeScreen extends Component {
 
     render() {
         if(this.props.NET == false){
+            CheckInternet();
             return <NoInternetScreen />
+        }else if(this.props.NET == true) {
+            CheckInternet();
         }
 
         return (
@@ -129,10 +131,16 @@ class HomeScreen extends Component {
                         this.state.ShowLogoTitle ?  // เช็คว่าแสดง Logo หรือไม่
                         <View style={s.viewImage}>
                             <Thumbnail style={s.thumbnail} source={LogoPage} />
+                            <CommonText
+                                text={'ปีบหรือกาซะลอง เป็นพรรณไม้\n'+'ประจำมหาวิทยาลัยราชภัฏพระนคร'}
+                                size={16}
+                                weight={"500"}
+                                style={{textAlign: 'center', marginTop: 10}}
+                            />
                         </View> : null
                     }
                     <View style={[s.titlePage,this.state.ShowLogoTitle ? {marginTop: 30} : null]} /*เช็คว่าแสดง Logo หรือไม่*/>
-                        <Text style={s.labelTitlePage}>{'ค้นหาพรรณไม้'}</Text>
+                        <CommonText text={'ค้นหาพรรณไม้'} size={25} weight={"bold"}/>
                     </View>
                     <View style={s.inputFormAll}>
                         <View style={this.state.InputIsEmpty ?   //เช็คว่า Input ว่างหรือไม่
@@ -152,7 +160,7 @@ class HomeScreen extends Component {
                                 onChangeText={(value) => this.SearchDataSource(value)}
                                 onSubmitEditing={() => [
                                     // เมื่อปิด keyboard ปิด DisableListResults แสดง Logo
-                                    this.setState({ShowLogoTitle: true, DisableListResults: true}),
+                                    this.setState({ShowLogoTitle: true, DisableListResults: true}),this.NavToDetail()
                                 ]}
                                 placeholder="กรุณากรอกชื่อพรรณไม้"
                                 placeholderTextColor='gray'
@@ -161,15 +169,7 @@ class HomeScreen extends Component {
                                 inputContainerStyle={s.inputContainer}          //Custom Input
                                 renderItem={({plantName, plantScience}) => (
                                     <CommonList
-                                        onPress={() =>
-                                            [this.setState({
-                                                InputIsEmpty: false, DisableListResults: true,
-                                                ValueInput: plantName, ShowLogoTitle: true
-                                            }),
-                                            this.props.SetValueSearchHomePage(plantName),
-                                            this.props.SetValueCheckInDatabaseHomePage(true), Keyboard.dismiss()
-                                            ]
-                                        }
+                                        onPress={() => this.ToDetail(plantName)}
                                         style={s.labelListSuggest}
                                         labelTH={plantName}
                                         labelEN={plantScience}
@@ -179,7 +179,7 @@ class HomeScreen extends Component {
                         </View>
                         {this.state.InputIsEmpty ?
                             null : <TouchableOpacity onPress={() => this.BtnClear()} style={s.btnClear}>
-                                        <Icon name={'close'} size={18} />
+                                        <Icon name={'close'} size={22} style={{color: 'red'}}/>
                                    </TouchableOpacity>
                         }
                         {this.state.ShowLogoTitle ?
@@ -207,8 +207,9 @@ const s = StyleSheet.create({
         backgroundColor: '#FEF9E7'
     },
     viewImage: {
+        alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'row',
+        flexDirection: 'column',
         marginTop: 30
     },
     thumbnail: {
@@ -254,7 +255,8 @@ const s = StyleSheet.create({
     },
     labelListSuggest: {
         marginLeft: 10,
-        marginBottom: 5
+        marginBottom: 5,
+        width: 300
     },
     buttonSearch: {
         height: 50,
@@ -283,11 +285,12 @@ const s = StyleSheet.create({
     },
     btnClear: {
         height:50,
-        backgroundColor: 'white',
+        justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
         paddingRight: 10,
-        paddingLeft: 10
+        paddingLeft: 10,
+        backgroundColor: 'white'
     }
 });
 

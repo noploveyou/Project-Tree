@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
-import { Container, Icon, Content, View, Item } from 'native-base';
-import { FlatList, BackHandler, NetInfo, Alert, Keyboard, TextInput } from 'react-native';
+import { Container, Content, View, Item } from 'native-base';
+import { connect } from "react-redux";
+import { FlatList, BackHandler, NetInfo, Keyboard, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { NavigationActions,StackActions } from 'react-navigation';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import HeaderForm from '../../../common/components/HeaderForm';
 import ListItemListTree from '../components/ListItemListTree';
-import { connect } from "react-redux";
 import CheckInternet from "../../../common/components/CheckNET";
 import Loading from '../../../common/components/Loading';
 import CheckExitApp from '../../../common/components/CheckExitApp';
-import { NavigationActions,StackActions } from 'react-navigation';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 class ListTreeScreen extends Component {
     componentDidMount(){
-        setTimeout(() => {this.props.FetchDataList();}, 0);   //เชื่อมต่อฐานข้อมูลใน 0.5 วินาที
+
         this.props.SetSearchList('');   //ค่าที่ใช้ค้นหาในฐานข้อมูล '' = ทั้งหมด
+        setTimeout(()=> {this.props.FetchDataList();}, 0);
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => [this.props.navigation.navigate('ListTree'),CheckExitApp()]);    //เมื่อกดปุ่ม back บนแอนดรอยด์
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide',
-            this._keyboardDidHide) // เมื่อปิด keyboard
+            this._keyboardDidHideList) // เมื่อปิด keyboard
     }
 
     componentWillUnmount() {
@@ -30,7 +32,7 @@ class ListTreeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: '' //ค่าในช่อง Input
+            valueInput: '' //ค่าในช่อง Input
         };
     }
 
@@ -39,26 +41,16 @@ class ListTreeScreen extends Component {
     _onPressItem = (value) => {
         // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
         this.keyboardDidHideListener.remove();
-        this.props.navigation.dispatch(
-            StackActions.reset({
-                index: 0,
-                actions: [
-                    NavigationActions.navigate({
+        this.props.navigation.navigate({
                         routeName: 'Detail',
-                        params: { back: "ListTree", Tree : value  },
-                    }),
-                ],
-            })
-        );
-
-        this.props.SetSearchList('');
-        this.clearText();
+                        params: { back: "ListTree", Tree : value },
+                    });
     };
 
     _renderItem = ({item}) => {
         return (
             <ListItemListTree
-                //id={item.plantID}
+                id={item.plantID}
                 labelTreeNameTH={item.plantName}    //ชื่อพรรณไม้
                 labelTreeNameEN={item.plantScience} //ชื่อวิทยาศาสตร์พรรณไม้
                 onPressItem={() => this._onPressItem(item.plantName)} //action เมื่อกดที่รายชื่อ
@@ -68,54 +60,54 @@ class ListTreeScreen extends Component {
     };
 
     Search(value){
-        this.setState({text: value});   // text มีค่าเท่ากับ ค่าในช่อง Input
+        this.setState({valueInput: value});   // text มีค่าเท่ากับ ค่าในช่อง Input
         this.props.SetSearchList(value);    //Set ค่าที่เรียกไปยังฐานข้อมูล
         this.props.FetchDataList();     // เรียกฐานข้อมูล
     }
 
     clearText(){
-        this.setState({text:''});   //ค่าในช่อง Input
+        this.setState({valueInput:''});   //ค่าในช่อง Input
         this.componentDidMount();   //ออกจากฟังก์ชัน
+        this.Search('');
     }
 
-
-
-    _keyboardDidHide = () => {  //เมื่อปิด Keyboard ลง
+    _keyboardDidHideList = () => {  //เมื่อปิด Keyboard ลง
         this.refs['ListInput'].blur();
     };
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
+            CheckInternet();
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }else if(this.props.DataList == null){    // หากปิด Internet
             return <Loading />     // แสดงหน้า Screen NoInternet
         }
-
         
         return (
             <Container>
                 <Item>
                     <TextInput
-                        style={{flex: 1,flexDirection: 'row',justifyContent: 'center', fontSize: 18, marginLeft: 5}}
+                        style={styles.input}
+                        underlineColorAndroid='transparent'
                         ref="ListInput"
                         placeholder= "กรุณากรอกชื่อพรรณไม้"
                         placeholderTextColor = '#D5D8DC'
                         returnKeyType={"done"}
                         onChangeText={(value) => {this.Search(value)}}
-                        value={this.state.text}
-                        onFocus={() => this._keyboardDidHide}
+                        value={this.state.valueInput}
+                        onFocus={() => this._keyboardDidHideList}
                     />
-                    <View>
-                        <Icon name='close' style={{fontSize: 25, color: 'red',marginRight: 15}}
-                              onPress={() => {this.clearText()}}
-                        />
-                    </View>
+                    <TouchableOpacity onPress={() => this.clearText()} style={styles.btnClear}>
+                        <Icon name={'close'} size={22} style={{color: 'red'}}/>
+                    </TouchableOpacity>
                 </Item>
-                <Content style={{backgroundColor: '#F1C40F'}}>
+                <Content style={styles.container}>
                     <FlatList
                         data={this.props.DataList}
                         keyExtractor={this._keyExtractor}
                         renderItem={this._renderItem}
+                        initialNumToRender={10}
+                        maxToRenderPerBatch={10}
                     />
                 </Content>
             </Container>
@@ -125,6 +117,34 @@ class ListTreeScreen extends Component {
 
 ListTreeScreen.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm btn={() => navigation.openDrawer()} iconName={'bars'} titlePage={'รายชื่อพรรณไม้'} />
+});
+
+const styles = StyleSheet.create({
+    input: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        fontSize: 18,
+        marginLeft: 5
+    },
+    buttonClear: {
+        fontSize: 25,
+        color: 'red',
+        marginRight: 15
+    },
+    container: {
+        backgroundColor: '#F1C40F'
+    },
+    btnClear: {
+        height:50,
+        width: '15%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingRight: 10,
+        paddingLeft: 10,
+        backgroundColor: 'white'
+    }
 });
 
 export default connect(

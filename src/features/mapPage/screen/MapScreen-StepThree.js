@@ -7,21 +7,20 @@ import geolib from 'geolib';
 import AlertGPS from '../components/AlertGPS';
 import HeaderForm from '../../../common/components/HeaderForm';
 import FuncCheckNet from '../components/FuncCheckNet';
-import GoogleMAP from '../../../common/components/GoogleMAP'
-import Loading from '../../../common/components/Loading';
+import GoogleMAP from '../../../common/components/GoogleMAP';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import ButtonFooterStepThree from  '../components/ButtonFooterStepThree';
 import LoadingButtonFooter from '../components/LoadingButtonFooter';
-import {NavigationActions, StackActions} from "react-navigation";
+import { NavigationActions, StackActions } from "react-navigation";
+import CommonText from "../../../common/components/CommonText";
+import CheckInternet from "../../../common/components/CheckNET";
 
 class MapScreenStepThree extends PureComponent {
     componentDidMount(){
-        this.CheckGPS(false);    // ตรวจ GPS
-        FuncCheckNet; // ตรวจสอบ internet
+        FuncCheckNet(); // ตรวจสอบ internet
         this.props.FetchDataMap();
-        const { back } = this.props.navigation.state.params;
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
-            () => this.props.navigation.navigate(back));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
+            () => this.props.navigation.navigate("SearchListMap"));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
     }
 
     componentWillUnmount() {
@@ -59,7 +58,7 @@ class MapScreenStepThree extends PureComponent {
                     default:
                 }
             }
-        }, 5000)    // เริ่มทำงานหลังจาก 5 วินาที
+        }, 0)
     };
 
     CheckGPS = (OnPressNear) => {
@@ -74,7 +73,7 @@ class MapScreenStepThree extends PureComponent {
                 }
                 this.setState({isLoading: false});  // ปิดการโหลด
             }, () => [AlertGPS(), this.setState({isLoading: false}), this.props.GPS(false)],
-                {timeout: 0, distanceFilter: 50} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
+                {timeout: 0, distanceFilter: 10, enableHighAccuracy: false} //ระยะเวลา, ระยะทางที่จะเริ่มเก็บ lat/lng อีกครั้ง 50 เมตร
         );
     };
 
@@ -136,60 +135,62 @@ class MapScreenStepThree extends PureComponent {
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
+            CheckInternet();
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
-        }else if(this.props.CheckFetchDataMap == false){
-            this.props.NET == true ? this.props.FetchDataMap() : '';
-            return(
-                <Loading />
-            )
         }
 
         return (
             <Container>
-                <View style={s.container}>
-                    <GoogleMAP
-                        hackScale={{width:this.state.MapWidth, height:this.state.MapHeight}}
-                        onMapReady={() =>
-                            [this.setState({ MapWidth: - 1, HackRender: true }), this.CheckInternetRender()]
-                        }
-                        onPress={() => this.setState({ShowBTNNavigate: false})}
-                        check={this.props.CheckFetchDataMap && this.state.HackRender}
-                        Data={this.props.DataMarker}
-                        OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
-                    />
-                    {this.state.isLoading ?
-                        <LoadingButtonFooter />
-                        :
-                        this.state.ShowBTNNavigate ?
-                            <ButtonFooterStepThree
-                                buttonDetail={() =>
-                                    /*this.props.navigation.navigate({
-                                        routeName: 'Detail',
-                                        params: { back : "SelectedMap", Tree : this.props.GetTree }
-                                    })*/
-                                    this.props.navigation.dispatch(
-                                        StackActions.reset({
-                                            index: 0,
-                                            actions: [
-                                                NavigationActions.navigate({
-                                                    routeName: 'Detail',
-                                                    params: { back: "SelectedMap", Tree : this.props.GetTree },
-                                                }),
-                                            ],
-                                        })
-                                    )
+                {this.props.CheckFetchDataMap == false ?
+                    <View style={s.noLocation}>
+                        <CommonText text={"ไม่พบตำแหน่งพรรณไม้"} size={20} weight={'500'}/>
+                    </View>
+                    :
+                    <View style={s.container}>
+                        <View style={s.titlePlantName}>
+                            <CommonText text={this.props.GetTree} size={25} textTitle={true} />
+                            <CommonText text={`จำนวนที่พบ  `+this.props.DataMarker.length+`  ต้น`} size={18} weight={'300'}/>
+                        </View>
+                        <View style={s.viewMap}>
+                            <GoogleMAP
+                                hackScale={{width: this.state.MapWidth, height: this.state.MapHeight}}
+                                onMapReady={() =>
+                                    [this.setState({MapWidth: -1, HackRender: true}), this.CheckInternetRender()]
                                 }
-                                buttonNavigate={() => this.handleGetDirections()}
-                                buttonNavigateNear={() => this.CheckGPS(true)}
+                                onPress={() => this.setState({ShowBTNNavigate: false})}
+                                check={this.props.CheckFetchDataMap && this.state.HackRender}
+                                Data={this.props.DataMarker}
+                                OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
                             />
+                        </View>
+                        {this.state.isLoading ?
+                            <View style={{width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
+                                <LoadingButtonFooter/>
+                            </View>
                             :
-                            <ButtonFooterStepThree
-                                ButtonFooter={false}
-                                DisableButtonDetail={true}
-                                buttonNearOutFooter={() => this.CheckGPS(true)}
-                            />
-                    }
-                </View>
+                            this.state.ShowBTNNavigate ?
+                                <View
+                                    style={{width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
+                                    <ButtonFooterStepThree
+                                        buttonDetail={() =>
+                                            this.props.navigation.navigate({routeName: "Detail",params: { back: "SelectedMap",Tree: this.props.GetTree }})
+                                        }
+                                        buttonNavigate={() => this.handleGetDirections()}
+                                        buttonNavigateNear={() => this.CheckGPS(true)}
+                                    />
+                                </View>
+                                :
+                                <View
+                                    style={{width: '100%', justifyContent: 'flex-end', alignItems: 'center', marginBottom: 10}}>
+                                    <ButtonFooterStepThree
+                                        ButtonFooter={false}
+                                        DisableButtonDetail={true}
+                                        buttonNearOutFooter={() => this.CheckGPS(true)}
+                                    />
+                                </View>
+                        }
+                    </View>
+                }
             </Container>
         );
     }
@@ -198,13 +199,7 @@ class MapScreenStepThree extends PureComponent {
 MapScreenStepThree.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm
         btn={() =>
-            navigation.dispatch(StackActions.reset({
-                    index: 0,
-                    actions: [
-                        NavigationActions.navigate({routeName: navigation.getParam('back'), params: { back: "Map" }})
-                    ],
-                })
-            )
+            navigation.navigate({routeName: "SearchListMap",params: { back: "Map" }})
         }
         iconName={'arrow-left'}
         titlePage={'แผนที่พรรณไม้'}
@@ -213,10 +208,31 @@ MapScreenStepThree.navigationOptions = ({ navigation }) => ({
 
 const s = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-    }
+        flex: 1,
+        backgroundColor: '#FEF9E7'
+    },
+    noLocation: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FEF9E7'
+    },
+    viewMap: {
+        height: '80%',
+        width: '100%',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        top: 15
+    },
+    titlePlantName: {
+        width: '100%',
+        height: 30,
+        top: -15,
+        alignItems: 'center',
+        flexDirection: 'column'
+    },
 });
 
 export default connect(

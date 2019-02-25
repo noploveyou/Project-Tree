@@ -19,7 +19,8 @@ function fetchDataHomePage(ValueKey) {
             store.dispatch({     // action
                 type: 'ADD_DATA_LIST_HOMEPAGE',
                 payload : responseJson
-            })
+
+            });
         })
         .catch(function (error) {
         })

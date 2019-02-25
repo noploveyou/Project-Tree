@@ -32,7 +32,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn1: true, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn1: true,
+            pressedBtn2: false,
+            pressedBtn3: false,
+            pressedBtn4: false,
+            pressedBtn5: false,
+            pressedBtn6: false,
+            pressedBtn7: false
+        });
     };
 
     Btn2 = () => {
@@ -46,7 +54,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn2: true, pressedBtn1: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn2: true,
+            pressedBtn1: false,
+            pressedBtn3: false,
+            pressedBtn4: false,
+            pressedBtn5: false,
+            pressedBtn6: false,
+            pressedBtn7: false
+        });
     };
 
     Btn3 = () => {
@@ -60,7 +76,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn3: true, pressedBtn1: false, pressedBtn2: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn3: true,
+            pressedBtn1: false,
+            pressedBtn2: false,
+            pressedBtn4: false,
+            pressedBtn5: false,
+            pressedBtn6: false,
+            pressedBtn7: false
+        });
     };
     Btn4 = () => {
         this.props.navigation.dispatch(
@@ -73,7 +97,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn4: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn5: false, pressedBtn6: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn4: true,
+            pressedBtn1: false,
+            pressedBtn2: false,
+            pressedBtn3: false,
+            pressedBtn5: false,
+            pressedBtn6: false,
+            pressedBtn7: false
+        });
     };
     Btn5 = () => {
         this.props.navigation.dispatch(
@@ -86,7 +118,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn5: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn6: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn5: true,
+            pressedBtn1: false,
+            pressedBtn2: false,
+            pressedBtn3: false,
+            pressedBtn4: false,
+            pressedBtn6: false,
+            pressedBtn7: false
+        });
     };
     Btn6 = () => {
         this.props.navigation.dispatch(
@@ -99,7 +139,15 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn6: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn7: false});
+        this.setState({
+            pressedBtn6: true,
+            pressedBtn1: false,
+            pressedBtn2: false,
+            pressedBtn3: false,
+            pressedBtn4: false,
+            pressedBtn5: false,
+            pressedBtn7: false
+        });
     };
     Btn7 = () => {
         this.props.navigation.dispatch(
@@ -112,18 +160,26 @@ export default class SideMenu extends Component {
                 ],
             })
         );
-        this.setState({pressedBtn7: true, pressedBtn1: false, pressedBtn2: false, pressedBtn3: false, pressedBtn4: false, pressedBtn5: false, pressedBtn6: false});
+        this.setState({
+            pressedBtn7: true,
+            pressedBtn1: false,
+            pressedBtn2: false,
+            pressedBtn3: false,
+            pressedBtn4: false,
+            pressedBtn5: false,
+            pressedBtn6: false
+        });
     };
 
     render () {
         return (
             <View style={styles.container}>
+                <View style={styles.viewImageTitle}>
+                    <Image source={titleLogoImage} style={styles.titleImage} />
+                    <CommonText text={'มหาวิทยาลัยราชภัฏพระนคร'} color={'white'} size={18} weight={'400'} style={{marginTop: 5}}/>
+                </View>
                 <ScrollView>
-                    <View style={styles.viewImageTitle}>
-                        <Image source={titleLogoImage} style={styles.titleImage} />
-                        <CommonText text={'มหาวิทยาลัยราชภัฏพระนคร'} color={'white'} size={18} weight={'400'}/>
-                    </View >
-                        <View >
+                        <View>
                             <List>
                                 <ListItem
                                     noIndent
@@ -244,7 +300,7 @@ export default class SideMenu extends Component {
                         <CommonText text={'ติดต่อ'} size={18} weight={'400'}/>
                     </View>
                     <View style={styles.viewFooter}>
-                        <CommonText text={'Footer'} size={20} weight={'400'}/>
+                        <CommonText text={'โทร. 02-544-8194 หรือ 02-522-6609'} size={15} weight={'400'}/>
                     </View>
             </View>
         );
@@ -257,20 +313,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#FEF9E7'
     },
     viewImageTitle: {
-        height: 210,
+        height: '35%',
+        width: '100%',
         backgroundColor: '#196F3D',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     titleImage: {
-        height: 160,
-        width: 130,
+        height: 150,
+        width:  '40%',
         marginTop: 10
     },
     button: {
         backgroundColor:'#FEF9E7',
-        height: 40,
+        height: 45,
         alignItems: 'flex-start',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        borderBottomColor: '#F1C40F'
     },
     buttonSelected: {
         backgroundColor: '#F1C40F'
@@ -285,12 +344,14 @@ const styles = StyleSheet.create({
     viewContact: {
         backgroundColor: '#FEF9E7',
         flexDirection: 'row',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        marginLeft: 10
     },
     viewFooter: {
         backgroundColor: '#FEF9E7',
         alignItems: 'center',
-        borderTopWidth: 0.3
+        borderTopWidth: 0.3,
+        marginVertical: 5
     },
     viewIcon: {
         alignItems: 'center',

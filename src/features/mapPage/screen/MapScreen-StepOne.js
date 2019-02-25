@@ -12,6 +12,7 @@ import GoogleMAP from '../../../common/components/GoogleMAP'
 import Loading from '../../../common/components/Loading';
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import CheckExitApp from '../../../common/components/CheckExitApp';
+import CommonText from "../../../common/components/CommonText";
 
 class MapScreenStepOne extends Component {
     componentDidMount(){    //เริ่มการทำงานของ class นี้
@@ -42,17 +43,17 @@ class MapScreenStepOne extends Component {
             if(this.props.NET){                 // Internet เปิดใช้งาน
                 switch (this.state.MapHeight) {     // Hack MAP เพื่อแสดงปุ่ม UserLocation
                     case '100%':
-                        this.setState({MapHeight: '101%', ShowBTNNavigate: false});
+                        this.setState({MapHeight: '101%'});
                         break;
 
                     case '101%':
-                        this.setState({MapHeight: '100%', ShowBTNNavigate: false});
+                        this.setState({MapHeight: '100%'});
                         break;
 
                     default:
                 }
             }
-        }, 5000)    // เริ่มทำงานหลังจาก 5 วินาที
+        }, 0)
     };
 
     handleGetDirections = () => { //ฟังก์ชัน นำทาง (เปิด Google MAP)
@@ -71,6 +72,7 @@ class MapScreenStepOne extends Component {
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
+            CheckInternet();
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }
         if(this.props.CheckFetchDataMap == false){
@@ -83,50 +85,67 @@ class MapScreenStepOne extends Component {
         }
 
         return (
-            <Container>
+            <Container style={s.containerAll}>
                 <View style={s.viewHeader}>
                     <TouchableOpacity
                         onPress={() => // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
-                            this.props.navigation.dispatch(
-                                StackActions.reset({
-                                    index: 0,
-                                    actions: [
-                                        NavigationActions.navigate({
+                            this.props.navigation.navigate({
                                             routeName: 'SearchListMap',
                                             params: { back: "Map" },
-                                        }),
-                                    ],
-                                })
-                            )
+                                        })
                         }
                         style={s.buttonSearch}
                     >
                         <Icon name={'md-search'} size={28} color={'white'} style={s.iconButtonSearch}/>
-                        <Text style={s.labelButtonSearch}> {`ค้นหา`} </Text>
+                        <CommonText text={`ค้นหา`} weight={'bold'} size={17} color={'white'} style={s.labelButtonSearch}/>
                     </TouchableOpacity>
                 </View>
                     <View style={s.container}>
-                        <GoogleMAP
-                            hackScale={{width:this.state.MapWidth, height:this.state.MapHeight}}
-                            onMapReady={() =>
-                            [this.setState({ MapWidth: - 1, HackRender: true }), this.CheckInternetRender()]
-                            }
-                            onPress={() => this.setState({ShowBTNNavigate: false})}
-                            check={this.props.CheckFetchDataMap && this.state.HackRender}
-                            Data={this.props.DataMarker}
-                            OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
-                            LocationUser={false}
-                        />
-                        {this.state.ShowBTNNavigate ?
-                            <View style={{marginBottom: 15}}>
-                                <TouchableOpacity onPress={() => this.handleGetDirections()} style={s.btnNavigate}>
-                                    <Icon name={'md-navigate'} size={28} color={'#FEF9E7'} style={s.iconBtnNavigate}/>
-                                    <Text style={s.labelBtnNavigate}> เส้นทาง </Text>
-                                </TouchableOpacity>
-                            </View>
-                            : null
+                        {
+                            this.state.HackRender ?
+                                <View style={s.titlePlantName}>
+                                    <CommonText
+                                        text={`พรรณไม้ทั้งหมดที่พบจำนวน  `+this.props.DataMarker.length+`  ต้น`}
+                                        size={18}
+                                        weight={'500'}
+                                    />
+                                </View> : null
                         }
+                        <View style={s.viewMap}>
+                            {
+                                this.state.HackRender ? null : <Loading />
+                            }
+                            <GoogleMAP
+                                hackScale={{width:this.state.MapWidth, height:this.state.MapHeight}}
+                                onMapReady={() =>
+                                [this.setState({ MapWidth: - 1, HackRender: true }), this.CheckInternetRender()]
+                                }
+                                onPress={() => this.setState({ShowBTNNavigate: false})}
+                                check={this.props.CheckFetchDataMap && this.state.HackRender}
+                                Data={this.props.DataMarker}
+                                OnMarkPress={(ly, lx) => this.SetLocationToNavigate(parseFloat(ly), parseFloat(lx))}
+                                LocationUser={true}
+                                initMAP={{
+                                    latitude: 13.8770500,
+                                    longitude: 100.5901700,
+                                    latitudeDelta: 0.000005,  // น้อย =  Zoom
+                                    longitudeDelta: 0.000005, // น้อย =  Zoom
+                                }}
+                            />
+                            <View style={s.footerButton}>
+                                {this.state.ShowBTNNavigate ?
+                                    <View>
+                                        <TouchableOpacity onPress={() => this.handleGetDirections()} style={s.btnNavigate}>
+                                            <Icon name={'md-navigate'} size={28} color={'#FEF9E7'} style={s.iconBtnNavigate}/>
+                                            <Text style={s.labelBtnNavigate}> เส้นทาง </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    : null
+                                }
+                            </View>
+                        </View>
                     </View>
+
             </Container>
         );
     }
@@ -137,65 +156,39 @@ MapScreenStepOne.navigationOptions = ({ navigation }) => ({
 });
 
 const s = StyleSheet.create({
+    containerAll: {
+        backgroundColor:"#FEF9E7"
+    },
     container: {
         flex: 1,
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#FEF9E7'
     },
     viewHeader: {
-        marginBottom: 0,
-        flexDirection: 'row',
+        width: '100%',
         backgroundColor: '#196F3D',
-        justifyContent: 'space-around'
-    },
-    ButtonsGroup: {
-        width: 190,
-        height: 45,
-        borderRadius: 5,
-        borderColor: '#F1C40F',
-        borderWidth: 1,
-        backgroundColor: '#196F3D',
-        flexDirection: 'row',
-        marginBottom: 5,
-        marginLeft: 5,
-        flex: 2,
-        justifyContent: 'center'
-    },
-    iconButtonsGroup: {
-        marginTop: 10,
-    },
-    labelButtonGroup: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginLeft: 15,
-        marginBottom: 7,
-        marginTop: 1,
-        color: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
     },
     buttonSearch: {
-        width: 150,
-        height: 45,
-        borderRadius: 5,
+        width: '50%',
+        borderRadius: 20,
         borderColor: '#F1C40F',
-        borderWidth: 1,
+        borderWidth: 2,
         backgroundColor: '#196F3D',
         flexDirection: 'row',
-        marginBottom: 5,
-        marginLeft: 5,
-        marginRight: 5,
-        flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginBottom: 10
     },
     iconButtonSearch: {
         marginTop: 10,
     },
     labelButtonSearch: {
-        fontSize: 14,
-        fontWeight: 'bold',
         marginLeft: 10,
         marginBottom: 7,
         marginTop: 10,
-        color: 'white'
     },
     btnNavigate: {
         width: '100%',
@@ -205,8 +198,7 @@ const s = StyleSheet.create({
         borderWidth: 1,
         backgroundColor: '#196F3D',
         flexDirection: 'row',
-        marginBottom: 10,
-        marginTop: 10,
+        marginBottom: 100,
         alignItems:'center'
     },
     iconBtnNavigate: {
@@ -221,6 +213,28 @@ const s = StyleSheet.create({
         marginBottom: 7,
         marginTop: 8,
         color: '#FEF9E7'
+    },
+    viewMap: {
+        height: '85%',
+        width: '100%',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginBottom: 20
+    },
+    titlePlantName: {
+        width: '100%',
+        height: 30,
+        alignItems: 'center',
+        flexDirection: 'column',
+        marginTop: 10
+    },
+    footerButton: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        position: 'absolute',
+        top: '20%'
     }
 });
 

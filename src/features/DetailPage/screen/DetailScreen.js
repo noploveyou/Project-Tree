@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Text, Tab, Tabs, TabHeading } from 'native-base';
-import { BackHandler, NetInfo} from 'react-native';
+import { Container, Tab, Tabs, TabHeading } from 'native-base';
+import {BackHandler, NetInfo, StyleSheet} from 'react-native';
+import { NavigationActions, StackActions } from "react-navigation";
 import Icon from "react-native-vector-icons/FontAwesome";
 import HeaderForm from "../../../common/components/HeaderForm";
 import CheckInternet from "../../../common/components/CheckNET";
@@ -10,37 +11,13 @@ import Detail from './tab/DetailTree';
 import Appearance from './tab/Appearance';
 import Location from './tab/Location';
 import Loading from '../../../common/components/Loading';
-import imagesRequire from "../../../common/ImagesRequire";
 import CommonText from '../../../common/components/CommonText';
-import { NavigationActions, StackActions } from "react-navigation";
 
 class DetailScreen extends Component {
-    constructor (props) {
-        super(props);
-        this.state = {
-            id: null,
-            name: null,
-            science: null,
-            familyName: null,
-            commonName: null,
-            species: null,
-            distribution: null,
-            extraction: null,
-            benefit: null,
-            benefity: null,
-            stem: null,
-            leaf: null,
-            flower: null,
-            round: null,
-            seed: null,
-            imgAll: []
-        }
-    }
-
     componentDidMount(){
         const { back, Tree } = this.props.navigation.state.params;
-        this.props.SetValue(Tree);
-        setTimeout(() => {this.props.FetchData();}, 200);
+        this.props.SetValue(Tree);  //ค่าที่จะส่งไปหาในฐานข้อมูล
+        this.props.FetchData();     //เชื่อมต่อฐานข้อมูล
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate(back));
@@ -48,92 +25,12 @@ class DetailScreen extends Component {
 
     componentWillUnmount() {
         this.backHandler.remove();
-        this.props.Reset([]);
+        this.props.Reset(null);
     }
-
-    get = () => {
-        let getId = "", getName= "", getScience= "", getFamilyName= "", getCommonName= "", getSpecies= "",
-            getDistribution= "", getExtraction= [], getBenefit= "", getBenefity= "", getStem = "", getLeaf = "",
-            getFlower = "", getRound = "", getSeed = "", getImgStem = null, getImgLeaf = null, getImgFlower = null,
-            getImgRound = null, getImgSeed = null;
-
-        this.props.DataSource.map(function (item){
-            return [
-                getId = item.plantID,
-                getName = item.plantName,
-                getScience = item.plantScience,
-                getFamilyName = item.plantFamilyName,
-                getCommonName = item.plantCommonname,
-                getSpecies = item.plantSpecies,
-                getDistribution = item.plantDistribution,
-                getExtraction.push(item.extractionName),
-                getBenefit = item.plantbenefit,
-                getBenefity = item.plantbenefity,
-                getStem = item.plantStem,
-                getLeaf = item.plantLeaf,
-                getFlower = item.plantFlower,
-                getRound = item.plantRound,
-                getSeed = item.plantSeed,
-                getImgStem = item.imageFileStem,
-                getImgLeaf = item.imageFileLeaf,
-                getImgFlower = item.imageFileFlower,
-                getImgRound = item.imageFileRound,
-                getImgSeed = item.imageFileSeed
-            ];
-        });
-        this.setState({
-            id: getId,
-            name: getName,
-            science: getScience,
-            familyName: getFamilyName,
-            commonName: getCommonName,
-            species: getSpecies,
-            distribution: getDistribution,
-            extraction: getExtraction,
-            benefit: getBenefit,
-            benefity: getBenefity,
-            stem: getStem,
-            leaf: getLeaf,
-            flower: getFlower,
-            round: getRound,
-            seed: getSeed
-        });
-
-        if(getImgStem != null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgStem]]
-            }))
-        }
-        if(getImgLeaf != null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgLeaf]]
-            }))
-        }
-        if(getImgFlower != null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgFlower]]
-            }))
-        }
-        if(getImgRound != null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgRound]]
-            }))
-        }
-        if(getImgSeed != null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgSeed]]
-            }))
-        }
-        if(getImgStem == null && getImgLeaf == null && getImgFlower == null && getImgRound == null
-            && getImgSeed == null){
-            this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire["null"]]
-            }))
-        }
-    };
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
+            CheckInternet();
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }else if(this.props.CheckData == false){
             return  <Loading />
@@ -145,48 +42,30 @@ class DetailScreen extends Component {
                     <Tabs >
                         <Tab
                             heading={
-                                <TabHeading style={{backgroundColor: "#196F3D"}}>
-                                        <Icon name="pagelines" style={{marginRight: 5, marginTop: 3}} size={20} color={'white'}/>
+                                <TabHeading style={styles.tab}>
+                                        <Icon name="pagelines" style={styles.iconTab} size={20} color={'white'}/>
                                         <CommonText text={'รายละเอียด'} size={16} color={'white'}  />
                                 </TabHeading>
                             }
                         >
-                            <Detail
-                                id={this.state.id}
-                                name={this.state.name}
-                                science={this.state.science}
-                                familyName={this.state.familyName}
-                                commonName={this.state.commonName}
-                                species={this.state.species}
-                                distribution={this.state.distribution}
-                                extraction={this.state.extraction}
-                                benefit={this.state.benefit}
-                                benefity={this.state.benefity}
-                            />
+                            <Detail />
                         </Tab>
                         <Tab
                             heading={
-                                <TabHeading style={{backgroundColor: "#196F3D"}}>
-                                        <Icon name="envira" style={{marginRight: 5, marginTop: 3}} size={20} color={'white'}/>
+                                <TabHeading style={styles.tab}>
+                                        <Icon name="envira" style={styles.iconTab} size={20} color={'white'}/>
                                     <CommonText text={'ลักษณะ'} size={16} color={'white'}  />
                                 </TabHeading>
                             }
                         >
-                            <Appearance
-                                stem={this.state.stem}
-                                leaf={this.state.leaf}
-                                flower={this.state.flower}
-                                round={this.state.round}
-                                seed={this.state.seed}
-                                imgAll={this.state.imgAll}
-                            />
+                            <Appearance />
                         </Tab>
                         {
                             back=="SelectedMap" ? null :
                                 <Tab
                                     heading={
-                                        <TabHeading style={{backgroundColor: "#196F3D"}}>
-                                            <Icon name="map-marker" style={{marginRight: 5, marginTop: 3}} size={20} color={'white'}/>
+                                        <TabHeading style={styles.tab}>
+                                            <Icon name="map-marker" style={styles.iconTab} size={20} color={'white'}/>
                                             <CommonText text={'สถานที่พบ'} size={16} color={'white'}  />
                                         </TabHeading>
                                     }
@@ -202,16 +81,20 @@ class DetailScreen extends Component {
 
 DetailScreen.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm
-        btn={() => navigation.dispatch(StackActions.reset({
-                index: 0,
-                actions: [
-                    NavigationActions.navigate({routeName: navigation.getParam('back'), params: { back: "SearchListMap" }})
-                ],
-            })
-        )}
+        btn={() => navigation.navigate({routeName: navigation.getParam('back') ,params: { back: "SearchListMap" }})}
         iconName={'arrow-left'}
         titlePage={'รายละเอียดพรรณไม้'}
     />
+});
+
+const styles = StyleSheet.create({
+    iconTab: {
+        marginRight: 5,
+        marginTop: 3
+    },
+    tab: {
+        backgroundColor: "#196F3D"
+    }
 });
 
 export default connect(

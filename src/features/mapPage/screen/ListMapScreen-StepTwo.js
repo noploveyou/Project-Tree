@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import { Container, Icon, Content, View, Item } from 'native-base';
-import { FlatList, BackHandler, NetInfo, Keyboard, TextInput } from 'react-native';
-import HeaderForm from '../../../common/components/HeaderForm';
+import { Container, Content, View, Item } from 'native-base';
 import { connect } from "react-redux";
-//import ListItem from '../components/ListItem';
+import { FlatList, BackHandler, NetInfo, Keyboard, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import HeaderForm from '../../../common/components/HeaderForm';
+import {NavigationActions, StackActions} from "react-navigation";
 import NoInternetScreen from  '../../../common/components/NoInternetScreen';
 import CheckInternet from "../../../common/components/CheckNET";
 import Loading from '../../../common/components/Loading';
-import {NavigationActions, StackActions} from "react-navigation";
 import ListItem from '../components/ListItem';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 class ListMapScreenStepTwo extends Component {
     componentDidMount(){
-        this.props.FetchDataListMap();
         this.props.SetSearchListMap('');
+        this.props.FetchDataListMap();
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate('Map'));     // เมื่อกดปุ่มย้อนกลับ (ของโทรศัพท์)
@@ -30,8 +30,7 @@ class ListMapScreenStepTwo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: '',
-            selected: (new Map()),
+            valueInput: '',
             isLoading: true,
         };
     }
@@ -40,31 +39,18 @@ class ListMapScreenStepTwo extends Component {
         this.refs['SearchInput'].blur();
     };
 
-    _keyExtractor = (item ) => item.areaID;
+    _keyExtractor = (item ) => item.plantID;
 
      _onPressItem = (value) => {
-         this.props.SetSearchListMap("");
          this.props.SetKeySearch(value);
-         this.setState({text: ""});
          this.keyboardDidHideListener.remove();
          // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
-         this.props.navigation.dispatch(
-             StackActions.reset({
-                 index: 0,
-                 actions: [
-                     NavigationActions.navigate({
-                         routeName: 'SelectedMap',
-                         params: { back: "SearchListMap" },
-                     }),
-                 ],
-             })
-         );
+         this.props.navigation.navigate('SelectedMap');
     };
 
     _renderItem = ({item}) => {
         return (
             <ListItem
-                //id={item.plantID}
                 labelTreeNameTH={item.plantName}
                 labelTreeNameEN={item.plantScience}
                 onPressItem={() => this._onPressItem(item.plantName)}
@@ -74,49 +60,50 @@ class ListMapScreenStepTwo extends Component {
     };
 
     Search(value){
-        this.setState({text: value});
+        this.setState({valueInput: value});
         this.props.SetSearchListMap(value);
         this.props.FetchDataListMap();
     }
 
     clearText(){
-        this.setState({text:''});
+        this.setState({valueInput:''});
         this.componentDidMount();
+        this.Search('');
     }
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
+            CheckInternet();
             return <NoInternetScreen />     // แสดงหน้า Screen NoInternet
         }else if(this.props.DataList == null){    // หากปิด Internet
             return <Loading />     // แสดงหน้า Screen NoInternet
         }
-        //console.warn(this.props.DataList);
-        //console.warn(this.props.navigation.getParam('back'));
 
         return (
             <Container>
                 <Item>
                     <TextInput
-                        style={{flex: 1,flexDirection: 'row',justifyContent: 'center', fontSize: 18}}
+                        style={styles.input}
+                        underlineColorAndroid='transparent'
                         ref="SearchInput"
-                        placeholder= "Search In Here"
+                        placeholder= "กรุณากรอกชื่อพรรณไม้"
                         placeholderTextColor = '#D5D8DC'
                         returnKeyType={"done"}
                         onChangeText={(value) => {this.Search(value)}}
-                        value={this.state.text}
+                        value={this.state.valueInput}
                         onBlur={() => this._keyboardDidHide}
                     />
-                    <View>
-                        <Icon name='close' style={{fontSize: 25, color: 'red',marginRight: 15}}
-                              onPress={() => {this.clearText()}}
-                        />
-                    </View>
+                    <TouchableOpacity onPress={() => this.clearText()} style={styles.btnClear}>
+                        <Icon name={'close'} size={22} style={{color: 'red'}}/>
+                    </TouchableOpacity>
                 </Item>
-                <Content style={{backgroundColor: '#F1C40F'}}>
+                <Content style={styles.container}>
                     <FlatList
                         data={this.props.DataList}
                         keyExtractor={this._keyExtractor}
                         renderItem={this._renderItem}
+                        initialNumToRender={10}
+                        maxToRenderPerBatch={10}
                     />
                 </Content>
             </Container>
@@ -127,16 +114,32 @@ class ListMapScreenStepTwo extends Component {
 ListMapScreenStepTwo.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm
         btn={() =>
-            navigation.dispatch(StackActions.reset({
-                    index: 0,
-                    actions: [
-                        NavigationActions.navigate({routeName: navigation.getParam('back')})
-                    ],
-                })
-            )
+            navigation.navigate({routeName: navigation.getParam('back')})
         }
         iconName={'arrow-left'}
         titlePage={'ค้นหาตำแหน่งพรรณไม้'} />
+});
+
+const styles = StyleSheet.create({
+    input: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        fontSize: 18,
+        marginLeft: 5
+    },
+    btnClear: {
+        height:50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingRight: 10,
+        paddingLeft: 10,
+        backgroundColor: 'white'
+    },
+    container: {
+        backgroundColor: '#F1C40F'
+    }
 });
 
 export default connect(
