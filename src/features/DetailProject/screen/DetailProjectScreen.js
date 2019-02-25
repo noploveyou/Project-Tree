@@ -7,7 +7,7 @@ import NoInternetScreen from '../../../common/components/NoInternetScreen';
 import CheckExitApp from '../../../common/components/CheckExitApp';
 import CommonText from '../../../common/components/CommonText';
 import DetailProject from  '../components/DetailProject';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 class DetailProjectScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
@@ -55,7 +55,7 @@ class DetailProjectScreen extends Component {
                                size={16} style={styles.detailAboutProject}
                            />
                        </View>
-                       <View style={[styles.label, {top: -30}]}>}>
+                       <View style={[styles.label, {top: -30}]}>
                            <CommonText
                                text={DetailProject['TitleProvider']}
                                size={17}
