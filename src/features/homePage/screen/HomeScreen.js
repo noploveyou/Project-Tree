@@ -74,33 +74,19 @@ class HomeScreen extends Component {
     }
 
     ToDetail = (value) => {
-        this.props.navigation.dispatch(
-            StackActions.reset({
-                index: 0,
-                actions: [
-                    NavigationActions.navigate({
+        this.props.navigation.navigate({
                         routeName: 'Detail',
                         params: { back: "Home", Tree : value },
-                    }),
-                ],
-            })
-        );
+                    })
     };
 
     NavToDetail = () =>{     // ปุ่มค้นหา
         if((this.props.CheckData)){
             // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
-            this.props.navigation.dispatch(
-                StackActions.reset({
-                    index: 0,
-                    actions: [
-                        NavigationActions.navigate({
+            this.props.navigation.navigate({
                             routeName: 'Detail',
                             params: { back: "Home", Tree : this.state.ValueInput },
-                        }),
-                    ],
-                })
-            );
+                        })
         }else {
             if (this.state.InputIsEmpty){    // เช็คค่า Input ว่างหรือไม่
                 Alert.alert(

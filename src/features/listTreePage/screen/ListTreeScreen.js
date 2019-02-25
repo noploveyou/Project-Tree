@@ -41,18 +41,10 @@ class ListTreeScreen extends Component {
     _onPressItem = (value) => {
         // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
         this.keyboardDidHideListener.remove();
-        this.props.navigation.dispatch(
-            StackActions.reset({
-                index: 0,
-                actions: [
-                    NavigationActions.navigate({
+        this.props.navigation.navigate({
                         routeName: 'Detail',
                         params: { back: "ListTree", Tree : value },
-                    }),
-                ],
-            })
-        );
-        this.setState({valueInput:''});
+                    });
     };
 
     _renderItem = ({item}) => {

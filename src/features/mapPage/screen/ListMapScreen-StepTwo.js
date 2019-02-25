@@ -42,21 +42,10 @@ class ListMapScreenStepTwo extends Component {
     _keyExtractor = (item ) => item.plantID;
 
      _onPressItem = (value) => {
-         this.props.SetSearchListMap("");
          this.props.SetKeySearch(value);
-         this.setState({valueInput: ""});
          this.keyboardDidHideListener.remove();
          // เปิดหน้าใหม่พร้อมกับปิดหน้าที่เคยเปิดอยู่
-         this.props.navigation.dispatch(
-             StackActions.reset({
-                 index: 0,
-                 actions: [
-                     NavigationActions.navigate({
-                         routeName: 'SelectedMap'
-                     }),
-                 ],
-             })
-         );
+         this.props.navigation.navigate('SelectedMap');
     };
 
     _renderItem = ({item}) => {
@@ -125,13 +114,7 @@ class ListMapScreenStepTwo extends Component {
 ListMapScreenStepTwo.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm
         btn={() =>
-            navigation.dispatch(StackActions.reset({
-                    index: 0,
-                    actions: [
-                        NavigationActions.navigate({routeName: navigation.getParam('back')})
-                    ],
-                })
-            )
+            navigation.navigate({routeName: navigation.getParam('back')})
         }
         iconName={'arrow-left'}
         titlePage={'ค้นหาตำแหน่งพรรณไม้'} />

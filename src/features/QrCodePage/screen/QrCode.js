@@ -9,6 +9,7 @@ import CheckExitApp from '../../../common/components/CheckExitApp';
 import CheckInternet from '../../../common/components/CheckNET';
 import CommonText from '../../../common/components/CommonText';
 import NoInternetScreen from '../../../common/components/NoInternetScreen';
+import NoCamera from '../components/NoCamera';
 
 class QrCode extends Component {
     constructor() {
@@ -88,6 +89,7 @@ class QrCode extends Component {
                 onRead={this.onSuccess} //เมื่ออ่านค่าเสร็จ
                 cameraStyle={{height: this.state.screenHeight, width: this.state.screenWidth}}
                 showMarker={true} //ให้แสดงกรอบ4เหลี่ยม
+                notAuthorizedView={<NoCamera />}
                 customMarker={
                     <View style={{height: this.state.screenHeight+150, width: this.state.screenWidth}}>
                         <View style={{position: 'absolute', height: this.state.screenHeight, width: this.state.screenWidth, justifyContent: 'space-between', flexDirection: 'column'}}>

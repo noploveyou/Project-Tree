@@ -147,6 +147,10 @@ class MapScreenStepThree extends PureComponent {
                     </View>
                     :
                     <View style={s.container}>
+                        <View style={s.titlePlantName}>
+                            <CommonText text={this.props.GetTree} size={25} textTitle={true} />
+                            <CommonText text={`จำนวนที่พบ  `+this.props.DataMarker.length+`  ต้น`} size={18} weight={'300'}/>
+                        </View>
                         <View style={s.viewMap}>
                             <GoogleMAP
                                 hackScale={{width: this.state.MapWidth, height: this.state.MapHeight}}
@@ -169,17 +173,7 @@ class MapScreenStepThree extends PureComponent {
                                     style={{width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
                                     <ButtonFooterStepThree
                                         buttonDetail={() =>
-                                            this.props.navigation.dispatch(
-                                                StackActions.reset({
-                                                    index: 0,
-                                                    actions: [
-                                                        NavigationActions.navigate({
-                                                            routeName: 'Detail',
-                                                            params: {back: "SelectedMap", Tree: this.props.GetTree},
-                                                        }),
-                                                    ],
-                                                })
-                                            )
+                                            this.props.navigation.navigate({routeName: "Detail",params: { back: "SelectedMap",Tree: this.props.GetTree }})
                                         }
                                         buttonNavigate={() => this.handleGetDirections()}
                                         buttonNavigateNear={() => this.CheckGPS(true)}
@@ -187,7 +181,7 @@ class MapScreenStepThree extends PureComponent {
                                 </View>
                                 :
                                 <View
-                                    style={{width: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
+                                    style={{width: '100%', justifyContent: 'flex-end', alignItems: 'center', marginBottom: 10}}>
                                     <ButtonFooterStepThree
                                         ButtonFooter={false}
                                         DisableButtonDetail={true}
@@ -205,15 +199,7 @@ class MapScreenStepThree extends PureComponent {
 MapScreenStepThree.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm
         btn={() =>
-            navigation.dispatch(StackActions.reset({
-                    index: 0,
-                    actions: [
-                        NavigationActions.navigate({
-                            routeName: 'SearchListMap',
-                            params: { back: "Map" }})
-                    ],
-                })
-            )
+            navigation.navigate({routeName: "SearchListMap",params: { back: "Map" }})
         }
         iconName={'arrow-left'}
         titlePage={'แผนที่พรรณไม้'}
@@ -224,7 +210,8 @@ const s = StyleSheet.create({
     container: {
         justifyContent: 'flex-end',
         alignItems: 'center',
-        flex: 1
+        flex: 1,
+        backgroundColor: '#FEF9E7'
     },
     noLocation: {
         flex: 1,
@@ -233,12 +220,19 @@ const s = StyleSheet.create({
         backgroundColor: '#FEF9E7'
     },
     viewMap: {
-        height: '95%',
+        height: '80%',
         width: '100%',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        top: 50
-    }
+        top: 15
+    },
+    titlePlantName: {
+        width: '100%',
+        height: 30,
+        top: -15,
+        alignItems: 'center',
+        flexDirection: 'column'
+    },
 });
 
 export default connect(

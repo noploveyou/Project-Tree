@@ -81,16 +81,7 @@ class DetailScreen extends Component {
 
 DetailScreen.navigationOptions = ({ navigation }) => ({
     header: <HeaderForm
-        btn={() => navigation.dispatch(StackActions.reset({
-                index: 0,
-                actions: [
-                    NavigationActions.navigate({
-                        routeName: navigation.getParam('back'),
-                        params: { back: "SearchListMap"
-                    }})
-                ],
-            })
-        )}
+        btn={() => navigation.navigate({routeName: navigation.getParam('back') ,params: { back: "SearchListMap" }})}
         iconName={'arrow-left'}
         titlePage={'รายละเอียดพรรณไม้'}
     />

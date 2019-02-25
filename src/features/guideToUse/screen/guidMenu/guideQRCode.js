@@ -65,7 +65,7 @@ class guideQRCode extends Component {
                             style={styles.label}
                         />
                         <CommonText
-                            text={'     ผู้ใช้จะต้องยินยอม อนุญาตให้เปิดใช้งานกล้อง จึงจะสามารถใช้งานเมนูนี้ได้'}
+                            text={'     ผู้ใช้จะต้องยินยอม อนุมัติให้เปิดใช้งานกล้อง จึงจะสามารถใช้งานเมนูนี้ได้'}
                             size={16}
                             weight={'400'}
                             color={'red'}

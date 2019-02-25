@@ -280,6 +280,7 @@ const imagesRequire = {
     '1091.jpg': require('../../public/assets/palntImages/chumhedted/1091.jpg'),
     '1092.jpg': require('../../public/assets/palntImages/donya/1092.jpg'),
     '1093.jpg': require('../../public/assets/palntImages/hookrajong/1093.jpg'),
+
 };
 
 export default imagesRequire;

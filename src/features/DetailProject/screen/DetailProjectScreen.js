@@ -7,9 +7,11 @@ import NoInternetScreen from '../../../common/components/NoInternetScreen';
 import CheckExitApp from '../../../common/components/CheckExitApp';
 import CommonText from '../../../common/components/CommonText';
 import DetailProject from  '../components/DetailProject';
+import {connect} from "react-redux";
 
 class DetailProjectScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
+        this.props.FetchDataMap();
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => [this.props.navigation.navigate('DetailProject'), CheckExitApp()]);
@@ -49,7 +51,8 @@ class DetailProjectScreen extends Component {
                                style={styles.titleDetailAbout}
                            />
                            <CommonText
-                               text={DetailProject['DetailAboutProject']}
+                               text={DetailProject['DetailAboutProject']+
+                               this.props.DataMarker.length + DetailProject['countTrees']}
                                size={16} style={styles.detailAboutProject}
                            />
                        </View>
@@ -116,5 +119,12 @@ const styles = StyleSheet.create({
     }
 });
 
-export default DetailProjectScreen;
+export default connect(
+    (state) => ({
+        DataMarker : state.DataMapScreen.DataMarkStepOne
+    }),
+    (dispatch) => ({
+        FetchDataMap : (value) => {dispatch({type: "CALL_DATA_STEP_ONE", payload: value})}
+    })
+)(DetailProjectScreen);
 
