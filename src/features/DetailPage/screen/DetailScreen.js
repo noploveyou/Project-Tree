@@ -18,6 +18,7 @@ class DetailScreen extends Component {
         const { back, Tree } = this.props.navigation.state.params;
         this.props.SetValue(Tree);  //ค่าที่จะส่งไปหาในฐานข้อมูล
         this.props.FetchData();     //เชื่อมต่อฐานข้อมูล
+        setTimeout(()=> {this.renderScienceName();}, 500);
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
         this.backHandler = BackHandler.addEventListener('hardwareBackPress',
             () => this.props.navigation.navigate(back));
@@ -27,6 +28,28 @@ class DetailScreen extends Component {
         this.backHandler.remove();
         this.props.Reset(null);
     }
+
+    constructor (props) {
+        super(props);
+        this.state = {
+            singleLine: null
+        }
+    }
+
+    renderScienceName = () => { //คำนวณจำนวนตัวอักษรเพื่อเว้นบรรทัด
+        let count = 0;
+
+        try {
+            if(this.props.DataSource != null){
+                if(this.props.DataSource[0].plantDiscoverer){
+                    count = this.props.DataSource[0].plantDiscoverer.length;
+                }
+            }
+        }catch (e) {
+            alert("กรุณาลองใหม่อีกครั้ง")
+        }
+        count >= 7 ? this.props.Check(false) : this.props.Check(true);
+    };
 
     render() {
         if(this.props.NET == false){    // หากปิด Internet
@@ -107,6 +130,7 @@ export default connect(
     (dispatch) => ({
         FetchData: (value) => {dispatch({type: "CALL_DATA_DETAIL", payload: value})},
         SetValue: (value) => {dispatch({type: "SET_VALUE_DETAIL", payload: value})},
-        Reset: (value) => {dispatch({type: "ADD_DATA_DETAIL", payload: value})}
+        Reset: (value) => {dispatch({type: "ADD_DATA_DETAIL", payload: value})},
+        Check: (value) => {dispatch({type: "CHECK_SCIENCE_NAME_DATA_DETAIL", payload: value})}
     })
 )(DetailScreen);

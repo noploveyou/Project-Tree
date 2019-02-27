@@ -17,7 +17,7 @@ const ShowLabelDetail = (props) => {
                         />
                         <CommonText
                             text={props.scienceName == null ? `` : props.scienceName}
-                            style={[styles.label]}
+                            style={[props.singleLineScienceName ? styles.label : styles.labelMulti ]}
                             color={"#196F3D"}
                         />
                     </View>
@@ -78,6 +78,10 @@ const styles = StyleSheet.create({
     },
     label: {
         marginTop: 5,
+        marginLeft: 10,
+        alignItems: "flex-start"
+    },
+    labelMulti: {
         marginLeft: 10,
         alignItems: "flex-start"
     },

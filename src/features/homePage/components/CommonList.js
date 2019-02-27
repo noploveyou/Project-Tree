@@ -16,13 +16,14 @@ class CommonList extends React.PureComponent {
                         size={17}
                         weight={'500'}
                     />
-                    <View style={{flexDirection: 'row', width: '80%'}}>
+                    <View style={{flexDirection: 'row', top: -5}}>
                         <CommonText
                             text={this.props.labelEN}
                             lines={1}
+                            size={14}
                             weight={'400'}
                             color={'gray'}
-                            style={{top: -5, fontStyle: 'italic'}}
+                            style={{fontStyle: 'italic'}}
                         />
                         <CommonText
                             text={this.props.labelDs == null ? "": ' '+this.props.labelDs}
@@ -30,7 +31,7 @@ class CommonList extends React.PureComponent {
                             size={14}
                             weight={'400'}
                             color={'gray'}
-                            style={{top: -5, width: '45%'}}
+                            style={{width: '35%'}}
                         />
                     </View>
                 </TouchableOpacity>

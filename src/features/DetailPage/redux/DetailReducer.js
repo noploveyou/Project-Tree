@@ -1,5 +1,5 @@
 const DetailReducer = (state={DataSource: [], Search: "", CheckData: false,
-    DataLocationSource: [], CheckLocationData: false}, action) => {
+    DataLocationSource: [], CheckLocationData: false, ScienceMultiLine: false}, action) => {
 
     switch (action.type){
         case "SET_VALUE_DETAIL" : {
@@ -38,6 +38,14 @@ const DetailReducer = (state={DataSource: [], Search: "", CheckData: false,
             state = {
                 ...state,
                 CheckLocationData: action.payload,
+            }
+        }
+            break;
+
+        case "CHECK_SCIENCE_NAME_DATA_DETAIL" : {
+            state = {
+                ...state,
+                ScienceMultiLine: action.payload,
             }
         }
             break;

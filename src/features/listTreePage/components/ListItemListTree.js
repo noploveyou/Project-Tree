@@ -33,7 +33,7 @@ class ListItemListTree extends React.PureComponent {
                     <View style={{marginLeft: 10, marginBottom: 10}}>
                         <Thumbnail source={images[this.props.image]} />
                     </View>
-                    <View style={{marginLeft: 10, marginTop: 5, width: '75%'}}>
+                    <View style={{marginLeft: 10, marginTop: 5, width: '70%'}}>
                         <CommonText text={this.props.labelTreeNameTH} size={18} weight={'600'} />
                         <View style={{flexDirection: 'row'}}>
                             <CommonText
@@ -48,7 +48,7 @@ class ListItemListTree extends React.PureComponent {
                                 text={this.props.plantDiscoverer == null ? '':' '+this.props.plantDiscoverer}
                                 size={16}
                                 color={'gray'}
-                                style={{width: '45%'}}
+                                style={{width: '30%'}}
                             />
                         </View>
                     </View>
