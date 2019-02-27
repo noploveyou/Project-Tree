@@ -1,6 +1,7 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import {Text, TouchableOpacity} from "react-native";
 import { View } from "native-base";
+import PropTypes from "prop-types";
 import CommonText from "../../../common/components/CommonText";
 
 class CommonList extends React.PureComponent {
@@ -15,18 +16,38 @@ class CommonList extends React.PureComponent {
                         size={17}
                         weight={'500'}
                     />
-                    <CommonText
-                        text={this.props.labelEN}
-                        size={14}
-                        weight={'400'}
-                        color={'gray'}
-                        style={{top: -5, fontStyle: 'italic'}}
-                    />
+                    <View style={{flexDirection: 'row', width: '80%'}}>
+                        <CommonText
+                            text={this.props.labelEN}
+                            lines={1}
+                            weight={'400'}
+                            color={'gray'}
+                            style={{top: -5, fontStyle: 'italic'}}
+                        />
+                        <CommonText
+                            text={this.props.labelDs == null ? "": ' '+this.props.labelDs}
+                            lines={1}
+                            size={14}
+                            weight={'400'}
+                            color={'gray'}
+                            style={{top: -5, width: '45%'}}
+                        />
+                    </View>
                 </TouchableOpacity>
             </View>
 
         );
     }
 }
+
+CommonList.propTypes = {
+    labelTH: PropTypes.string,
+    labelEN: PropTypes.string,
+    labelDs: PropTypes.string,
+};
+
+CommonList.defaultProps = {
+    labelDs: '',
+};
 
 export default CommonList;

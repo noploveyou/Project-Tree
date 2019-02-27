@@ -10,15 +10,17 @@ class DetailTree extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            extraction: null
+            extraction: null,
+            singleLine: null
         }
     }
 
     componentDidMount(){
         if(this.props.DataSource == null){
-            setTimeout(() => {this.get();}, 50);
+            setTimeout(() => {this.get();this.renderScienceName();}, 50);
         }else {
-            this.get()
+            this.get();
+            this.renderScienceName()
         }
     }
 
@@ -33,6 +35,20 @@ class DetailTree extends Component {
             setTimeout(() => {this.get();}, 50);
         }
         this.setState({extraction: getExtraction});
+    };
+
+    renderScienceName = () => { //คำนวณจำนวนตัวอักษรเพื่อเว้นบรรทัด
+        let count1 = 0, count2 =0, sum;
+
+        if(this.props.DataSource != null){
+            if(this.props.DataSource[0].plantDiscoverer){
+                count1 = this.props.DataSource[0].plantScience.length;
+                count2 = this.props.DataSource[0].plantDiscoverer.length;
+            }
+        }
+        sum = count1 + count2;
+        sum >= 40 ? this.setState({singleLine: false}) : this.setState({singleLine: true});
+
     };
 
     render() {
@@ -54,7 +70,10 @@ class DetailTree extends Component {
                         <ShowLabelDetail
                             title={"ชื่อวิทยาศาสตร์"}
                             result={this.props.DataSource[0].plantScience}
-                            styleText={{fontStyle: 'italic'}} />
+                            scienceName={this.props.DataSource[0].plantDiscoverer}
+                            haveScienceName={true}
+                            singleLineScienceName={this.state.singleLine}
+                        />
                         <ShowLabelDetail title={"ชื่อวงศ์"} result={this.props.DataSource[0].plantFamilyName} />
                         <ShowLabelDetail title={"ชื่อสามัญ"} result={this.props.DataSource[0].plantCommonname} />
                     </View>

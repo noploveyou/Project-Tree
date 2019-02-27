@@ -53,6 +53,7 @@ class ListMapScreenStepTwo extends Component {
             <ListItem
                 labelTreeNameTH={item.plantName}
                 labelTreeNameEN={item.plantScience}
+                plantDiscoverer={item.plantDiscoverer}
                 onPressItem={() => this._onPressItem(item.plantName)}
                 icons={item.plantIcon}
             />

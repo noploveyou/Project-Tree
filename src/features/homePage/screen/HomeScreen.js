@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Thumbnail, Text, Content } from 'native-base';
 import { View, TouchableOpacity, StyleSheet, Keyboard, Alert, NetInfo, BackHandler } from 'react-native';
-import { NavigationActions, StackActions } from "react-navigation";
 import Autocomplete from 'react-native-autocomplete-input';
 import CommonList from '../components/CommonList';
 import HeaderForm from '../../../common/components/HeaderForm';
@@ -167,12 +166,13 @@ class HomeScreen extends Component {
                                 hideResults={this.state.DisableListResults}     // true = ปิด - false = เปิด List
                                 listContainerStyle={s.CustomListSuggest}        // Custom List
                                 inputContainerStyle={s.inputContainer}          //Custom Input
-                                renderItem={({plantName, plantScience}) => (
+                                renderItem={({plantName, plantScience, plantDiscoverer}) => (
                                     <CommonList
                                         onPress={() => this.ToDetail(plantName)}
                                         style={s.labelListSuggest}
                                         labelTH={plantName}
                                         labelEN={plantScience}
+                                        labelDs={plantDiscoverer}
                                     />
                                 )}
                             />
