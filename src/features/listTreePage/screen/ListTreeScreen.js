@@ -53,6 +53,7 @@ class ListTreeScreen extends Component {
                 id={item.plantID}
                 labelTreeNameTH={item.plantName}    //ชื่อพรรณไม้
                 labelTreeNameEN={item.plantScience} //ชื่อวิทยาศาสตร์พรรณไม้
+                plantDiscoverer={item.plantDiscoverer}
                 onPressItem={() => this._onPressItem(item.plantName)} //action เมื่อกดที่รายชื่อ
                 image={item.imageFileAll} //imageFileAll ภาพพรรณไม้
             />

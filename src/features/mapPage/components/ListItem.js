@@ -40,27 +40,24 @@ class ListItem extends React.PureComponent {
                     <View style={{marginLeft: 10, marginBottom: 10}}>
                         <Thumbnail source={icons[this.props.icons]} />
                     </View>
-                    <View style={{
-                            marginLeft: 10,
-                            marginTop: 5,
-                            borderLeftWidth: 0.3,
-                            borderLeftColor: 'gray',
-                            paddingLeft: 10,
-                            width: '75%'
-                        }}>
-                        <CommonText
-                            text={this.props.labelTreeNameTH}
-                            size={18}
-                            weight={'600'}
-                            style={{marginLeft: 5}}
-                        />
-                        <CommonText
-                            text={this.props.labelTreeNameEN}
-                            size={16}
-                            style={{marginLeft: 5, fontStyle: 'italic'}}
-                            lines={1}
-                            color={'gray'}
-                        />
+                    <View style={{marginLeft: 10, marginTop: 5, width: '70%'}}>
+                        <CommonText text={this.props.labelTreeNameTH} size={18} weight={'600'} />
+                        <View style={{flexDirection: 'row'}}>
+                            <CommonText
+                                text={this.props.labelTreeNameEN}
+                                size={16}
+                                lines={1}
+                                style={{fontStyle: 'italic'}}
+                                color={'gray'}
+                            />
+                            <CommonText
+                                lines={1}
+                                text={this.props.plantDiscoverer == null ? '':' '+this.props.plantDiscoverer}
+                                size={16}
+                                color={'gray'}
+                                style={{width: '30%'}}
+                            />
+                        </View>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -71,6 +68,7 @@ class ListItem extends React.PureComponent {
 ListItem.propTypes = {
     labelTreeNameTH: PropTypes.string,
     labelTreeNameEN: PropTypes.string,
+    plantDiscoverer: PropTypes.string,
     onPressItem: PropTypes.func,
     icons: PropTypes.string
 };
@@ -79,7 +77,8 @@ ListItem.defaultProps = {
     labelTreeNameTH: "",
     labelTreeNameEN: "",
     onPressItem: null,
-    icons: ""
+    icons: "",
+    plantDiscoverer: ''
 };
 
 export default ListItem;

@@ -18,7 +18,7 @@ class DetailTree extends Component {
         if(this.props.DataSource == null){
             setTimeout(() => {this.get();}, 50);
         }else {
-            this.get()
+            this.get();
         }
     }
 
@@ -34,6 +34,8 @@ class DetailTree extends Component {
         }
         this.setState({extraction: getExtraction});
     };
+
+
 
     render() {
         if(this.props.DataSource == null){
@@ -54,7 +56,10 @@ class DetailTree extends Component {
                         <ShowLabelDetail
                             title={"ชื่อวิทยาศาสตร์"}
                             result={this.props.DataSource[0].plantScience}
-                            styleText={{fontStyle: 'italic'}} />
+                            scienceName={this.props.DataSource[0].plantDiscoverer}
+                            haveScienceName={true}
+                            singleLineScienceName={this.props.ScienceLine}
+                        />
                         <ShowLabelDetail title={"ชื่อวงศ์"} result={this.props.DataSource[0].plantFamilyName} />
                         <ShowLabelDetail title={"ชื่อสามัญ"} result={this.props.DataSource[0].plantCommonname} />
                     </View>
@@ -96,6 +101,7 @@ const styles = StyleSheet.create({
 
 export default connect(
     (state) => ({
-        DataSource: state.DataDetailScreen.DataSource
+        DataSource: state.DataDetailScreen.DataSource,
+        ScienceLine: state.DataDetailScreen.ScienceMultiLine
     }), null
 )(DetailTree);
