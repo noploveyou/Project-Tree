@@ -7,7 +7,8 @@ $plantName = $TextPlantName['plantName'];
 $Check = $TextPlantName['check'];
 
 if($Check == "Like_HOMEPAGESCREEN"){    /* SearchInput In Page HomeScreen */
-    $sql = "SELECT * FROM plant WHERE plantName LIKE '%".$plantName."%' OR plant.plantScience LIKE '%".$plantName."%' ";
+    $sql = "SELECT plant.plantName, plant.plantID, plant.plantScience, plant.plantDiscoverer
+            FROM plant WHERE plantName LIKE '%".$plantName."%'";
     $result = $conn->query($sql);
 
     if($result->num_rows >0){
@@ -22,7 +23,7 @@ if($Check == "Like_HOMEPAGESCREEN"){    /* SearchInput In Page HomeScreen */
     $conn->close();
 
 }else if($Check == "IS_HOMEPAGESCREEN"){  /* CheckValueDatabase In Page HomeScreen */
-    $sql = "SELECT * FROM plant WHERE (plantName = '$plantName')";
+    $sql = "SELECT plant.plantName FROM plant WHERE plantName = '$plantName'";
     $result = $conn->query($sql);
 
     if($result->num_rows >0){
@@ -37,9 +38,11 @@ if($Check == "Like_HOMEPAGESCREEN"){    /* SearchInput In Page HomeScreen */
     $conn->close();
 
 }else if($Check == "LIKE_LIST_TREE_SCREEN"){     /* Page ListTreesScreen */
-    $sql = "SELECT plant.*, images.* FROM plant, images 
-            WHERE (plant.plantName LIKE '%".$plantName."%' OR plant.plantScience LIKE '%".$plantName."%')
-            AND images.plantID = plant.plantID";
+    $sql = "SELECT plant.plantName, plant.plantDiscoverer, plant.plantID , plant.plantScience ,
+                images.plantID , images.imageFileAll 
+            FROM plant 
+            LEFT JOIN images ON images.plantID = plant.plantID
+            WHERE plant.plantName LIKE '%".$plantName."%'";
     $result = $conn->query($sql);
 
     if($result->num_rows >0){
@@ -92,7 +95,7 @@ if($Check == "Like_HOMEPAGESCREEN"){    /* SearchInput In Page HomeScreen */
 
 }else if($Check == "MAPSCREEN_STEP_ONE"){      /* Page MapsScreen */
     $sql = "SELECT plant.plantID, plant.plantIcon , plant.plantName ,location.locationName, area.lx, area.ly
-            FROM area, plant, location WHERE lx != 0.0 AND ly != 0.0 AND plant.plantID = area.plantID 
+            FROM area, plant, location WHERE area.lx != 0.0 AND area.ly != 0.0 AND plant.plantID = area.plantID 
             AND location.locationID = area.locationID";
     $result = $conn -> query($sql);
 
@@ -108,9 +111,8 @@ if($Check == "Like_HOMEPAGESCREEN"){    /* SearchInput In Page HomeScreen */
     $conn->close();
 
 }else if($Check == "MAPSCREEN_STEP_TWO"){        /* Page ListMapScreen When Use Search Function */
-    $sql = "SELECT plant.plantID, plant.plantName, plant.plantScience ,plant.plantIcon
-                FROM plant WHERE (plant.plantName LIKE '%".$plantName."%' 
-                OR plant.plantScience LIKE '%".$plantName."%') ";
+    $sql = "SELECT plant.plantID, plant.plantName, plant.plantScience ,plant.plantIcon, plant.plantDiscoverer
+                FROM plant WHERE (plant.plantName LIKE '%".$plantName."%') ";
     $result = $conn->query($sql);
 
     if ($result->num_rows >0) {
