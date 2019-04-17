@@ -12,7 +12,7 @@ const CommonDeckSwiper = (props) =>{
             <View style={styles.viewDeckSwiper}>
                 <DeckSwiper
                     ref={(c) => this.deckSwiper = c}
-                    dataSource={props.dataSource}
+                    dataSource={props.LocalImageSource}
                     renderEmpty={() => renderEmpty()}
                     renderItem={(item) => renderItem(item)}
                 />
@@ -42,7 +42,10 @@ const renderItem = (item) => {
         <View style={styles.viewRenderCard}>
             <Card style={styles.renderCard}>
                 <CardItem cardBody>
-                    <Image style={styles.image} source={item} />
+                    <Image
+                        style={styles.image}
+                        source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/'+item}}
+                    />
                 </CardItem>
             </Card>
         </View>
@@ -50,7 +53,7 @@ const renderItem = (item) => {
 };
 
 CommonDeckSwiper.propTypes = {
-    dataSource: PropTypes.array.isRequired
+    LocalImageSource: PropTypes.array.isRequired
 };
 
 const styles = StyleSheet.create({

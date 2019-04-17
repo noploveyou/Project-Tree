@@ -157,7 +157,7 @@ DetailZoneScreen.navigationOptions = ({ navigation }) => ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F1C40F'
+        backgroundColor: '#ffdf66'
     },
     viewAll: {
         margin: 10

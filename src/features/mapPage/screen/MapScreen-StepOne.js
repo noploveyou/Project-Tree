@@ -175,7 +175,7 @@ const s = StyleSheet.create({
     buttonSearch: {
         width: '50%',
         borderRadius: 20,
-        borderColor: '#F1C40F',
+        borderColor: '#ffdf66',
         borderWidth: 2,
         backgroundColor: '#196F3D',
         flexDirection: 'row',
@@ -194,7 +194,7 @@ const s = StyleSheet.create({
         width: '100%',
         height: 60,
         borderRadius: 5,
-        borderColor: '#F1C40F',
+        borderColor: '#ffdf66',
         borderWidth: 1,
         backgroundColor: '#196F3D',
         flexDirection: 'row',

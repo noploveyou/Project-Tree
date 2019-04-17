@@ -2,7 +2,6 @@ import React from "react";
 import { TouchableOpacity, View } from 'react-native';
 import { Thumbnail } from 'native-base';
 import PropTypes from 'prop-types';
-import images from "../../../common/ImagesRequire";
 import CommonText from "../../../common/components/CommonText";
 
 class ListItemListTree extends React.PureComponent {
@@ -31,7 +30,9 @@ class ListItemListTree extends React.PureComponent {
                         }
                     }>
                     <View style={{marginLeft: 10, marginBottom: 10}}>
-                        <Thumbnail source={images[this.props.image]} />
+                        <Thumbnail
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/'+this.props.image}}
+                        />
                     </View>
                     <View style={{marginLeft: 10, marginTop: 5, width: '70%'}}>
                         <CommonText text={this.props.labelTreeNameTH} size={18} weight={'600'} />
@@ -63,14 +64,19 @@ ListItemListTree.propTypes = {
     labelTreeNameEN: PropTypes.string,
     plantDiscoverer: PropTypes.string,
     onPressItem: PropTypes.func,
-    image: PropTypes.string,
+    image: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.object,
+        PropTypes.array
+    ]),
 };
 
 ListItemListTree.defaultProps = {
     labelTreeNameTH: "",
     labelTreeNameEN: "",
     onPressItem: null,
-    image: 'null',
+    image: 'otherImage/NoImage.png',
     plantDiscoverer: ''
 };
 

@@ -6,7 +6,6 @@ import ShowLabelDetail from '../../components/ShowLabelDetail';
 import CommonDeckSwiper from  '../../components/DeckSwiper';
 import Loading from "../../../../common/components/Loading";
 import CommonText from "../../../../common/components/CommonText";
-import imagesRequire from "../../../../common/ImagesRequire";
 
 class Appearance  extends Component {
     constructor (props) {
@@ -21,12 +20,13 @@ class Appearance  extends Component {
     }
 
     get = () => {
-        let getImgStem = null, getImgLeaf = null, getImgFlower = null, getImgRound = null, getImgSeed = null,
+        let getPath = null ,getImgStem = null, getImgLeaf = null, getImgFlower = null, getImgRound = null, getImgSeed = null,
             getImgAll = null;
 
         try {
             this.props.DataSource.map(function (item){
                 return [
+                    getPath = item.pathIMG,
                     getImgStem = item.imageFileStem,
                     getImgLeaf = item.imageFileLeaf,
                     getImgFlower = item.imageFileFlower,
@@ -41,32 +41,32 @@ class Appearance  extends Component {
 
         if(getImgStem != null){
             this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgStem]]
+                imgAll: [...prevState.imgAll, getPath+getImgStem]
             }))
         }
         if(getImgLeaf != null){
             this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgLeaf]]
+                imgAll: [...prevState.imgAll, getPath+getImgLeaf]
             }))
         }
         if(getImgFlower != null){
             this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgFlower]]
+                imgAll: [...prevState.imgAll, getPath+getImgFlower]
             }))
         }
         if(getImgRound != null){
             this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgRound]]
+                imgAll: [...prevState.imgAll, getPath+getImgRound]
             }))
         }
         if(getImgSeed != null){
             this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgSeed]]
+                imgAll: [...prevState.imgAll, getPath+getImgSeed]
             }))
         }
         if(getImgAll != null){
             this.setState(prevState => ({
-                imgAll: [...prevState.imgAll, imagesRequire[getImgAll]]
+                imgAll: [...prevState.imgAll, getPath+getImgAll]
             }))
         }
         if(getImgStem == null && getImgLeaf == null && getImgFlower == null && getImgRound == null
@@ -87,7 +87,7 @@ class Appearance  extends Component {
                     <View style={styles.viewPicture}>
                         <CommonText text={this.props.DataSource[0].plantName} size={25} textTitle={true} />
                     </View>
-                    <CommonDeckSwiper dataSource={this.state.imgAll} />
+                    <CommonDeckSwiper LocalImageSource={this.state.imgAll} />
                     <View style={styles.background}>
                         <ShowLabelDetail title={"ลักษณะลำต้น"} result={this.props.DataSource[0].plantStem} newLine={true} />
                     </View>
@@ -111,7 +111,7 @@ class Appearance  extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#F1C40F",
+        backgroundColor: "#ffdf66",
         flex: 1
     },
     background: {

@@ -7,8 +7,6 @@ import NoInternetScreen from '../../../../common/components/NoInternetScreen';
 import CommonText from '../../../../common/components/CommonText';
 import { NavigationActions, StackActions } from "react-navigation";
 
-const Image1 = require('../../../../../public/assets/ImageGuide/guideAboutProject.jpg');
-
 class guideAboutProject extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
@@ -42,7 +40,11 @@ class guideAboutProject extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 350}]} source={Image1} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 350}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideAboutProject.jpg'}}
+                        />
                     </View>
 
                 </Content>
@@ -69,7 +71,7 @@ guideAboutProject.navigationOptions = ({ navigation }) => ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F1C40F'
+        backgroundColor: '#ffdf66'
     },
     viewAll: {
         alignItems: 'center',

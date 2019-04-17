@@ -84,7 +84,7 @@ class DetailTree extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#F1C40F"
+        backgroundColor: "#ffdf66"
     },
     background: {
         margin: 10,

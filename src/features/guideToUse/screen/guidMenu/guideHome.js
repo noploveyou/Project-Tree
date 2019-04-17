@@ -7,9 +7,6 @@ import NoInternetScreen from '../../../../common/components/NoInternetScreen';
 import CommonText from '../../../../common/components/CommonText';
 import { NavigationActions, StackActions } from "react-navigation";
 
-const Image1 = require('../../../../../public/assets/ImageGuide/guideHome1.jpg');
-const Image2 = require('../../../../../public/assets/ImageGuide/guideHome2.jpg');
-
 class guideHome extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
@@ -44,14 +41,22 @@ class guideHome extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 110}]} source={Image1} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 110}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideHome1.jpg'}}
+                        />
                         <CommonText
                             text={'     ขณะกรอกชื่อพรรณไม้ ระบบจะแสดงรายชื่อพรรณไม้ที่มีชื่อใกล้เคียงกับคำในช่องค้นหา\nดังภาพ'}
                             size={18}
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 250}]} source={Image2} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 250}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideHome2.jpg'}}
+                        />
                         <CommonText
                             text={'     หากต้องการลบรายชื่อพรรณไม้ที่กรอกในช่องค้นหาทั้งหมด\nกดปุ่ม x(กากบาท) ในช่องค้นหา\n\n'}
                             size={16}
@@ -111,7 +116,7 @@ guideHome.navigationOptions = ({ navigation }) => ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F1C40F'
+        backgroundColor: '#ffdf66'
     },
     viewAll: {
         alignItems: 'center',

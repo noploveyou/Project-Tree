@@ -39,7 +39,7 @@ if($Check == "Like_HOMEPAGESCREEN"){    /* SearchInput In Page HomeScreen */
 
 }else if($Check == "LIKE_LIST_TREE_SCREEN"){     /* Page ListTreesScreen */
     $sql = "SELECT plant.plantName, plant.plantDiscoverer, plant.plantID , plant.plantScience ,
-                images.plantID , images.imageFileAll 
+                images.plantID, images.imageFileAll ,images.pathIMG
             FROM plant 
             LEFT JOIN images ON images.plantID = plant.plantID
             WHERE plant.plantName LIKE '%".$plantName."%'";

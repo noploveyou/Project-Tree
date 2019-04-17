@@ -55,7 +55,7 @@ class ListTreeScreen extends Component {
                 labelTreeNameEN={item.plantScience} //ชื่อวิทยาศาสตร์พรรณไม้
                 plantDiscoverer={item.plantDiscoverer}
                 onPressItem={() => this._onPressItem(item.plantName)} //action เมื่อกดที่รายชื่อ
-                image={item.imageFileAll} //imageFileAll ภาพพรรณไม้
+                image={item.pathIMG+item.imageFileAll} //imageFileAll ภาพพรรณไม้
             />
         );
     };
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     container: {
-        backgroundColor: '#F1C40F'
+        backgroundColor: '#ffdf66'
     },
     btnClear: {
         height:50,

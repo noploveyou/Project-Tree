@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import MapView from 'react-native-maps';
 import PropTypes from 'prop-types';
-import iconsTree from "../IconRequire";
 
 const GoogleMAP = (props) => {
     return(
@@ -28,7 +27,7 @@ const GoogleMAP = (props) => {
                         coordinate={{latitude: parseFloat(mark.ly), longitude: parseFloat(mark.lx)}}
                         title={mark.plantName}
                         description={"โซน : "+mark.locationName}
-                        image={iconsTree[mark.plantIcon]}
+                        image={'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/iconsMark/'+mark.plantIcon}
                         key={index}>
                     </MapView.Marker>
                 }) : null

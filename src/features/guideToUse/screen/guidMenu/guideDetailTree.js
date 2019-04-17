@@ -7,13 +7,6 @@ import NoInternetScreen from '../../../../common/components/NoInternetScreen';
 import CommonText from '../../../../common/components/CommonText';
 import { NavigationActions, StackActions } from "react-navigation";
 
-const Image1 = require('../../../../../public/assets/ImageGuide/guideDetailTree1.jpg');
-const Image2 = require('../../../../../public/assets/ImageGuide/guideDetailTree2.jpg');
-const Image3 = require('../../../../../public/assets/ImageGuide/guideDetailTree3.jpg');
-const Image4 = require('../../../../../public/assets/ImageGuide/guideDetailTree4.jpg');
-const Image5 = require('../../../../../public/assets/ImageGuide/guideDetailTree5.jpg');
-const Image6 = require('../../../../../public/assets/ImageGuide/guideDetailTree6.jpg');
-
 class guideDetailTree extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
@@ -48,7 +41,11 @@ class guideDetailTree extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 100}]} source={Image1} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 100}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideDetailTree1.jpg'}}
+                        />
 
                     </View>
                     <View style={[styles.viewAll, {marginTop: -25}]}>
@@ -59,7 +56,11 @@ class guideDetailTree extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 300}]} source={Image2} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 300}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideDetailTree2.jpg'}}
+                        />
                         <CommonText
                             text={'แสดงข้อมูลดังนี้\n' +
                             '   - รหัสพรรณไม้\n'+
@@ -85,7 +86,11 @@ class guideDetailTree extends Component {
                             weight={'400'}
                             style={[styles.label, {marginTop: 10}]}
                         />
-                        <Thumbnail square style={[styles.image,{height: 400}]} source={Image3} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 400}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideDetailTree3.jpg'}}
+                        />
                         <CommonText
                             text={'แสดงข้อมูลดังนี้\n' +
                             '   - รูปภาพพรรณไม้\n'+
@@ -114,7 +119,11 @@ class guideDetailTree extends Component {
                             weight={'400'}
                             style={[styles.label, {marginTop: 10}]}
                         />
-                        <Thumbnail square style={[styles.image,{height: 540}]} source={Image4} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 540}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideDetailTree4.jpg'}}
+                        />
                         <CommonText
                             text={'แสดงข้อมูลดังนี้\n' +
                             '   - จำนวนพรรณไม้ที่พบ\n'+
@@ -144,7 +153,11 @@ class guideDetailTree extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 180}]} source={Image6} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 180}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideDetailTree5.jpg'}}
+                        />
                         <CommonText
                             text={'     เมื่อกดเลือกพรรณไม้ในแผนที่จะแสดงชื่อและโซนของพรรณไม้\n'+
                             'และแถบปุ่มด้านล่าง\nประกอบด้วยปุ่ม\n\n' +
@@ -190,7 +203,7 @@ guideDetailTree.navigationOptions = ({ navigation }) => ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F1C40F'
+        backgroundColor: '#ffdf66'
     },
     viewAll: {
         alignItems: 'center',

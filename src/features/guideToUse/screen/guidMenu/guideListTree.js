@@ -7,9 +7,6 @@ import NoInternetScreen from '../../../../common/components/NoInternetScreen';
 import CommonText from '../../../../common/components/CommonText';
 import { NavigationActions, StackActions } from "react-navigation";
 
-const Image1 = require('../../../../../public/assets/ImageGuide/guideListTree1.jpg');
-const Image2 = require('../../../../../public/assets/ImageGuide/guideListTree2.jpg');
-
 class guideListTree extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
@@ -44,14 +41,22 @@ class guideListTree extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 250}]} source={Image1} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 250}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideListTree1.jpg'}}
+                        />
                         <CommonText
                             text={'     หรือค้นหารายชื่อพรรณไม้ โดยกรอกชื่อพรรณไม้ในช่องค้นหา\nดังภาพ'}
                             size={18}
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 200}]} source={Image2} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 200}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideListTree2.jpg'}}
+                        />
                         <CommonText
                             text={'2. เมื่อเลือกพรรณไม้ที่ต้องการ\nระบบจะแสดงรายละเอียดพรรณไม้ที่เลือก\n\n'}
                             size={18}
@@ -91,7 +96,7 @@ guideListTree.navigationOptions = ({ navigation }) => ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F1C40F'
+        backgroundColor: '#ffdf66'
     },
     viewAll: {
         alignItems: 'center',

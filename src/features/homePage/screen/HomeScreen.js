@@ -12,8 +12,6 @@ import CheckExitApp from '../../../common/components/CheckExitApp';
 import CommonText from "../../../common/components/CommonText";
 import SplashScreen from 'react-native-splash-screen';
 
-const LogoPage = require('../../../../public/assets/plantImages/LogoTree.png');
-
 class HomeScreen extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
         SplashScreen.hide();
@@ -129,7 +127,10 @@ class HomeScreen extends Component {
                     {
                         this.state.ShowLogoTitle ?  // เช็คว่าแสดง Logo หรือไม่
                         <View style={s.viewImage}>
-                            <Thumbnail style={s.thumbnail} source={LogoPage} />
+                            <Thumbnail
+                                style={s.thumbnail}
+                                source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/otherImage/LogoTree.png'}}
+                            />
                             <CommonText
                                 text={'ปีบหรือกาซะลอง เป็นพรรณไม้\n'+'ประจำมหาวิทยาลัยราชภัฏพระนคร'}
                                 size={16}
@@ -261,7 +262,7 @@ const s = StyleSheet.create({
     buttonSearch: {
         height: 50,
         width: 85,
-        backgroundColor: '#F4D03F',
+        backgroundColor: '#ffdf66',
         justifyContent: 'center',
         flexDirection: 'row',
         alignItems: 'center',

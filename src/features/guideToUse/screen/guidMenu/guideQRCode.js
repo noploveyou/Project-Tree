@@ -7,8 +7,6 @@ import NoInternetScreen from '../../../../common/components/NoInternetScreen';
 import CommonText from '../../../../common/components/CommonText';
 import { NavigationActions, StackActions } from "react-navigation";
 
-const Image1 = require('../../../../../public/assets/ImageGuide/guideQRCode.jpg');
-
 class guideQRCode extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
@@ -43,7 +41,11 @@ class guideQRCode extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 320}]} source={Image1} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 320}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideQRCode.jpg'}}
+                        />
                         <CommonText
                             text={'     เมื่อสแกน QR Code พรรณไม้\nระบบจะแสดงรายละเอียดพรรณไม้ที่สแกน\n\n'}
                             size={18}
@@ -97,7 +99,7 @@ guideQRCode.navigationOptions = ({ navigation }) => ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F1C40F'
+        backgroundColor: '#ffdf66'
     },
     viewAll: {
         alignItems: 'center',

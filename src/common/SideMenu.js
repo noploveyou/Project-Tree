@@ -5,8 +5,6 @@ import  { NavigationActions, StackActions } from 'react-navigation';
 import CommonText from '../common/components/CommonText';
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const titleLogoImage = require('../../public/assets/plantImages/pnru_logo.png');
-
 export default class SideMenu extends Component {
     constructor() {
         super();
@@ -175,7 +173,10 @@ export default class SideMenu extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.viewImageTitle}>
-                    <Image source={titleLogoImage} style={styles.titleImage} />
+                    <Image
+                        source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/otherImage/pnru_logo.png'}}
+                        style={styles.titleImage}
+                    />
                     <CommonText text={'มหาวิทยาลัยราชภัฏพระนคร'} color={'white'} size={18} weight={'400'} style={{marginTop: 5}}/>
                 </View>
                 <ScrollView>
@@ -329,10 +330,10 @@ const styles = StyleSheet.create({
         height: 45,
         alignItems: 'flex-start',
         borderBottomWidth: 1,
-        borderBottomColor: '#F1C40F'
+        borderBottomColor: '#ffdf66'
     },
     buttonSelected: {
-        backgroundColor: '#F1C40F'
+        backgroundColor: '#ffdf66'
     },
     ColText : {
         fontWeight: '400',

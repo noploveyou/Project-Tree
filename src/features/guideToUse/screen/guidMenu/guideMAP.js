@@ -7,13 +7,6 @@ import NoInternetScreen from '../../../../common/components/NoInternetScreen';
 import CommonText from '../../../../common/components/CommonText';
 import { NavigationActions, StackActions } from "react-navigation";
 
-const Image1 = require('../../../../../public/assets/ImageGuide/guideMAP1.jpg');
-const Image2 = require('../../../../../public/assets/ImageGuide/guideMAP2.jpg');
-const Image3 = require('../../../../../public/assets/ImageGuide/guideMAP3.jpg');
-const Image4 = require('../../../../../public/assets/ImageGuide/guideMAP4.jpg');
-const Image5 = require('../../../../../public/assets/ImageGuide/guideMAP5.jpg');
-const Image6 = require('../../../../../public/assets/ImageGuide/guideMAP6.jpg');
-
 class guideMAP extends Component {
     componentDidMount() {   // เริ่มต้นการทำงาน
         NetInfo.isConnected.addEventListener('connectionChange', CheckInternet); // ตรวจสอบ internet
@@ -55,7 +48,11 @@ class guideMAP extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 350}]} source={Image1} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 350}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideMAP1.jpg'}}
+                        />
                         <CommonText
                             text={'     เมื่อกดเลือกพรรณไม้ในแผนที่ จะแสดงชื่อและโซนของพรรณไม้\n'}
                             size={18}
@@ -87,7 +84,11 @@ class guideMAP extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 110}]} source={Image2} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 110}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideMAP2.jpg'}}
+                        />
                     </View>
 
 
@@ -110,15 +111,22 @@ class guideMAP extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 250}]} source={Image3} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 250}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideMAP3.jpg'}}
+                        />
                         <CommonText
                             text={'     หรือค้นหารายชื่อพรรณไม้ โดยกรอกชื่อพรรณไม้ในช่องค้นหา\nดังภาพ'}
                             size={18}
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 210}]} source={Image4} />
-
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 210}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideMAP4.jpg'}}
+                        />
                         <CommonText
                             text={'     หากต้องการลบรายชื่อพรรณไม้ที่กรอกในช่องค้นหาทั้งหมด\nกดปุ่ม x(กากบาท) ในช่องค้นหา\n\n'}
                             size={16}
@@ -148,7 +156,11 @@ class guideMAP extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 180}]} source={Image5} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 180}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideMAP5.jpg'}}
+                        />
                         <CommonText
                             text={'     ระบบจะคำนวณเส้นทางที่ใกล้กับผู้ใช้มากที่สุดและจะเปิดแอปพลิเคชันนำทางให้กับผู้ใช้ (Google Map)\n'}
                             size={18}
@@ -169,7 +181,11 @@ class guideMAP extends Component {
                             weight={'400'}
                             style={styles.label}
                         />
-                        <Thumbnail square style={[styles.image,{height: 180}]} source={Image6} />
+                        <Thumbnail
+                            square
+                            style={[styles.image,{height: 180}]}
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/ImageGuide/guideMAP6.jpg'}}
+                        />
                         <CommonText
                             text={'     เมื่อกดเลือกพรรณไม้ในแผนที่จะแสดงชื่อและโซนของพรรณไม้\n' +
                             'และแถบปุ่มด้านล่าง\nประกอบด้วยปุ่ม\n\n' +
@@ -216,7 +232,7 @@ guideMAP.navigationOptions = ({ navigation }) => ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F1C40F'
+        backgroundColor: '#ffdf66'
     },
     viewAll: {
         alignItems: 'center',

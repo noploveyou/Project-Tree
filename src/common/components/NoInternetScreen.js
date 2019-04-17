@@ -4,7 +4,7 @@ import { Thumbnail } from  'native-base';
 import CommonText from './CommonText';
 import AndroidOpenSettings from 'react-native-android-open-settings';
 
-const NoNET = require('../../../public/assets/otherImage/Trex.jpg');
+const NoNET = require('../../../public/assets/images/Trex.jpg');
 
 NoInternetScreen = () =>{
     return (

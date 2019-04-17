@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     container: {
-        backgroundColor: '#F1C40F'
+        backgroundColor: '#ffdf66'
     }
 });
 

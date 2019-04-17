@@ -2,7 +2,6 @@ import React from "react";
 import { TouchableOpacity, View, Text } from 'react-native';
 import { Thumbnail } from 'native-base';
 import PropTypes from 'prop-types';
-import icons from "../../../common/IconRequire";
 import CommonText from "../../../common/components/CommonText";
 
 class ListItem extends React.PureComponent {
@@ -38,7 +37,10 @@ class ListItem extends React.PureComponent {
                         }
                     }>
                     <View style={{marginLeft: 10, marginBottom: 10}}>
-                        <Thumbnail source={icons[this.props.icons]} />
+                        <Thumbnail
+                            source={{uri: 'http://www.bellcenter-pnru.com/admin10/project/buildForMobile/iconsMark/'
+                                +this.props.icons}}
+                        />
                     </View>
                     <View style={{marginLeft: 10, marginTop: 5, width: '70%'}}>
                         <CommonText text={this.props.labelTreeNameTH} size={18} weight={'600'} />
@@ -77,7 +79,7 @@ ListItem.defaultProps = {
     labelTreeNameTH: "",
     labelTreeNameEN: "",
     onPressItem: null,
-    icons: "",
+    icons: "otherImage/NoImage.png",
     plantDiscoverer: ''
 };
 
